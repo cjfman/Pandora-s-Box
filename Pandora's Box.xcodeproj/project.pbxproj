@@ -17,6 +17,27 @@
 		5623D01516B5C220002B2E0C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623CFF516B5C220002B2E0C /* Cocoa.framework */; };
 		5623D01D16B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623D01B16B5C220002B2E0C /* InfoPlist.strings */; };
 		5623D02016B5C220002B2E0C /* Pandora_s_BoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */; };
+		5623D02A16B5C23F002B2E0C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02916B5C23F002B2E0C /* AVFoundation.framework */; };
+		5623D02D16B5C24B002B2E0C /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02B16B5C24B002B2E0C /* Quartz.framework */; };
+		5623D02E16B5C24B002B2E0C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02C16B5C24B002B2E0C /* QuartzCore.framework */; };
+		5623D03816B5C2C2002B2E0C /* PandoraConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03116B5C2C2002B2E0C /* PandoraConnection.m */; };
+		5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */; };
+		5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */; };
+		5623D03B16B5C2C2002B2E0C /* PandoraSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03516B5C2C2002B2E0C /* PandoraSong.m */; };
+		5623D03C16B5C2C2002B2E0C /* PandoraStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03716B5C2C2002B2E0C /* PandoraStation.m */; };
+		5623D04E16B5C34C002B2E0C /* blowfish_koc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03E16B5C34C002B2E0C /* blowfish_koc.c */; };
+		5623D05016B5C34C002B2E0C /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04116B5C34C002B2E0C /* readme.txt */; };
+		5623D05116B5C34C002B2E0C /* audioControlBackTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04316B5C34C002B2E0C /* audioControlBackTemplate.pdf */; };
+		5623D05216B5C34C002B2E0C /* audioControlNextTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04416B5C34C002B2E0C /* audioControlNextTemplate.pdf */; };
+		5623D05316B5C34C002B2E0C /* audioControlPauseTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04516B5C34C002B2E0C /* audioControlPauseTemplate.pdf */; };
+		5623D05416B5C34C002B2E0C /* audioControlPlayTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04616B5C34C002B2E0C /* audioControlPlayTemplate.pdf */; };
+		5623D05516B5C34C002B2E0C /* SpeakerLoud.png in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04716B5C34C002B2E0C /* SpeakerLoud.png */; };
+		5623D05616B5C34C002B2E0C /* SpeakerQuiet.png in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04816B5C34C002B2E0C /* SpeakerQuiet.png */; };
+		5623D05716B5C34C002B2E0C /* ThumbsDownTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04916B5C34C002B2E0C /* ThumbsDownTemplate.pdf */; };
+		5623D05816B5C34C002B2E0C /* ThumbsUpTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04A16B5C34C002B2E0C /* ThumbsUpTemplate.pdf */; };
+		5623D05916B5C34C002B2E0C /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D04D16B5C34C002B2E0C /* JSONKit.m */; };
+		5623D05D16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */; };
+		56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +70,33 @@
 		5623D01C16B5C220002B2E0C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5623D01E16B5C220002B2E0C /* Pandora_s_BoxTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pandora_s_BoxTests.h; sourceTree = "<group>"; };
 		5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pandora_s_BoxTests.m; sourceTree = "<group>"; };
+		5623D02916B5C23F002B2E0C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5623D02B16B5C24B002B2E0C /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		5623D02C16B5C24B002B2E0C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5623D03016B5C2C2002B2E0C /* PandoraConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraConnection.h; sourceTree = "<group>"; };
+		5623D03116B5C2C2002B2E0C /* PandoraConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraConnection.m; sourceTree = "<group>"; };
+		5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PandoraDebugResponses.plist; sourceTree = "<group>"; };
+		5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PandoraExceptions.plist; sourceTree = "<group>"; };
+		5623D03416B5C2C2002B2E0C /* PandoraSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSong.h; sourceTree = "<group>"; };
+		5623D03516B5C2C2002B2E0C /* PandoraSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSong.m; sourceTree = "<group>"; };
+		5623D03616B5C2C2002B2E0C /* PandoraStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraStation.h; sourceTree = "<group>"; };
+		5623D03716B5C2C2002B2E0C /* PandoraStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraStation.m; sourceTree = "<group>"; };
+		5623D03E16B5C34C002B2E0C /* blowfish_koc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blowfish_koc.c; sourceTree = "<group>"; };
+		5623D03F16B5C34C002B2E0C /* blowfish_koc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish_koc.h; sourceTree = "<group>"; };
+		5623D04116B5C34C002B2E0C /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		5623D04316B5C34C002B2E0C /* audioControlBackTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = audioControlBackTemplate.pdf; sourceTree = "<group>"; };
+		5623D04416B5C34C002B2E0C /* audioControlNextTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = audioControlNextTemplate.pdf; sourceTree = "<group>"; };
+		5623D04516B5C34C002B2E0C /* audioControlPauseTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = audioControlPauseTemplate.pdf; sourceTree = "<group>"; };
+		5623D04616B5C34C002B2E0C /* audioControlPlayTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = audioControlPlayTemplate.pdf; sourceTree = "<group>"; };
+		5623D04716B5C34C002B2E0C /* SpeakerLoud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpeakerLoud.png; sourceTree = "<group>"; };
+		5623D04816B5C34C002B2E0C /* SpeakerQuiet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpeakerQuiet.png; sourceTree = "<group>"; };
+		5623D04916B5C34C002B2E0C /* ThumbsDownTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ThumbsDownTemplate.pdf; sourceTree = "<group>"; };
+		5623D04A16B5C34C002B2E0C /* ThumbsUpTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ThumbsUpTemplate.pdf; sourceTree = "<group>"; };
+		5623D04C16B5C34C002B2E0C /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		5623D04D16B5C34C002B2E0C /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		5623D05B16B5C3A8002B2E0C /* cjfmanExtentionToNSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cjfmanExtentionToNSString.h; sourceTree = "<group>"; };
+		5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cjfmanExtentionToNSString.m; sourceTree = "<group>"; };
+		56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PartnerInfo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5623D02D16B5C24B002B2E0C /* Quartz.framework in Frameworks */,
+				5623D02E16B5C24B002B2E0C /* QuartzCore.framework in Frameworks */,
+				5623D02A16B5C23F002B2E0C /* AVFoundation.framework in Frameworks */,
 				5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +126,9 @@
 		5623CFE616B5C220002B2E0C = {
 			isa = PBXGroup;
 			children = (
+				5623D02B16B5C24B002B2E0C /* Quartz.framework */,
+				5623D02C16B5C24B002B2E0C /* QuartzCore.framework */,
+				5623D02916B5C23F002B2E0C /* AVFoundation.framework */,
 				5623CFFB16B5C220002B2E0C /* Pandora's Box */,
 				5623D01816B5C220002B2E0C /* Pandora's BoxTests */,
 				5623CFF416B5C220002B2E0C /* Frameworks */,
@@ -117,6 +171,11 @@
 				5623D00716B5C220002B2E0C /* PandoraAppDelegate.h */,
 				5623D00816B5C220002B2E0C /* PandoraAppDelegate.m */,
 				5623D00A16B5C220002B2E0C /* MainMenu.xib */,
+				5623D05A16B5C37E002B2E0C /* My Tools */,
+				5623D04216B5C34C002B2E0C /* images */,
+				5623D02F16B5C283002B2E0C /* Pandora Interface */,
+				5623D04B16B5C34C002B2E0C /* JSONKit */,
+				5623D03D16B5C34C002B2E0C /* bfsh-koc */,
 				5623CFFC16B5C220002B2E0C /* Supporting Files */,
 			);
 			path = "Pandora's Box";
@@ -151,6 +210,65 @@
 				5623D01B16B5C220002B2E0C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5623D02F16B5C283002B2E0C /* Pandora Interface */ = {
+			isa = PBXGroup;
+			children = (
+				5623D03016B5C2C2002B2E0C /* PandoraConnection.h */,
+				5623D03116B5C2C2002B2E0C /* PandoraConnection.m */,
+				5623D03616B5C2C2002B2E0C /* PandoraStation.h */,
+				5623D03716B5C2C2002B2E0C /* PandoraStation.m */,
+				5623D03416B5C2C2002B2E0C /* PandoraSong.h */,
+				5623D03516B5C2C2002B2E0C /* PandoraSong.m */,
+				5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */,
+				5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */,
+				56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */,
+			);
+			name = "Pandora Interface";
+			sourceTree = "<group>";
+		};
+		5623D03D16B5C34C002B2E0C /* bfsh-koc */ = {
+			isa = PBXGroup;
+			children = (
+				5623D03E16B5C34C002B2E0C /* blowfish_koc.c */,
+				5623D03F16B5C34C002B2E0C /* blowfish_koc.h */,
+				5623D04116B5C34C002B2E0C /* readme.txt */,
+			);
+			path = "bfsh-koc";
+			sourceTree = "<group>";
+		};
+		5623D04216B5C34C002B2E0C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				5623D04316B5C34C002B2E0C /* audioControlBackTemplate.pdf */,
+				5623D04416B5C34C002B2E0C /* audioControlNextTemplate.pdf */,
+				5623D04516B5C34C002B2E0C /* audioControlPauseTemplate.pdf */,
+				5623D04616B5C34C002B2E0C /* audioControlPlayTemplate.pdf */,
+				5623D04716B5C34C002B2E0C /* SpeakerLoud.png */,
+				5623D04816B5C34C002B2E0C /* SpeakerQuiet.png */,
+				5623D04916B5C34C002B2E0C /* ThumbsDownTemplate.pdf */,
+				5623D04A16B5C34C002B2E0C /* ThumbsUpTemplate.pdf */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		5623D04B16B5C34C002B2E0C /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				5623D04C16B5C34C002B2E0C /* JSONKit.h */,
+				5623D04D16B5C34C002B2E0C /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
+		5623D05A16B5C37E002B2E0C /* My Tools */ = {
+			isa = PBXGroup;
+			children = (
+				5623D05B16B5C3A8002B2E0C /* cjfmanExtentionToNSString.h */,
+				5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */,
+			);
+			name = "My Tools";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +346,18 @@
 				5623D00016B5C220002B2E0C /* InfoPlist.strings in Resources */,
 				5623D00616B5C220002B2E0C /* Credits.rtf in Resources */,
 				5623D00C16B5C220002B2E0C /* MainMenu.xib in Resources */,
+				5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */,
+				5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */,
+				5623D05016B5C34C002B2E0C /* readme.txt in Resources */,
+				5623D05116B5C34C002B2E0C /* audioControlBackTemplate.pdf in Resources */,
+				5623D05216B5C34C002B2E0C /* audioControlNextTemplate.pdf in Resources */,
+				5623D05316B5C34C002B2E0C /* audioControlPauseTemplate.pdf in Resources */,
+				5623D05416B5C34C002B2E0C /* audioControlPlayTemplate.pdf in Resources */,
+				5623D05516B5C34C002B2E0C /* SpeakerLoud.png in Resources */,
+				5623D05616B5C34C002B2E0C /* SpeakerQuiet.png in Resources */,
+				5623D05716B5C34C002B2E0C /* ThumbsDownTemplate.pdf in Resources */,
+				5623D05816B5C34C002B2E0C /* ThumbsUpTemplate.pdf in Resources */,
+				56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +394,12 @@
 			files = (
 				5623D00216B5C220002B2E0C /* main.m in Sources */,
 				5623D00916B5C220002B2E0C /* PandoraAppDelegate.m in Sources */,
+				5623D03816B5C2C2002B2E0C /* PandoraConnection.m in Sources */,
+				5623D03B16B5C2C2002B2E0C /* PandoraSong.m in Sources */,
+				5623D03C16B5C2C2002B2E0C /* PandoraStation.m in Sources */,
+				5623D04E16B5C34C002B2E0C /* blowfish_koc.c in Sources */,
+				5623D05916B5C34C002B2E0C /* JSONKit.m in Sources */,
+				5623D05D16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +581,7 @@
 				5623D02516B5C220002B2E0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5623D02616B5C220002B2E0C /* Build configuration list for PBXNativeTarget "Pandora's BoxTests" */ = {
 			isa = XCConfigurationList;
@@ -453,6 +590,7 @@
 				5623D02816B5C220002B2E0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

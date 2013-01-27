@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PandoraOne</key>
+	<dict>
+		<key>entryPoint</key>
+		<string>internal-tuner.pandora.com</string>
+		<key>username</key>
+		<string>pandora one</string>
+		<key>password</key>
+		<string>TVCKIBGS9AO9TSYLNNFUML0743LH82D</string>
+		<key>deviceModel</key>
+		<string>D01</string>
+		<key>decrypt</key>
+		<string>U#IO$RZPAB%VX2</string>
+		<key>encrypt</key>
+		<string>2%3WCL*JU$MP]4</string>
+	</dict>
+	<key>iOS</key>
+	<dict>
+		<key>entryPoint</key>
+		<string>tuner.pandora.com</string>
+		<key>username</key>
+		<string>iphone</string>
+		<key>password</key>
+		<string>P2E4FC0EAD3*878N92B2CDp34I0B1@388137C</string>
+		<key>deviceModel</key>
+		<string>IP01</string>
+		<key>decrypt</key>
+		<string>20zE1E47BE57$51</string>
+		<key>encrypt</key>
+		<string>721^26xE22776</string>
+	</dict>
+	<key>Andriod</key>
+	<dict>
+		<key>entryPoint</key>
+		<string>tuner.pandora.com</string>
+		<key>username</key>
+		<string>android</string>
+		<key>password</key>
+		<string>AC7IBG09A3DTSYM4R41UJWL07VLN8JI7</string>
+		<key>deviceModel</key>
+		<string>android-generic</string>
+		<key>decrypt</key>
+		<string>R=U!LH$O2B#</string>
+		<key>encrypt</key>
+		<string>6#26FRL$ZWD</string>
+	</dict>
+</dict>
+</plist>
