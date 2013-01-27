@@ -1,0 +1,460 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623CFF516B5C220002B2E0C /* Cocoa.framework */; };
+		5623D00016B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623CFFE16B5C220002B2E0C /* InfoPlist.strings */; };
+		5623D00216B5C220002B2E0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D00116B5C220002B2E0C /* main.m */; };
+		5623D00616B5C220002B2E0C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D00416B5C220002B2E0C /* Credits.rtf */; };
+		5623D00916B5C220002B2E0C /* PandoraAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D00816B5C220002B2E0C /* PandoraAppDelegate.m */; };
+		5623D00C16B5C220002B2E0C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5623D00A16B5C220002B2E0C /* MainMenu.xib */; };
+		5623D01416B5C220002B2E0C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D01316B5C220002B2E0C /* SenTestingKit.framework */; };
+		5623D01516B5C220002B2E0C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623CFF516B5C220002B2E0C /* Cocoa.framework */; };
+		5623D01D16B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623D01B16B5C220002B2E0C /* InfoPlist.strings */; };
+		5623D02016B5C220002B2E0C /* Pandora_s_BoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5623D01616B5C220002B2E0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5623CFE816B5C220002B2E0C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5623CFF016B5C220002B2E0C;
+			remoteInfo = "Pandora's Box";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5623CFF116B5C220002B2E0C /* Pandora's Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pandora's Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5623CFF516B5C220002B2E0C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		5623CFF816B5C220002B2E0C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		5623CFF916B5C220002B2E0C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		5623CFFA16B5C220002B2E0C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5623CFFD16B5C220002B2E0C /* Pandora's Box-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pandora's Box-Info.plist"; sourceTree = "<group>"; };
+		5623CFFF16B5C220002B2E0C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5623D00116B5C220002B2E0C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5623D00316B5C220002B2E0C /* Pandora's Box-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pandora's Box-Prefix.pch"; sourceTree = "<group>"; };
+		5623D00516B5C220002B2E0C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		5623D00716B5C220002B2E0C /* PandoraAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PandoraAppDelegate.h; sourceTree = "<group>"; };
+		5623D00816B5C220002B2E0C /* PandoraAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PandoraAppDelegate.m; sourceTree = "<group>"; };
+		5623D00B16B5C220002B2E0C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		5623D01216B5C220002B2E0C /* Pandora's BoxTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pandora's BoxTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5623D01316B5C220002B2E0C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		5623D01A16B5C220002B2E0C /* Pandora's BoxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pandora's BoxTests-Info.plist"; sourceTree = "<group>"; };
+		5623D01C16B5C220002B2E0C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5623D01E16B5C220002B2E0C /* Pandora_s_BoxTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pandora_s_BoxTests.h; sourceTree = "<group>"; };
+		5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pandora_s_BoxTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5623CFEE16B5C220002B2E0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5623D00E16B5C220002B2E0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5623D01416B5C220002B2E0C /* SenTestingKit.framework in Frameworks */,
+				5623D01516B5C220002B2E0C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5623CFE616B5C220002B2E0C = {
+			isa = PBXGroup;
+			children = (
+				5623CFFB16B5C220002B2E0C /* Pandora's Box */,
+				5623D01816B5C220002B2E0C /* Pandora's BoxTests */,
+				5623CFF416B5C220002B2E0C /* Frameworks */,
+				5623CFF216B5C220002B2E0C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5623CFF216B5C220002B2E0C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5623CFF116B5C220002B2E0C /* Pandora's Box.app */,
+				5623D01216B5C220002B2E0C /* Pandora's BoxTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5623CFF416B5C220002B2E0C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5623CFF516B5C220002B2E0C /* Cocoa.framework */,
+				5623D01316B5C220002B2E0C /* SenTestingKit.framework */,
+				5623CFF716B5C220002B2E0C /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5623CFF716B5C220002B2E0C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5623CFF816B5C220002B2E0C /* AppKit.framework */,
+				5623CFF916B5C220002B2E0C /* CoreData.framework */,
+				5623CFFA16B5C220002B2E0C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		5623CFFB16B5C220002B2E0C /* Pandora's Box */ = {
+			isa = PBXGroup;
+			children = (
+				5623D00716B5C220002B2E0C /* PandoraAppDelegate.h */,
+				5623D00816B5C220002B2E0C /* PandoraAppDelegate.m */,
+				5623D00A16B5C220002B2E0C /* MainMenu.xib */,
+				5623CFFC16B5C220002B2E0C /* Supporting Files */,
+			);
+			path = "Pandora's Box";
+			sourceTree = "<group>";
+		};
+		5623CFFC16B5C220002B2E0C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5623CFFD16B5C220002B2E0C /* Pandora's Box-Info.plist */,
+				5623CFFE16B5C220002B2E0C /* InfoPlist.strings */,
+				5623D00116B5C220002B2E0C /* main.m */,
+				5623D00316B5C220002B2E0C /* Pandora's Box-Prefix.pch */,
+				5623D00416B5C220002B2E0C /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5623D01816B5C220002B2E0C /* Pandora's BoxTests */ = {
+			isa = PBXGroup;
+			children = (
+				5623D01E16B5C220002B2E0C /* Pandora_s_BoxTests.h */,
+				5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */,
+				5623D01916B5C220002B2E0C /* Supporting Files */,
+			);
+			path = "Pandora's BoxTests";
+			sourceTree = "<group>";
+		};
+		5623D01916B5C220002B2E0C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5623D01A16B5C220002B2E0C /* Pandora's BoxTests-Info.plist */,
+				5623D01B16B5C220002B2E0C /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5623CFF016B5C220002B2E0C /* Pandora's Box */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5623D02316B5C220002B2E0C /* Build configuration list for PBXNativeTarget "Pandora's Box" */;
+			buildPhases = (
+				5623CFED16B5C220002B2E0C /* Sources */,
+				5623CFEE16B5C220002B2E0C /* Frameworks */,
+				5623CFEF16B5C220002B2E0C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pandora's Box";
+			productName = "Pandora's Box";
+			productReference = 5623CFF116B5C220002B2E0C /* Pandora's Box.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5623D01116B5C220002B2E0C /* Pandora's BoxTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5623D02616B5C220002B2E0C /* Build configuration list for PBXNativeTarget "Pandora's BoxTests" */;
+			buildPhases = (
+				5623D00D16B5C220002B2E0C /* Sources */,
+				5623D00E16B5C220002B2E0C /* Frameworks */,
+				5623D00F16B5C220002B2E0C /* Resources */,
+				5623D01016B5C220002B2E0C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5623D01716B5C220002B2E0C /* PBXTargetDependency */,
+			);
+			name = "Pandora's BoxTests";
+			productName = "Pandora's BoxTests";
+			productReference = 5623D01216B5C220002B2E0C /* Pandora's BoxTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5623CFE816B5C220002B2E0C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Pandora;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Charles Franklin";
+			};
+			buildConfigurationList = 5623CFEB16B5C220002B2E0C /* Build configuration list for PBXProject "Pandora's Box" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5623CFE616B5C220002B2E0C;
+			productRefGroup = 5623CFF216B5C220002B2E0C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5623CFF016B5C220002B2E0C /* Pandora's Box */,
+				5623D01116B5C220002B2E0C /* Pandora's BoxTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5623CFEF16B5C220002B2E0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5623D00016B5C220002B2E0C /* InfoPlist.strings in Resources */,
+				5623D00616B5C220002B2E0C /* Credits.rtf in Resources */,
+				5623D00C16B5C220002B2E0C /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5623D00F16B5C220002B2E0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5623D01D16B5C220002B2E0C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5623D01016B5C220002B2E0C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5623CFED16B5C220002B2E0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5623D00216B5C220002B2E0C /* main.m in Sources */,
+				5623D00916B5C220002B2E0C /* PandoraAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5623D00D16B5C220002B2E0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5623D02016B5C220002B2E0C /* Pandora_s_BoxTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5623D01716B5C220002B2E0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5623CFF016B5C220002B2E0C /* Pandora's Box */;
+			targetProxy = 5623D01616B5C220002B2E0C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5623CFFE16B5C220002B2E0C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5623CFFF16B5C220002B2E0C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5623D00416B5C220002B2E0C /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5623D00516B5C220002B2E0C /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		5623D00A16B5C220002B2E0C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5623D00B16B5C220002B2E0C /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		5623D01B16B5C220002B2E0C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5623D01C16B5C220002B2E0C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5623D02116B5C220002B2E0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5623D02216B5C220002B2E0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5623D02416B5C220002B2E0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pandora's Box/Pandora's Box-Prefix.pch";
+				INFOPLIST_FILE = "Pandora's Box/Pandora's Box-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5623D02516B5C220002B2E0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pandora's Box/Pandora's Box-Prefix.pch";
+				INFOPLIST_FILE = "Pandora's Box/Pandora's Box-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5623D02716B5C220002B2E0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pandora's Box.app/Contents/MacOS/Pandora's Box";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pandora's Box/Pandora's Box-Prefix.pch";
+				INFOPLIST_FILE = "Pandora's BoxTests/Pandora's BoxTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		5623D02816B5C220002B2E0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pandora's Box.app/Contents/MacOS/Pandora's Box";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pandora's Box/Pandora's Box-Prefix.pch";
+				INFOPLIST_FILE = "Pandora's BoxTests/Pandora's BoxTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5623CFEB16B5C220002B2E0C /* Build configuration list for PBXProject "Pandora's Box" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5623D02116B5C220002B2E0C /* Debug */,
+				5623D02216B5C220002B2E0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5623D02316B5C220002B2E0C /* Build configuration list for PBXNativeTarget "Pandora's Box" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5623D02416B5C220002B2E0C /* Debug */,
+				5623D02516B5C220002B2E0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5623D02616B5C220002B2E0C /* Build configuration list for PBXNativeTarget "Pandora's BoxTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5623D02716B5C220002B2E0C /* Debug */,
+				5623D02816B5C220002B2E0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5623CFE816B5C220002B2E0C /* Project object */;
+}

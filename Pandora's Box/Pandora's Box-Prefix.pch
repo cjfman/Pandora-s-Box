@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Pandora's Box' target in the 'Pandora's Box' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif
