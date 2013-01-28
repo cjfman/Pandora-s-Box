@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
+@class PandoraConnection;
 @class PandoraStation;
 
 @interface PandoraSong : NSObject
 {
+	PandoraConnection *connection;
 	PandoraStation *station;
 }
 
@@ -53,14 +55,17 @@
 @property (copy) NSString *amazonSongDigitalAsin;
 @property (copy) NSString *adToken;
 
-@property (assign) NSImage *albumArt;
-@property (assign) NSData *songData;
-@property (assign) AVAudioPlayer *audioPlayer;
+@property (retain) NSImage *albumArt;
+@property (retain) NSData *songData;
+@property (retain) AVAudioPlayer *audioPlayer;
 
-- (id)initWithDictionary:(NSDictionary*)info station:(PandoraStation*)newStation;
+- (id)initWithDictionary:(NSDictionary*)info
+			  connection:(PandoraConnection*)newConnection
+				 station:(PandoraStation*)newStation;
 - (void)loadData;
 - (void)loadAlbumArt;
 - (void)loadSong;
+- (void)rate:(BOOL)rating;
 
 @end
 

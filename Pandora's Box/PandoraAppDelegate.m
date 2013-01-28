@@ -198,6 +198,9 @@
 		[self.stationsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 	}
 	else {
+		if (audioPlayer) {
+			[audioPlayer pause];
+		}
 		PandoraSong *song = [newStation getCurrentSong];
 		[self changeSong: song];
 	}
@@ -209,24 +212,23 @@
 		selectedSong = newSong;
 		
 		// Get Song Data
-		[selectedSong loadData];
-		
+		[selectedSong loadData];		
 		
 		// Play Song
-		// Pause currently playing song if one
-		if (audioPlayer) {
-			[audioPlayer pause];
-		}
 		if (!(audioPlayer = selectedSong.audioPlayer))
 		{
 			NSError *error = nil;
-			audioPlayer = [[AVAudioPlayer alloc] initWithData:selectedSong.songData error:&error];
+			audioPlayer = [[AVAudioPlayer alloc] initWithData:selectedSong.songData
+														error:&error];
 			if (error) {
 				NSLog(@"%@", error);
 				return;
 			}
 			[audioPlayer setDelegate:self];
 			selectedSong.audioPlayer = audioPlayer;
+		}
+		else {
+			[audioPlayer retain];
 		}
 		[audioPlayer play];
 		NSLog(@"Song Duration: %ld", (NSInteger)audioPlayer.duration);
@@ -254,9 +256,8 @@
 
 - (void)clearPlayer {
 	if (audioPlayer) {
-		if (audioPlayer == selectedSong.audioPlayer) {
-			selectedSong.audioPlayer = nil;
-		}
+		[audioPlayer pause];
+		audioPlayer.currentTime = 0;
 		[audioPlayer release];
 		audioPlayer = nil;
 	}
@@ -309,13 +310,17 @@
 }
 
 - (IBAction)playPreviousSong:(id)sender {
+	if ([audioPlayer currentTime] > 1) {
+		[audioPlayer setCurrentTime:0];
+		return;
+	}
 	[self clearPlayer];
 	[self changeSong:[selectedStation setCurrentIndex:[selectedStation getCurrentIndex] - 1]];
 }
 
 - (IBAction)audioControlPushed:(id)sender {
 	NSInteger selection = [sender selectedSegment];
-	switch(selection) {
+	switch (selection) {
 		case 0:
 			[self playPreviousSong:sender];
 			break;
@@ -323,6 +328,19 @@
 			[self playPause:sender];
 			break;
 		case 2:
+			[self skipSong:sender];
+			break;
+	}
+}
+
+- (IBAction)ratingPushed:(id)sender {
+	NSInteger selection = [sender selectedSegment];
+	switch (selection) {
+		case 0:
+			[selectedSong rate:YES];
+			break;
+		case 1:
+			[selectedSong rate:NO];
 			[self skipSong:sender];
 			break;
 	}

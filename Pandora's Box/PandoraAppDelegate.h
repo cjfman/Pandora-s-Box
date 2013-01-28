@@ -43,6 +43,7 @@
 - (IBAction)skipSong:(id)sender;
 - (IBAction)playPreviousSong:(id)sender;
 - (IBAction)audioControlPushed:(id)sender;
+- (IBAction)ratingPushed:(id)sender;
 
 // Time Bar
 @property (assign) IBOutlet NSView *timeBarView;

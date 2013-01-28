@@ -42,36 +42,29 @@
 									   //formats, @"additionalAudioUrl",
 									   nil];
 	NSError *error = nil;
-	NSDictionary *response = [connection jsonRequest:@"station.getPlaylist" withParameters:parameters useTLS:TRUE isEncrypted:TRUE error:&error];
+	NSDictionary *response = [connection jsonRequest:@"station.getPlaylist"
+									  withParameters:parameters
+											  useTLS:TRUE
+										 isEncrypted:TRUE
+											   error:&error];
 	if (!response) return nil;
 	//NSLog(@"JSON Response:\n%@", response);
 	NSArray *songs = [response objectForKey:@"items"];
 	for (NSDictionary* song in songs)
 	{
 		if ([song objectForKey:@"adToken"]) continue;
-		[playList addObject:[[PandoraSong alloc] initWithDictionary:song station: self]];
+		[playList addObject:[[PandoraSong alloc] initWithDictionary:song
+														 connection:connection station: self]];
 	}
 	return playList;
 }
 
 - (PandoraSong *) getCurrentSong {
-	//if (currentSong) return currentSong;
 	if (currentIndex != -1) return [playList objectAtIndex:currentIndex];
 	else return [self getNextSong];
 }
 
 - (PandoraSong *) getNextSong {
-	/*if ([playList count] > 0) {
-		if (currentSong) {
-			[justPlayed addObject:currentSong];
-		}
-	}
-	else {
-		[self getPlaylist];
-	}
-	currentSong = [playList objectAtIndex:0];
-	[playList removeObjectAtIndex:0];
-	return currentSong;*/
 	if ([playList count] <= ++currentIndex) {
 		[self getPlaylist];
 	}
@@ -79,17 +72,6 @@
 }
 
 - (PandoraSong *) getSongAtIndex:(NSInteger)index {
-	/*if (index < [justPlayed count]) {
-		return [justPlayed objectAtIndex:index];
-	}
-	else if (index == [justPlayed count]) {
-		return currentSong;
-	}
-	else if ([playList count] > 0) {
-		index -= [justPlayed count] + 1;
-		return [playList objectAtIndex:index];
-	}
-	return nil;*/
 	return [playList objectAtIndex:index];
 }
 
