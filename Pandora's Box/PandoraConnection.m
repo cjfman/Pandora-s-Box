@@ -14,7 +14,7 @@
 
 #import <time.h>
 
-#define PANDORA_PARSE_DEBUG
+//#define PANDORA_PARSE_DEBUG
 
 #define pandoraVersion 5
 
@@ -170,8 +170,11 @@
  JSON Methods
  ******************************************/
 
-- (NSDictionary*)jsonRequest:(NSString*)method withParameters:(NSMutableDictionary*)parameters useTLS:(BOOL)useTLS isEncrypted:(BOOL)isEncrypted error:(NSError**)error
-{
+- (NSDictionary*)jsonRequest:(NSString*)method
+			  withParameters:(NSMutableDictionary*)parameters
+					  useTLS:(BOOL)useTLS
+				 isEncrypted:(BOOL)isEncrypted
+					   error:(NSError**)error {
 #ifdef PANDORA_PARSE_DEBUG
 	
 	NSString *debugResponsesPath = [[NSBundle mainBundle] pathForResource:@"PandoraDebugResponses" ofType:@"plist"];
@@ -238,9 +241,11 @@
 	//NSLog(@"Making HTTP Request");
 	NSData *jsonData;
 	NSURLResponse *urlResponse;
-	jsonData = [NSURLConnection sendSynchronousRequest:request
-									returningResponse:&urlResponse
-												error:error];
+	@synchronized(self) {
+		jsonData = [NSURLConnection sendSynchronousRequest:request
+										returningResponse:&urlResponse
+													error:error];
+	}
 	if (jsonData == nil) return nil;
 	NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 	//NSLog(@"%@", jsonResult);
@@ -248,7 +253,7 @@
 	NSDictionary *response = [jsonData objectFromJSONData];
 	if ([[response objectForKey:kStat] isEqualTo:@"fail"])
 	{
-		NSLog(jsonResult);
+		NSLog(@"%@", jsonResult);
 		NSString *code = [NSString stringWithFormat:@"%ld",[[response objectForKey:@"code"] integerValue]];;
 		NSString *errorName = [errorCodes objectForKey:code];
 		*error = [NSError errorWithDomain: errorName  code: [code integerValue] userInfo:response];

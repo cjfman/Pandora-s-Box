@@ -10,7 +10,7 @@
 #import "PandoraConnection.h"
 #import "PandoraStation.h"
 
-#define SONG_DOWNLOAD_DEBUG
+//#define SONG_DOWNLOAD_DEBUG
 
 @implementation PandoraSong
 
@@ -91,7 +91,7 @@
 - (void)rate:(BOOL)rating {
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   self.trackToken, @"trackToken",
-									   rating, @"isPositive",
+									   [NSNumber numberWithBool:rating], @"isPositive",
 									   nil];
 	NSError *error = nil;
 	NSDictionary *response = [connection jsonRequest:@"station.addFeedback"
@@ -104,7 +104,7 @@
 		NSLog(@"%@", error);
 		return;
 	}
-	NSLog(@"%@", response);
+	//NSLog(@"%@", response);
 }
 
 @end
