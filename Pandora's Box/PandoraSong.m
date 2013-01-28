@@ -10,7 +10,7 @@
 #import "PandoraConnection.h"
 #import "PandoraStation.h"
 
-//#define SONG_DOWNLOAD_DEBUG
+#define SONG_DOWNLOAD_DEBUG
 
 @implementation PandoraSong
 
@@ -89,6 +89,7 @@
 }
 
 - (void)rate:(BOOL)rating {
+	self.songRating = (rating) ? 1 : -1;
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   self.trackToken, @"trackToken",
 									   [NSNumber numberWithBool:rating], @"isPositive",
@@ -104,7 +105,7 @@
 		NSLog(@"%@", error);
 		return;
 	}
-	//NSLog(@"%@", response);
+	NSLog(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "PandoraAppDelegate.h"
 #import "PandoraConnection.h"
+#import "PlaylistTableCellView.h"
 
 #define kOpenTab @"openTab"
 #define kUsername @"username"
@@ -28,7 +29,9 @@
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-	
+	// Load Images
+	thumbsDownImage = [[NSImage imageNamed:@"ThumbsDownTemplate.pdf"] retain];
+	thumbsUpImage = [[NSImage imageNamed:@"ThumbsUpTemplate.pdf"] retain];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -159,11 +162,36 @@
 			return thisCell;
 		}
 		else if ([thisColName isEqualToString:@"Info"]) {
-			NSTableCellView *thisCell = [tableView makeViewWithIdentifier:thisColName owner:self];
+			PlaylistTableCellView *thisCell = [tableView makeViewWithIdentifier:thisColName owner:self];
+			
+			// Info
 			thisCell.textField.stringValue = [NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
 											  [song songName],
 											  [song artistName],
 											  [song albumName]];
+			
+			// Now Playing
+			if (row == [selectedStation getCurrentIndex]) {
+				[thisCell.imageView setHidden:NO];
+			}
+			else {
+				[thisCell.imageView setHidden:YES];
+			}
+			
+			// Rating
+			if ([song songRating]) {
+				if (song.songRating == 1) {
+					[thisCell.ratingImage setImage:thumbsUpImage];
+				}
+				else if (song.songRating == -1) {
+					[thisCell.ratingImage setImage:thumbsDownImage];
+				}
+				[thisCell.ratingImage setHidden:NO];
+			}
+			else {
+				[thisCell.ratingImage setHidden:YES];
+			}
+			
 			return thisCell;
 		}
 	}
@@ -344,6 +372,10 @@
 			[self skipSong:sender];
 			break;
 	}
+	[self.playlistView reloadDataForRowIndexes:
+	 [NSIndexSet indexSetWithIndex:[selectedStation getCurrentIndex]]
+								 columnIndexes:
+	 [NSIndexSet indexSetWithIndex:1]];
 }
 
 - (IBAction)songScrubbing:(id)sender {

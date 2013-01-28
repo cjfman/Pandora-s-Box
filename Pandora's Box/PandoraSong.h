@@ -24,7 +24,7 @@
 @property (copy) NSString *albumName;
 @property (copy) NSString *trackToken;
 @property (copy) NSString *stationId;
-@property (copy) NSString *songRating;
+@property (assign) NSInteger songRating;
 
 // Song Data
 @property (copy) NSString *audioUrl;

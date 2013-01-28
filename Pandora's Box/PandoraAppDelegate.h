@@ -20,6 +20,10 @@
 	AVAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
 	NSUserDefaults *userDefaults;
+	
+	// Images
+	NSImage *thumbsUpImage;
+	NSImage *thumbsDownImage;
 }
 
 @property (assign) IBOutlet NSWindow *window;
