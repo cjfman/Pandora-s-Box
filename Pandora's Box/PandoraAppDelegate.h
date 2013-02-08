@@ -64,6 +64,7 @@
 @property (assign) IBOutlet NSImageView *stationsTabAlbumView;
 @property (assign) IBOutlet NSTextField *stationsTabSongTextView;
 @property (assign) IBOutlet NSTableView *stationsTableView;
+@property (assign) IBOutlet NSTextField *stationsTabStationNameView;
 
 // Now Playing Tab
 @property (assign) IBOutlet NSImageView *playingTabAlbumView;
@@ -81,6 +82,7 @@
 - (void)changeStation:(PandoraStation*)newStation;
 - (void)changeSong:(PandoraSong*)newSong;
 - (void)songSelected;
+- (void)stationSelected;
 - (void)clearPlayer;
 - (NSString *)timeFormatted:(NSInteger)totalSeconds;
 

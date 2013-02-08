@@ -71,11 +71,17 @@
 	 constant:1]];
 	 //*/
 	[self.stationsTabSongTextView setStringValue:@"No Song Playing"];
-	[self.mainTabView selectTabViewItemAtIndex:[userDefaults integerForKey:kOpenTab]];
-	[self.tabSelectionView selectSegmentWithTag:[userDefaults integerForKey:kOpenTab]];
-	playHeadTimer = [[NSTimer timerWithTimeInterval:.1 target:self selector:@selector(updatePlayHead) userInfo:nil repeats:YES] retain];
+	[self.mainTabView selectTabViewItemAtIndex:0]; //[userDefaults integerForKey:kOpenTab]];
+	[self.tabSelectionView selectSegmentWithTag:0]; //[userDefaults integerForKey:kOpenTab]];
+	playHeadTimer = [[NSTimer timerWithTimeInterval:.1
+											 target:self
+										   selector:@selector(updatePlayHead)
+										   userInfo:nil
+											repeats:YES]
+					 retain];
 	[[NSRunLoop currentRunLoop] addTimer:playHeadTimer forMode:NSDefaultRunLoopMode];
 	[self.playlistView setDoubleAction:@selector(songSelected)];
+	[self.stationsTableView setDoubleAction:@selector(stationSelected)];
 }
 
 - (IBAction)login:(id)sender {
@@ -115,8 +121,8 @@
 	// Start Station
 	stationList = [[NSMutableArray arrayWithArray:[pandora getStationList]] retain];
 	[self.stationsTableView reloadData];
-	[self.playlistView reloadData];
-	NSInteger first_selected_station = [userDefaults integerForKey:kOpenStation];
+	//[self.playlistView reloadData];
+	NSInteger first_selected_station = 1; //[userDefaults integerForKey:kOpenStation];
 	PandoraStation *station = [pandora getStation:[stationList objectAtIndex:first_selected_station]];
 	[self changeStation: station];
 }
@@ -156,6 +162,9 @@
 	}
 	else if (tableView == self.playlistView) {
 		PandoraSong *song = [selectedStation getSongAtIndex:row];
+		if(!song.enabled) {
+			
+		}
 		if ([thisColName isEqualToString:@"Album Art"]) {
 			NSImageView *thisCell = [tableView makeViewWithIdentifier:thisColName owner:self];
 			[thisCell setImage:[song albumArt]];
@@ -201,13 +210,19 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 	NSTableView *tableView = [aNotification object];
 	if (tableView == self.stationsTableView) {
-		PandoraStation *station = [pandora getStation:[stationList objectAtIndex:[tableView selectedRow]]];
-		NSLog(@"New Station Selected: %@", station.stationName);
-		[self changeStation:station];
+		[tableView scrollRowToVisible:[tableView selectedRow]];
 	}
 	if (tableView == self.playlistView) {
 		[tableView scrollRowToVisible:[tableView selectedRow]];
 	}
+}
+
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
+	if (tableView == self.playlistView) {
+		return YES;
+		//return [[selectedStation getSongAtIndex:row] enabled];
+	}
+	return YES;
 }
 
 /*****************************************
@@ -221,26 +236,29 @@
 
 - (void)changeStation:(PandoraStation *)newStation {
 	selectedStation = newStation;
-	NSInteger index = [stationList indexOfObject: newStation.stationName];
-	if ([self.stationsTableView selectedRow] != index) {
-		[self.stationsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+	[self.stationsTabStationNameView setStringValue:
+	 [newStation stationName]];
+	if (audioPlayer) {
+		[audioPlayer pause];
 	}
-	else {
-		if (audioPlayer) {
-			[audioPlayer pause];
-		}
-		PandoraSong *song = [newStation getCurrentSong];
-		[self changeSong: song];
-	}
+	PandoraSong *song = [newStation getCurrentSong];
+	[self.playlistView reloadData];
+	[self changeSong: song];
 }
 
 - (void)changeSong:(PandoraSong *)newSong {
 	@synchronized(self) {
 		NSLog(@"New Song: %@", newSong.songName);
-		selectedSong = newSong;
 		
 		// Get Song Data
-		[selectedSong loadData];		
+		[newSong loadData];
+		if (!newSong.enabled) {
+			NSLog(@"Song %@ is disabled", [newSong songName]);
+			[self playNextSong];
+			return;
+		}
+		
+		selectedSong = newSong;
 		
 		// Play Song
 		if (!(audioPlayer = selectedSong.audioPlayer))
@@ -259,14 +277,15 @@
 			[audioPlayer retain];
 		}
 		[audioPlayer play];
-		NSLog(@"Song Duration: %ld", (NSInteger)audioPlayer.duration);
+		//NSLog(@"Song Duration: %ld", (NSInteger)audioPlayer.duration);
 		
 		// Setup gui elemets
 		[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",
 							   [selectedSong songName],
 							   [selectedStation stationName]]];
-		[self.playHeadView setMaxValue:[audioPlayer duration]];
+		[selectedStation cleanPlayList];
 		[self.playlistView reloadData];
+		[self.playHeadView setMaxValue:[audioPlayer duration]];
 		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[selectedStation getCurrentIndex]] byExtendingSelection:NO];
 		[self.stationsTabAlbumView setImage:selectedSong.albumArt];
 		[self.playingTabAlbumView setImage:selectedSong.albumArt];
@@ -279,7 +298,21 @@
 
 - (void)songSelected {
 	[self clearPlayer];
-	[self changeSong:[selectedStation setCurrentIndex:[self.playlistView selectedRow]]];
+	PandoraSong *song = [selectedStation setCurrentIndex:
+						 [self.playlistView selectedRow]];
+	if (!song.enabled) {
+		NSLog(@"Selected song %@ is disabled", [song songName]);
+		return;
+	}
+	[self changeSong:song];
+}
+
+- (void)stationSelected {
+	PandoraStation *station = [pandora getStation:
+							   [stationList objectAtIndex:
+								[self.stationsTableView selectedRow]]];
+	NSLog(@"New Station Selected: %@", station.stationName);
+	[self changeStation:station];
 }
 
 - (void)clearPlayer {
@@ -329,6 +362,9 @@
 		else {
 			[audioPlayer play];
 		}
+	}
+	else {
+		[self playNextSong];
 	}
 }
 

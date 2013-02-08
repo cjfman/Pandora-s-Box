@@ -86,8 +86,22 @@
 - (PandoraSong *)setCurrentIndex:(NSInteger)index {
 	if (index < 0) index = 0;
 	else if (index >= [playList count]) index = [playList count] - 1;
-	currentIndex = index;
-	return [playList objectAtIndex:currentIndex];
+	PandoraSong *song = [playList objectAtIndex:index];
+	if (song.enabled) {
+		currentIndex = index;
+	}
+	return song;
+}
+
+- (void) cleanPlayList {
+	int i = 0;
+	for (i = 0; i < [playList count]; i++) {
+		PandoraSong *song = [playList objectAtIndex:i];
+		if (!song.enabled) {
+			[playList removeObjectAtIndex:i--];
+			[song release];
+		}
+	}
 }
 
 @end

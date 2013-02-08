@@ -10,7 +10,7 @@
 #import "PandoraConnection.h"
 #import "PandoraStation.h"
 
-#define SONG_DOWNLOAD_DEBUG
+//#define SONG_DOWNLOAD_DEBUG
 
 @implementation PandoraSong
 
@@ -19,19 +19,21 @@
 				 station:(PandoraStation*)newStation {
 	if(!(self = [super init])) return self;
 	[self setValuesForKeysWithDictionary:info];
-	connection = newConnection;
-	station = newStation;
+	connection = [newConnection retain];
+	station = [newStation retain];
 	self.audioPlayer = nil;
+	self.enabled = YES;
 	return self;
 }
 
 - (void)dealloc {
+	[connection release];
+	[station release];
 	[self.songName release];
 	[self.artistName release];
 	[self.albumName release];
 	[self.trackToken release];
 	[self.stationId release];
-	[self.songRating release];
 	[self.audioUrl release];
 	[self.albumArtUrl release];
 	[self.audioUrlMap release];
@@ -69,13 +71,22 @@
 }
 
 - (void)loadSong {
+	if (!self.enabled) return;
 	if (self.songData) return;
+	NSLog(@"Loading song data for song: %@", self.songName);
 	@synchronized(self.songData) {
 #ifndef SONG_DOWNLOAD_DEBUG
 		self.songData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: self.audioUrl]];
 #else
-		self.songData = [[[NSFileManager defaultManager] contentsAtPath:@"/Volumes/HDD Storage/My Files Backup/Music/iTunes/iTunes Music/The Heavy/The House That Dirt Built/01 The House That Dirt Built.m4a"] retain];
+		//self.songData = [[[NSFileManager defaultManager] contentsAtPath:@"/Volumes/HDD Storage/My Files Backup/Music/iTunes/iTunes Music/The Heavy/The House That Dirt Built/01 The House That Dirt Built.m4a"] retain];
+		self.songData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://t3-2.p-cdn.com/access/3458497696169817008.mp3?version=4&lid=70147280&token=eZd2CDOwKDQAykg%2FQXUV9D7Y%2BEgxlNzgOyfFKrLmgj%2FLw0dcboROS%2FMUNEty9T5nTwBvzFos149gqsjEFzluR%2FKUwviGrtt23Hp5PoI%2BksGZVg2eFAZNQXfIzaJpdfeMf5J5x6tmNYjHGd1JjMBe07UHLimXNovisv3rcwsN0CJIRvzmahLDQwIfV1utqo4V3okS8bIq%2BXMQBqYEJ8HD1jT95B4oL6fIeDnTXwSE%2BmsN9%2BmZxnzXTuh4vGf54ne7%2F9wEvvUNBxHYeYdCXsaLi4qmlZ0PShsQ5Hu0cDYAkCl2082%2F0W989r%2BYYXPfltUXXbhmEUgpX2caU92J3OSo455snl1AfbdO"]];
+		
 #endif
+		if (!self.songData) {
+			NSLog(@"Failed to load song data for song: %@", self.songName);
+			self.enabled = NO;
+			[self.songData release];
+		}
 	}
 }
 

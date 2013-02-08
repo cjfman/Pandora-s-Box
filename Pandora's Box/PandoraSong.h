@@ -58,6 +58,7 @@
 @property (retain) NSImage *albumArt;
 @property (retain) NSData *songData;
 @property (retain) AVAudioPlayer *audioPlayer;
+@property (assign) BOOL enabled;
 
 - (id)initWithDictionary:(NSDictionary*)info
 			  connection:(PandoraConnection*)newConnection

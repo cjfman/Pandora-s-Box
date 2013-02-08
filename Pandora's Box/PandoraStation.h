@@ -53,5 +53,6 @@
 - (NSInteger)count;
 - (NSInteger)getCurrentIndex;
 - (PandoraSong *)setCurrentIndex:(NSInteger)index;
+- (void) cleanPlayList;
 
 @end
