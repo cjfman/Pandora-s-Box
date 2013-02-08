@@ -14,9 +14,7 @@
 @interface PandoraStation : NSObject
 {
 	PandoraConnection *connection;
-	//PandoraSong *currentSong;
 	NSMutableArray *playList;
-	//NSMutableArray *justPlayed;
 	NSInteger currentIndex;
 }
 

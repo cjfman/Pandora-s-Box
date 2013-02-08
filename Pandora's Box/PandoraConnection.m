@@ -96,6 +96,19 @@
 	[userDefaults setObject:<#(id)#> forKey:<#(NSString *)#>]
 }*/
 
+-(void)dealloc {
+	[partner release];
+	[stationList release];
+	[stations release];
+	[auth_token release];
+	[partner_id release];
+	[user_id release];
+	[userAuthToken release];
+	[partnerAuthToken release];
+	[errorCodes release];
+	[super dealloc];
+}
+
 - (NSArray*)loginWithUsername:(NSString*) username andPassword:(NSString*) password error: (NSError**)error
 {
 	NSLog(@"Logging in user: %@", username);
@@ -114,7 +127,11 @@
 								//boolean, @"includeDemographics",
 								//boolean, @"returnCapped",
 								nil];
-	NSDictionary *response = [self jsonRequest:@"auth.userLogin" withParameters:parameters useTLS:TRUE isEncrypted:TRUE error:error];
+	NSDictionary *response = [self jsonRequest:@"auth.userLogin"
+								withParameters:parameters
+										useTLS:TRUE
+								   isEncrypted:TRUE
+										 error:error];
 	//NSLog(@"JSON Response:\n%@", response);
 	if (*error) return nil;
 	user_id = [[response objectForKey:kUserId] copy];
@@ -132,13 +149,21 @@
 	NSError *error = nil;
 	
 	// Get Stations
-	NSDictionary *response = [self jsonRequest:@"user.getStationList" withParameters:parameters useTLS:FALSE isEncrypted:TRUE error:&error];
+	NSDictionary *response = [self jsonRequest:@"user.getStationList"
+								withParameters:parameters
+										useTLS:FALSE
+								   isEncrypted:TRUE
+										 error:&error];
 	if(!response) return nil;
 	//NSLog(@"JSON Response:\n%@", response);
 	NSString *precheck = [response objectForKey:kChecksum];
 	
 	// Get Checksum
-	NSDictionary *checkResponse = [self jsonRequest:@"user.getStationListChecksum" withParameters:parameters useTLS:FALSE isEncrypted:TRUE error:&error];
+	NSDictionary *checkResponse = [self jsonRequest:@"user.getStationListChecksum"
+									 withParameters:parameters
+											 useTLS:FALSE
+										isEncrypted:TRUE
+											  error:&error];
 	if(!response) return nil;
 	//NSLog(@"JSON Response:\n%@", checkResponse);
 	NSString *postcheck = [checkResponse objectForKey:kChecksum];
@@ -151,7 +176,11 @@
 		//NSLog(@"Station:\n%@", station);
 		if (!name) continue;
 		[stationList addObject:name];
-		[stations setObject:[[PandoraStation alloc] initWithDictionary: station connection:self] forKey:name];
+		PandoraStation *newStation = [[PandoraStation alloc] initWithDictionary: station
+																	 connection:self];
+		[newStation autorelease];
+		[stations setObject:newStation
+					 forKey:name];
 	}
 	
 	//NSLog(@"%@", stationList);

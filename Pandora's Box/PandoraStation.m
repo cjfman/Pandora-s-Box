@@ -16,12 +16,25 @@
 {
 	if(!(self = [super init])) return self;
 	[self setValuesForKeysWithDictionary:info];
-	connection = newConnection;
-	//currentSong = nil;
+	connection = [newConnection retain];
 	playList = [[NSMutableArray alloc] init];
-	//justPlayed = [[NSMutableArray alloc] init];
 	currentIndex = -1;
 	return self;
+}
+
+- (void)dealloc {
+	[connection release];
+	[playList release];
+	[self.stationName release];
+	[self.stationId release];
+	[self.dateCreated release];
+	[self.stationToken release];
+	[self.genre release];
+	[self.quickMixStationIds release];
+	[self.music release];
+	[self.stationDetailUrl release];
+	[self.stationSharingUrl release];
+	[super dealloc];
 }
 
 - (NSArray*)getPlaylist
@@ -53,8 +66,10 @@
 	for (NSDictionary* song in songs)
 	{
 		if ([song objectForKey:@"adToken"]) continue;
-		[playList addObject:[[PandoraSong alloc] initWithDictionary:song
-														 connection:connection station: self]];
+		PandoraSong *newSong = [[PandoraSong alloc] initWithDictionary:song
+															connection:connection station: self];
+		[newSong autorelease];
+		[playList addObject:newSong];
 	}
 	return playList;
 }
