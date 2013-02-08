@@ -10,8 +10,6 @@
 #import "PandoraConnection.h"
 #import "PandoraStation.h"
 
-//#define SONG_DOWNLOAD_DEBUG
-
 @implementation PandoraSong
 
 - (id)initWithDictionary:(NSDictionary*)info
@@ -70,32 +68,69 @@
 	[self loadSong];
 }
 
-- (void)loadSong {
-	if (!self.enabled) return;
-	if (self.songData) return;
-	NSLog(@"Loading song data for song: %@", self.songName);
-	@synchronized(self.songData) {
-#ifndef SONG_DOWNLOAD_DEBUG
-		self.songData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: self.audioUrl]];
-#else
-		//self.songData = [[[NSFileManager defaultManager] contentsAtPath:@"/Volumes/HDD Storage/My Files Backup/Music/iTunes/iTunes Music/The Heavy/The House That Dirt Built/01 The House That Dirt Built.m4a"] retain];
-		self.songData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://t3-2.p-cdn.com/access/3458497696169817008.mp3?version=4&lid=70147280&token=eZd2CDOwKDQAykg%2FQXUV9D7Y%2BEgxlNzgOyfFKrLmgj%2FLw0dcboROS%2FMUNEty9T5nTwBvzFos149gqsjEFzluR%2FKUwviGrtt23Hp5PoI%2BksGZVg2eFAZNQXfIzaJpdfeMf5J5x6tmNYjHGd1JjMBe07UHLimXNovisv3rcwsN0CJIRvzmahLDQwIfV1utqo4V3okS8bIq%2BXMQBqYEJ8HD1jT95B4oL6fIeDnTXwSE%2BmsN9%2BmZxnzXTuh4vGf54ne7%2F9wEvvUNBxHYeYdCXsaLi4qmlZ0PShsQ5Hu0cDYAkCl2082%2F0W989r%2BYYXPfltUXXbhmEUgpX2caU92J3OSo455snl1AfbdO"]];
-		
-#endif
-		if (!self.songData) {
-			NSLog(@"Failed to load song data for song: %@", self.songName);
-			self.enabled = NO;
-			[self.songData release];
-		}
-	}
-}
-
 - (void)loadAlbumArt {
 	if (_albumArt) return;
 	@synchronized(_albumArt) {
 		NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: self.albumArtUrl]];
 		_albumArt = [[NSImage alloc] initWithData: imageData];
 		[imageData release];
+	}
+}
+
+- (void)loadSong {
+	if (!self.enabled) return;
+	if (self.songData) return;
+	NSString *usedURL;
+	@synchronized(self.songData) {
+#ifndef SONG_DOWNLOAD_DEBUG
+		if (songPath) {
+			self.songData = [[[NSFileManager defaultManager] contentsAtPath:songPath] retain];
+		}
+		else {
+			NSLog(@"Downloading song data for song: %@", self.songName);
+			self.songData = [[NSData alloc] initWithContentsOfURL:
+							 [NSURL URLWithString: self.audioUrl]];
+			usedURL = self.audioUrl;
+		}
+#else
+		self.songData = [[[NSFileManager defaultManager] contentsAtPath:@"/Volumes/HDD Storage/Users/charles/Desktop/Pandora's Box/5855720188902449219.mp4"] retain];
+		usedURL = [NSString stringWithFormat:@"http://test.com/DEBUG_%@.m4a?parameters", self.songName];
+		
+#endif
+		if (!self.songData) {
+			NSLog(@"Failed to load song data for song: %@", self.songName);
+			self.enabled = NO;
+			[self.songData release];
+			return;
+		}
+	}
+	NSMutableString *temp = [NSMutableString stringWithString:usedURL];
+	NSRange range = [temp rangeOfString:@"?"];
+	if (range.location != NSNotFound) {
+		range.length = [temp length] - range.location;
+		[temp deleteCharactersInRange:range];
+	}
+	range = [temp rangeOfString:@"." options:NSBackwardsSearch];
+	if (range.location != NSNotFound) {
+		range.length = range.location + 1;
+		range.location = 0;
+		[temp deleteCharactersInRange:range];
+	}
+	audioContainer = [NSString stringWithString:temp];
+}
+
+- (void)saveSong:(NSString*)path {
+	NSString *fileName = [NSString stringWithFormat:@"%@/%@_%@_%@.%@",
+						  path,
+						  self.songName,
+						  self.artistName,
+						  self.albumName,
+						  audioContainer];
+	songPath = [fileName stringByExpandingTildeInPath];
+	NSError *error = nil;
+	[self.songData writeToFile:songPath options:0 error:&error];
+	if (error) {
+		NSLog(@"Error saveing song :%@\n%@",self.songName, error);
 	}
 }
 

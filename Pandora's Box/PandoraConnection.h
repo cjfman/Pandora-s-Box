@@ -10,6 +10,9 @@
 #import "blowfish_koc.h"
 #import "PandoraStation.h"
 
+#define PANDORA_PARSE_DEBUG
+#define SONG_DOWNLOAD_DEBUG
+
 @interface PandoraConnection : NSObject
 {
 	NSDictionary *partner;

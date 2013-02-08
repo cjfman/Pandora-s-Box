@@ -36,6 +36,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	applicationName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+	
 	// Setup Default Settings
 	userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults registerDefaults:
@@ -53,6 +55,20 @@
 	  nil]];
 	
 	[self startLoginSheet];
+	
+	// Setup Support Files
+	supportPath = [[[NSString alloc] initWithFormat:
+					@"~/Library/Application Support/%@", applicationName]
+				   stringByExpandingTildeInPath];
+	[[NSFileManager defaultManager] createDirectoryAtPath:supportPath
+							  withIntermediateDirectories:NO
+											   attributes:nil
+													error:nil];
+	audioCachePath = [[NSString alloc] initWithFormat:@"%@/%@", supportPath, audioCacheFolder];
+	[[NSFileManager defaultManager] createDirectoryAtPath:audioCachePath
+							  withIntermediateDirectories:NO
+											   attributes:nil
+													error:nil];
 	
 	// Setup UI Elements
 	/*
@@ -343,7 +359,7 @@
 			[audioPlayer retain];
 		}
 		[audioPlayer play];
-		//NSLog(@"Song Duration: %ld", (NSInteger)audioPlayer.duration);
+		[selectedSong saveSong:audioCachePath];
 		
 		// Setup gui elemets
 		[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",

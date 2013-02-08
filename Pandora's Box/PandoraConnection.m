@@ -14,8 +14,6 @@
 
 #import <time.h>
 
-//#define PANDORA_PARSE_DEBUG
-
 #define pandoraVersion 5
 
 

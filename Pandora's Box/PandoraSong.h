@@ -16,6 +16,8 @@
 {
 	PandoraConnection *connection;
 	PandoraStation *station;
+	NSString *audioContainer;
+	NSString *songPath;
 }
 
 // Song Info
@@ -66,6 +68,7 @@
 - (void)loadData;
 - (void)loadAlbumArt;
 - (void)loadSong;
+- (void)saveSong:(NSString*)path;
 - (void)rate:(BOOL)rating;
 
 @end

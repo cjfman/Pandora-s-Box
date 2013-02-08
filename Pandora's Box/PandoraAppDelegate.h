@@ -11,8 +11,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PandoraConnection.h"
 
+#define audioCacheFolder @"Audio File Cache"
+
 @interface PandoraAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, AVAudioPlayerDelegate, NSUserInterfaceValidations>
 {
+	NSString *applicationName;
+	
+	// Pandora
 	PandoraConnection *pandora;
 	PandoraStation *selectedStation;
 	PandoraSong *selectedSong;
@@ -28,6 +33,10 @@
 	// Images
 	NSImage *thumbsUpImage;
 	NSImage *thumbsDownImage;
+	
+	//Paths
+	NSString *supportPath;
+	NSString *audioCachePath;
 }
 
 @property (assign) IBOutlet NSWindow *window;
