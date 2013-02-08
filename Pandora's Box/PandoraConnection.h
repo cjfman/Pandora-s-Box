@@ -26,11 +26,16 @@
 	NSDictionary *errorCodes;
 	BLOWFISH_CTX blowfishCTXEncrypt;
 	BLOWFISH_CTX blowfishCTXDecrypt;
+	
+	NSString *username;
+	NSString *password;
 }
 
 - (id)initWithPartner:(NSString*)partnerName;
-//- (void)saveToDefaults:(NSUserDefaults*)userDefaults;
-- (NSArray*)loginWithUsername:(NSString*) username andPassword:(NSString*) password error:(NSError**)error;
+- (NSArray*)loginWithUsername:(NSString*) username
+				  andPassword:(NSString*) password
+						error:(NSError**)error;
+- (NSArray*)relogin;
 - (NSArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
 

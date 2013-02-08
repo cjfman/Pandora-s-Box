@@ -52,13 +52,7 @@
 	  [NSNumber numberWithInt:0], kSyncTime,
 	  nil]];
 	
-	// Login
-	[NSApp beginSheet: self.loginWindow
-	   modalForWindow: self.window
-		modalDelegate: nil //self
-	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
-		  contextInfo: nil];
-	[NSApp endSheet:self.loginWindow];
+	[self startLoginSheet];
 	
 	// Setup UI Elements
 	/*
@@ -82,6 +76,15 @@
 	[[NSRunLoop currentRunLoop] addTimer:playHeadTimer forMode:NSDefaultRunLoopMode];
 	[self.playlistView setDoubleAction:@selector(songSelected)];
 	[self.stationsTableView setDoubleAction:@selector(stationSelected)];
+}
+
+- (void)startLoginSheet {
+	[NSApp beginSheet: self.loginWindow
+	   modalForWindow: self.window
+		modalDelegate: nil //self
+	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
+		  contextInfo: nil];
+	[NSApp endSheet:self.loginWindow];
 }
 
 - (IBAction)login:(id)sender {
@@ -111,6 +114,7 @@
 	
 	// Close Modal Sheet
 	[self.loginWindow orderOut:self];
+
 	
 	// Save Settings
 	/*[userDefaults setBool:remember forKey:kRememberLogin];
@@ -131,11 +135,73 @@
 	return TRUE;
 }
 
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
+	BOOL ans = YES;
+	if (item == self.logoutMenuItem) {
+		ans = (pandora) ? YES : NO;
+	}
+	else if (item == self.playPauseMenuItem || item == self.nextMenuItem) {
+		ans = (selectedStation) ? YES : NO;
+	}
+	else if (item == self.backMenuItem) {
+		ans = (selectedStation && [selectedStation getCurrentIndex] != 0) ? YES : NO;
+	}
+	return ans;
+}
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
 	[userDefaults setInteger:[stationList indexOfObject:[selectedStation stationName]] forKey:kOpenStation];
 }
 
+/*****************************************
+ Menu Bar Methods
+ *****************************************/
+
+- (IBAction)playPause:(id)sender {
+	if (audioPlayer) {
+		if (audioPlayer.playing) {
+			[audioPlayer pause];
+		}
+		else {
+			[audioPlayer play];
+		}
+	}
+	else {
+		[self playNextSong];
+	}
+}
+
+- (IBAction)skipSong:(id)sender {
+	[self clearPlayer];
+	[self playNextSong];
+}
+
+- (IBAction)playPreviousSong:(id)sender {
+	if ([audioPlayer currentTime] > 1) {
+		[audioPlayer setCurrentTime:0];
+		return;
+	}
+	[self clearPlayer];
+	[self changeSong:[selectedStation setCurrentIndex:[selectedStation getCurrentIndex] - 1]];
+}
+
+- (IBAction)logout:(id)sender {
+	if (audioPlayer) {
+		[audioPlayer stop];
+		[audioPlayer release];
+		audioPlayer = nil;
+	}
+	[stationList release];
+	[selectedSong release];
+	[selectedStation release];
+	[pandora release];
+	stationList = nil;
+	selectedSong = nil;
+	selectedStation = nil;
+	pandora = nil;
+	[self startLoginSheet];
+}
 
 /*****************************************
  Tabel View Deligate Methods
@@ -352,34 +418,6 @@
 
 - (IBAction)newTabSelected:(id)sender {
 	[self.mainTabView selectTabViewItemAtIndex:[sender selectedSegment]];
-}
-
-- (IBAction)playPause:(id)sender {
-	if (audioPlayer) {
-		if (audioPlayer.playing) {
-			[audioPlayer pause];
-		}
-		else {
-			[audioPlayer play];
-		}
-	}
-	else {
-		[self playNextSong];
-	}
-}
-
-- (IBAction)skipSong:(id)sender {
-	[self clearPlayer];
-	[self playNextSong];
-}
-
-- (IBAction)playPreviousSong:(id)sender {
-	if ([audioPlayer currentTime] > 1) {
-		[audioPlayer setCurrentTime:0];
-		return;
-	}
-	[self clearPlayer];
-	[self changeSong:[selectedStation setCurrentIndex:[selectedStation getCurrentIndex] - 1]];
 }
 
 - (IBAction)audioControlPushed:(id)sender {

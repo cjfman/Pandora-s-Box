@@ -92,10 +92,6 @@
 	return self;
 }
 
-/*- (void)saveToDefaults:(NSUserDefaults*)userDefaults {
-	[userDefaults setObject:<#(id)#> forKey:<#(NSString *)#>]
-}*/
-
 -(void)dealloc {
 	[partner release];
 	[stationList release];
@@ -109,8 +105,12 @@
 	[super dealloc];
 }
 
-- (NSArray*)loginWithUsername:(NSString*) username andPassword:(NSString*) password error: (NSError**)error
+- (NSArray*)loginWithUsername:(NSString*) aUsername
+				  andPassword:(NSString*) aPassword
+						error: (NSError**)error
 {
+	username = aUsername;
+	password = aPassword;
 	NSLog(@"Logging in user: %@", username);
 	if (!partnerAuthToken) return nil;
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -137,7 +137,14 @@
 	user_id = [[response objectForKey:kUserId] copy];
 	userAuthToken =[[response objectForKey:kUserAuthToken] copy];
 	maxStations = [[response objectForKey:@"maxStationsAllowed"] intValue];
-	return [self getStationList];
+	return nil; //[self getStationList];
+}
+
+- (NSArray*)relogin {
+	if (username && password) {
+		return [self loginWithUsername:username andPassword:password error:nil];
+	}
+	return nil;
 }
 
 - (NSArray*)getStationList
@@ -155,7 +162,6 @@
 								   isEncrypted:TRUE
 										 error:&error];
 	if(!response) return nil;
-	//NSLog(@"JSON Response:\n%@", response);
 	NSString *precheck = [response objectForKey:kChecksum];
 	
 	// Get Checksum
@@ -165,7 +171,6 @@
 										isEncrypted:TRUE
 											  error:&error];
 	if(!response) return nil;
-	//NSLog(@"JSON Response:\n%@", checkResponse);
 	NSString *postcheck = [checkResponse objectForKey:kChecksum];
 	if (![precheck isEqualToString:postcheck]) return [self getStationList];
 	
@@ -173,7 +178,6 @@
 	for (NSDictionary *station in [response objectForKey:@"stations"])
 	{
 		NSString *name = [station objectForKey:@"stationName"];
-		//NSLog(@"Station:\n%@", station);
 		if (!name) continue;
 		[stationList addObject:name];
 		PandoraStation *newStation = [[PandoraStation alloc] initWithDictionary: station
@@ -181,9 +185,7 @@
 		[newStation autorelease];
 		[stations setObject:newStation
 					 forKey:name];
-	}
-	
-	//NSLog(@"%@", stationList);
+	}	
 	return stationList;
 }
 
@@ -224,12 +226,9 @@
 		[parameters setObject:userAuthToken forKey:kUserAuthToken];
 	}
 	NSMutableString *jsonString = [NSMutableString stringWithString:[parameters JSONString]];
-	//NSLog(@"JSON Request:\n%@", parameters);
-	//NSLog(@"New JSON String:\n%@", jsonString);
 	if (isEncrypted)
 	{
 		[jsonString setString:[self encryptBlowfishMessage:jsonString]];
-		//NSLog(@"New Encrypted JSON String:\n%@", jsonString);
 	}
 	
 	// Build URL
@@ -256,7 +255,6 @@
 	{
 		[urlString appendFormat:@"&auth_token=%@", [PandoraConnection encodeURL:partnerAuthToken]];
 	}
-	//NSLog(@"Built URL: %@", urlString);
 	
 	// Build HTTP Request
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
@@ -267,7 +265,6 @@
 	[request setTimeoutInterval:15];
 	
 	// Make Synchronous Request
-	//NSLog(@"Making HTTP Request");
 	NSData *jsonData;
 	NSURLResponse *urlResponse;
 	@synchronized(self) {
@@ -283,9 +280,23 @@
 	if ([[response objectForKey:kStat] isEqualTo:@"fail"])
 	{
 		NSLog(@"%@", jsonResult);
-		NSString *code = [NSString stringWithFormat:@"%ld",[[response objectForKey:@"code"] integerValue]];;
-		NSString *errorName = [errorCodes objectForKey:code];
-		*error = [NSError errorWithDomain: errorName  code: [code integerValue] userInfo:response];
+		NSInteger code = [[response objectForKey:@"code"] integerValue];
+		NSString *codeString = [NSString stringWithFormat:
+						  @"%ld",code];
+
+		// Try to handle error
+		if (code == 1001) {
+			[self relogin];
+			return [self jsonRequest:method
+					  withParameters:parameters
+							  useTLS:useTLS
+						 isEncrypted:isEncrypted
+							   error:error];
+		}
+		
+		// Pass error to calling method
+		NSString *errorName = [errorCodes objectForKey:codeString];
+		*error = [NSError errorWithDomain:errorName  code:code userInfo:response];
 		return nil;
 	}
 	

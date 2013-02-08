@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PandoraConnection.h"
 
-@interface PandoraAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, AVAudioPlayerDelegate>
+@interface PandoraAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, AVAudioPlayerDelegate, NSUserInterfaceValidations>
 {
 	PandoraConnection *pandora;
 	PandoraStation *selectedStation;
@@ -19,7 +19,11 @@
 	NSMutableArray *stationList;
 	AVAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
+	
+	// User Information
 	NSUserDefaults *userDefaults;
+	//NSString *username;
+	//NSString *password;
 	
 	// Images
 	NSImage *thumbsUpImage;
@@ -38,14 +42,21 @@
 @property (assign) IBOutlet NSImageView *loginErrorImage;
 - (IBAction)login:(id)sender;
 
+// Menu Bar
+@property (assign) IBOutlet NSMenuItem *logoutMenuItem;
+@property (assign) IBOutlet NSMenuItem *playPauseMenuItem;
+@property (assign) IBOutlet NSMenuItem *nextMenuItem;
+@property (assign) IBOutlet NSMenuItem *backMenuItem;
+- (IBAction)playPause:(id)sender;
+- (IBAction)skipSong:(id)sender;
+- (IBAction)playPreviousSong:(id)sender;
+- (IBAction)logout:(id)sender;
+
 // Toolbar Buttons
 @property (assign) IBOutlet NSPopUpButton *mainActionButtonView;
 @property (assign) IBOutlet NSSegmentedControl *tabSelectionView;
 @property (assign) IBOutlet NSSegmentedControl *playbackControls;
 - (IBAction)newTabSelected:(id)sender;
-- (IBAction)playPause:(id)sender;
-- (IBAction)skipSong:(id)sender;
-- (IBAction)playPreviousSong:(id)sender;
 - (IBAction)audioControlPushed:(id)sender;
 - (IBAction)ratingPushed:(id)sender;
 
@@ -74,7 +85,8 @@
 
 
 
-// Logging in
+// Starting up
+- (void)startLoginSheet;
 //- (BOOL)startPandora:()
 
 // Audio Playing Methods
