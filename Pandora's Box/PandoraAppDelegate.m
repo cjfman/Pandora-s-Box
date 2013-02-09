@@ -158,17 +158,17 @@
 		ans = (pandora) ? YES : NO;
 	}
 	else if (item == self.playPauseMenuItem || item == self.nextMenuItem) {
-		ans = (selectedStation) ? YES : NO;
+		ans = (currentStation) ? YES : NO;
 	}
 	else if (item == self.backMenuItem) {
-		ans = (selectedStation && [selectedStation getCurrentIndex] != 0) ? YES : NO;
+		ans = (currentStation && [currentStation getCurrentIndex] != 0) ? YES : NO;
 	}
 	return ans;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
-	[userDefaults setInteger:[stationList indexOfObject:[selectedStation stationName]] forKey:kOpenStation];
+	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]] forKey:kOpenStation];
 	
 	// Clear Cache
 	NSError *error = nil;
@@ -218,7 +218,7 @@
 		return;
 	}
 	[self clearPlayer];
-	[self changeSong:[selectedStation setCurrentIndex:[selectedStation getCurrentIndex] - 1]];
+	[self changeSong:[currentStation setCurrentIndex:[currentStation getCurrentIndex] - 1]];
 }
 
 - (IBAction)logout:(id)sender {
@@ -228,12 +228,12 @@
 		audioPlayer = nil;
 	}
 	[stationList release];
-	[selectedSong release];
-	[selectedStation release];
+	[currentSong release];
+	[currentStation release];
 	[pandora release];
 	stationList = nil;
-	selectedSong = nil;
-	selectedStation = nil;
+	currentSong = nil;
+	currentStation = nil;
 	pandora = nil;
 	[self startLoginSheet];
 }
@@ -247,7 +247,7 @@
 		return [stationList count];
 	}
 	else if (view == self.playlistView) {
-		return [selectedStation count];
+		return [currentStation count];
 	}
 	return 0;
 }
@@ -262,7 +262,7 @@
 		return thisCell;
 	}
 	else if (tableView == self.playlistView) {
-		PandoraSong *song = [selectedStation getSongAtIndex:row];
+		PandoraSong *song = [currentStation getSongAtIndex:row];
 		if(!song.enabled) {
 			
 		}
@@ -281,7 +281,7 @@
 											  [song albumName]];
 			
 			// Now Playing
-			if (row == [selectedStation getCurrentIndex]) {
+			if (row == [currentStation getCurrentIndex]) {
 				[thisCell.imageView setHidden:NO];
 			}
 			else {
@@ -332,11 +332,11 @@
 
 - (void)playNextSong {
 	[self clearPlayer];
-	[self changeSong: [selectedStation getNextSong]];
+	[self changeSong: [currentStation getNextSong]];
 }
 
 - (void)changeStation:(PandoraStation *)newStation {
-	selectedStation = newStation;
+	currentStation = newStation;
 	[self.stationsTabStationNameView setStringValue:
 	 [newStation stationName]];
 	if (audioPlayer) {
@@ -359,10 +359,10 @@
 			return;
 		}
 		
-		selectedSong = newSong;
+		currentSong = newSong;
 		
 		// Play Song
-		if (!(audioPlayer = selectedSong.audioPlayer))
+		if (!(audioPlayer = currentSong.audioPlayer))
 		{
 			return;
 		}
@@ -370,28 +370,28 @@
 			[audioPlayer retain];
 		}
 		[audioPlayer play];
-		[selectedSong saveSong:audioCachePath];
+		[currentSong saveSong:audioCachePath];
 		
 		// Setup gui elemets
 		[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",
-							   [selectedSong songName],
-							   [selectedStation stationName]]];
-		[selectedStation cleanPlayList];
+							   [currentSong songName],
+							   [currentStation stationName]]];
+		[currentStation cleanPlayList];
 		[self.playlistView reloadData];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];
-		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[selectedStation getCurrentIndex]] byExtendingSelection:NO];
-		[self.stationsTabAlbumView setImage:selectedSong.albumArt];
-		[self.playingTabAlbumView setImage:selectedSong.albumArt];
+		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
+		[self.stationsTabAlbumView setImage:currentSong.albumArt];
+		[self.playingTabAlbumView setImage:currentSong.albumArt];
 		[self.stationsTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
-													  [selectedSong songName],
-													  [selectedSong artistName],
-													  [selectedSong albumName]]];
+													  [currentSong songName],
+													  [currentSong artistName],
+													  [currentSong albumName]]];
 	}
 }
 
 - (void)songSelected {
 	[self clearPlayer];
-	PandoraSong *song = [selectedStation setCurrentIndex:
+	PandoraSong *song = [currentStation setCurrentIndex:
 						 [self.playlistView selectedRow]];
 	if (!song.enabled) {
 		NSLog(@"Selected song %@ is disabled", [song songName]);
@@ -414,7 +414,7 @@
 		audioPlayer.currentTime = 0;
 		[audioPlayer release];
 		audioPlayer = nil;
-		[selectedSong clean];
+		[currentSong clean];
 	}
 }
 
@@ -469,11 +469,11 @@
 	NSInteger index;
 	if ([self.tabSelectionView selectedSegment] == 2) {
 		index = [self.playlistView selectedRow];
-		song = [selectedStation getSongAtIndex:index];
+		song = [currentStation getSongAtIndex:index];
 	}
 	else {
-		index = [selectedStation getCurrentIndex];
-		song = selectedSong;
+		index = [currentStation getCurrentIndex];
+		song = currentSong;
 	}
 	switch (selection) {
 		case 0:
@@ -481,7 +481,7 @@
 			break;
 		case 1:
 			[song rate:NO];
-			if (song == selectedSong)
+			if (song == currentSong)
 				[self skipSong:sender];
 			break;
 	}

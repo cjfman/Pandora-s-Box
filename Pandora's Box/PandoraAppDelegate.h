@@ -21,8 +21,8 @@
 	
 	// Pandora
 	PandoraConnection *pandora;
-	PandoraStation *selectedStation;
-	PandoraSong *selectedSong;
+	PandoraStation *currentStation;
+	PandoraSong *currentSong;
 	NSMutableArray *stationList;
 	AVAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
