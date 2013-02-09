@@ -411,6 +411,7 @@
 		audioPlayer.currentTime = 0;
 		[audioPlayer release];
 		audioPlayer = nil;
+		[currentSong clean];
 	}
 }
 
