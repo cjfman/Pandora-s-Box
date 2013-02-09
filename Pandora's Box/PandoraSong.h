@@ -18,6 +18,9 @@
 	PandoraStation *station;
 	NSString *audioContainer;
 	NSString *songPath;
+	AVAudioPlayer *audioPlayer;
+	NSImage *albumArt;
+	BOOL cached;
 }
 
 // Song Info
@@ -57,9 +60,7 @@
 @property (copy) NSString *amazonSongDigitalAsin;
 @property (copy) NSString *adToken;
 
-@property (retain) NSImage *albumArt;
 @property (retain) NSData *songData;
-@property (retain) AVAudioPlayer *audioPlayer;
 @property (assign) BOOL enabled;
 
 - (id)initWithDictionary:(NSDictionary*)info
@@ -69,7 +70,12 @@
 - (void)loadAlbumArt;
 - (void)loadSong;
 - (void)saveSong:(NSString*)path;
+- (void)clean;
 - (void)rate:(BOOL)rating;
+- (void)setAudioPlayer:(AVAudioPlayer*)newPlayer;
+- (AVAudioPlayer*)audioPlayer;
+- (void)setAlbumArt:(NSImage*)newArt;
+- (NSImage*)albumArt;
 
 @end
 

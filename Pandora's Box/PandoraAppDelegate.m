@@ -29,6 +29,23 @@
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
+	applicationName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+
+	// Setup Support Files
+	fileManager = [[NSFileManager defaultManager] retain];
+	supportPath = [[[NSString alloc] initWithFormat:
+					@"~/Library/Application Support/%@", applicationName]
+				   stringByExpandingTildeInPath];
+	[fileManager createDirectoryAtPath:supportPath
+							  withIntermediateDirectories:NO
+											   attributes:nil
+													error:nil];
+	audioCachePath = [[NSString alloc] initWithFormat:@"%@/%@", supportPath, audioCacheFolder];
+	[fileManager createDirectoryAtPath:audioCachePath
+		   withIntermediateDirectories:NO
+							attributes:nil
+								 error:nil];
+	
 	// Load Images
 	thumbsDownImage = [[NSImage imageNamed:@"ThumbsDownTemplate.pdf"] retain];
 	thumbsUpImage = [[NSImage imageNamed:@"ThumbsUpTemplate.pdf"] retain];
@@ -36,8 +53,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	applicationName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-	
 	// Setup Default Settings
 	userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults registerDefaults:
@@ -55,20 +70,6 @@
 	  nil]];
 	
 	[self startLoginSheet];
-	
-	// Setup Support Files
-	supportPath = [[[NSString alloc] initWithFormat:
-					@"~/Library/Application Support/%@", applicationName]
-				   stringByExpandingTildeInPath];
-	[[NSFileManager defaultManager] createDirectoryAtPath:supportPath
-							  withIntermediateDirectories:NO
-											   attributes:nil
-													error:nil];
-	audioCachePath = [[NSString alloc] initWithFormat:@"%@/%@", supportPath, audioCacheFolder];
-	[[NSFileManager defaultManager] createDirectoryAtPath:audioCachePath
-							  withIntermediateDirectories:NO
-											   attributes:nil
-													error:nil];
 	
 	// Setup UI Elements
 	/*
@@ -168,6 +169,24 @@
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
 	[userDefaults setInteger:[stationList indexOfObject:[selectedStation stationName]] forKey:kOpenStation];
+	
+	// Clear Cache
+	NSError *error = nil;
+	NSArray *files = [fileManager contentsOfDirectoryAtPath:audioCachePath error:&error];
+	if (error) {
+		NSLog(@"%@", error);
+	}
+	else {
+		for (NSString *file in files) {
+			[fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",
+										   audioCachePath,
+										   file]
+									error:&error];
+		}
+		if (error) {
+			NSLog(@"%@", error);
+		}
+	}
 }
 
 /*****************************************
@@ -345,15 +364,7 @@
 		// Play Song
 		if (!(audioPlayer = selectedSong.audioPlayer))
 		{
-			NSError *error = nil;
-			audioPlayer = [[AVAudioPlayer alloc] initWithData:selectedSong.songData
-														error:&error];
-			if (error) {
-				NSLog(@"%@", error);
-				return;
-			}
-			[audioPlayer setDelegate:self];
-			selectedSong.audioPlayer = audioPlayer;
+			return;
 		}
 		else {
 			[audioPlayer retain];
@@ -403,6 +414,7 @@
 		audioPlayer.currentTime = 0;
 		[audioPlayer release];
 		audioPlayer = nil;
+		[selectedSong clean];
 	}
 }
 

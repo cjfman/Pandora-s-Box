@@ -21,6 +21,7 @@
 	station = [newStation retain];
 	self.audioPlayer = nil;
 	self.enabled = YES;
+	cached = NO;
 	return self;
 }
 
@@ -56,23 +57,16 @@
 	[super dealloc];
 }
 
-- (NSImage*)albumArt {
-	if (!_albumArt) {
-		[self loadAlbumArt];
-	}
-	return _albumArt;
-}
-
 - (void)loadData {
 	[self loadAlbumArt];
 	[self loadSong];
 }
 
 - (void)loadAlbumArt {
-	if (_albumArt) return;
-	@synchronized(_albumArt) {
+	if (albumArt) return;
+	@synchronized(albumArt) {
 		NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: self.albumArtUrl]];
-		_albumArt = [[NSImage alloc] initWithData: imageData];
+		albumArt = [[NSImage alloc] initWithData: imageData];
 		[imageData release];
 	}
 }
@@ -83,7 +77,7 @@
 	NSString *usedURL;
 	@synchronized(self.songData) {
 #ifndef SONG_DOWNLOAD_DEBUG
-		if (songPath) {
+		if (cached) {
 			self.songData = [[[NSFileManager defaultManager] contentsAtPath:songPath] retain];
 		}
 		else {
@@ -128,10 +122,17 @@
 						  audioContainer];
 	songPath = [fileName stringByExpandingTildeInPath];
 	NSError *error = nil;
-	[self.songData writeToFile:songPath options:0 error:&error];
+	cached = [self.songData writeToFile:songPath options:0 error:&error];
 	if (error) {
 		NSLog(@"Error saveing song :%@\n%@",self.songName, error);
 	}
+}
+
+- (void)clean {
+	[self.songData release];
+	[self.audioPlayer release];
+	self.songData = nil;
+	self.audioPlayer = nil;
 }
 
 - (void)rate:(BOOL)rating {
@@ -152,6 +153,35 @@
 		return;
 	}
 	NSLog(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
+}
+
+- (void)setAudioPlayer:(AVAudioPlayer *)newPlayer {
+	audioPlayer = newPlayer;
+}
+
+- (AVAudioPlayer*)audioPlayer {
+	if (!audioPlayer) {
+		[self loadSong];
+		NSError *error = nil;
+		audioPlayer = [[AVAudioPlayer alloc] initWithData:self.songData
+													error:&error];
+		if (error) {
+			NSLog(@"%@", error);
+			return nil;
+		}
+	}
+	return audioPlayer;
+}
+
+- (void)setAlbumArt:(NSImage *)newArt {
+	albumArt = newArt;
+}
+
+- (NSImage*)albumArt {
+	if (!albumArt) {
+		[self loadAlbumArt];
+	}
+	return albumArt;
 }
 
 @end

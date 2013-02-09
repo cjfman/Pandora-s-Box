@@ -16,6 +16,8 @@
 @interface PandoraAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, AVAudioPlayerDelegate, NSUserInterfaceValidations>
 {
 	NSString *applicationName;
+	NSUserDefaults *userDefaults;
+	NSFileManager *fileManager;
 	
 	// Pandora
 	PandoraConnection *pandora;
@@ -24,11 +26,6 @@
 	NSMutableArray *stationList;
 	AVAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
-	
-	// User Information
-	NSUserDefaults *userDefaults;
-	//NSString *username;
-	//NSString *password;
 	
 	// Images
 	NSImage *thumbsUpImage;
