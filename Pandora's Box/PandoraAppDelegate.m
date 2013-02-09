@@ -364,7 +364,15 @@
 		// Play Song
 		if (!(audioPlayer = currentSong.audioPlayer))
 		{
-			return;
+			NSError *error = nil;
+			audioPlayer = [[AVAudioPlayer alloc] initWithData:currentSong.songData
+														error:&error];
+			if (error) {
+				NSLog(@"%@", error);
+				return;
+			}
+			[audioPlayer setDelegate:self];
+			currentSong.audioPlayer = audioPlayer;
 		}
 		else {
 			[audioPlayer retain];
@@ -414,7 +422,6 @@
 		audioPlayer.currentTime = 0;
 		[audioPlayer release];
 		audioPlayer = nil;
-		[currentSong clean];
 	}
 }
 

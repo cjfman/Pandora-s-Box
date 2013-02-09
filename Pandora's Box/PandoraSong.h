@@ -18,7 +18,7 @@
 	PandoraStation *station;
 	NSString *audioContainer;
 	NSString *songPath;
-	AVAudioPlayer *audioPlayer;
+	//AVAudioPlayer *audioPlayer;
 	NSImage *albumArt;
 	BOOL cached;
 }
@@ -60,7 +60,9 @@
 @property (copy) NSString *amazonSongDigitalAsin;
 @property (copy) NSString *adToken;
 
+//@property (retain) NSImage *albumArt;
 @property (retain) NSData *songData;
+@property (retain) AVAudioPlayer *audioPlayer;
 @property (assign) BOOL enabled;
 
 - (id)initWithDictionary:(NSDictionary*)info

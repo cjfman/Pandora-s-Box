@@ -155,7 +155,7 @@
 	NSLog(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
 }
 
-- (void)setAudioPlayer:(AVAudioPlayer *)newPlayer {
+/*- (void)setAudioPlayer:(AVAudioPlayer *)newPlayer {
 	audioPlayer = newPlayer;
 }
 
@@ -171,7 +171,7 @@
 		}
 	}
 	return audioPlayer;
-}
+}*/
 
 - (void)setAlbumArt:(NSImage *)newArt {
 	albumArt = newArt;
