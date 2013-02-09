@@ -30,6 +30,12 @@
 	// Images
 	NSImage *thumbsUpImage;
 	NSImage *thumbsDownImage;
+	NSImage *speakerLoud;
+	NSImage *speakerMid;
+	NSImage *speakerQuiet;
+	NSImage *speakerMute;
+	NSImage *playSymbol;
+	NSImage *pauseSymbol;
 	
 	//Paths
 	NSString *supportPath;
@@ -103,6 +109,8 @@
 - (void)clearPlayer;
 - (NSString *)timeFormatted:(NSInteger)totalSeconds;
 
-// Helper Functions
+// Helper Methods
+- (NSInteger)selectedSongIndex;
+- (PandoraSong*)selectedSong;
 
 @end

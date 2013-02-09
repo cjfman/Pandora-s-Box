@@ -49,6 +49,12 @@
 	// Load Images
 	thumbsDownImage = [[NSImage imageNamed:@"ThumbsDownTemplate.pdf"] retain];
 	thumbsUpImage = [[NSImage imageNamed:@"ThumbsUpTemplate.pdf"] retain];
+	speakerLoud = [[NSImage imageNamed:@"speakerLoudTemplate.pdf"] retain];
+	speakerMid = [[NSImage imageNamed:@"speakerMidTemplate.pdf"] retain];
+	speakerQuiet = [[NSImage imageNamed:@"speakerQuietTemplate.pdf"] retain];
+	speakerMute = [[NSImage imageNamed:@"speakerMuteTemplate.pdf"] retain];
+	playSymbol = [[NSImage imageNamed:@"audioControlPlayTemplate.pdf"] retain];
+	pauseSymbol = [[NSImage imageNamed:@"audioControlPauseTemplate.pdf"] retain];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -197,9 +203,11 @@
 	if (audioPlayer) {
 		if (audioPlayer.playing) {
 			[audioPlayer pause];
+			[self.playbackControls setImage:playSymbol forSegment:1];
 		}
 		else {
 			[audioPlayer play];
+			[self.playbackControls setImage:pauseSymbol forSegment:1];
 		}
 	}
 	else {
@@ -366,7 +374,8 @@
 			return;
 		[audioPlayer retain];
 		[audioPlayer setDelegate:self];
-		[audioPlayer play];
+		//[audioPlayer play];
+		[self playPause:nil];
 		[currentSong saveSong:audioCachePath];
 		
 		// Setup gui elemets
@@ -462,16 +471,8 @@
 
 - (IBAction)ratingPushed:(id)sender {
 	NSInteger selection = [sender selectedSegment];
-	PandoraSong *song;
-	NSInteger index;
-	if ([self.tabSelectionView selectedSegment] == 2) {
-		index = [self.playlistView selectedRow];
-		song = [currentStation getSongAtIndex:index];
-	}
-	else {
-		index = [currentStation getCurrentIndex];
-		song = currentSong;
-	}
+	PandoraSong *song = [self selectedSong];
+	NSInteger index = [self selectedSongIndex];
 	switch (selection) {
 		case 0:
 			[song rate:YES];
@@ -498,6 +499,21 @@
 		[self.elapsedTimeView setStringValue:[self timeFormatted:currentTime]];
 		[self.remainingTimeView setStringValue:[NSString stringWithFormat:@"-%@", [self timeFormatted:(NSInteger)duration - (NSInteger)currentTime]]];
 	}
+}
+
+/*****************************************
+ Helper Methods
+ *****************************************/
+
+- (NSInteger)selectedSongIndex {
+	if ([self.tabSelectionView selectedSegment] == 2) {
+		return [self.playlistView selectedRow];
+	}
+	return [currentStation getCurrentIndex];
+}
+
+- (PandoraSong*)selectedSong {
+	return [currentStation getSongAtIndex:[self selectedSongIndex]];
 }
 
 @end
