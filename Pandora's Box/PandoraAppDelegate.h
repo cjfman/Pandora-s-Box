@@ -24,6 +24,8 @@
 	PandoraStation *currentStation;
 	PandoraSong *currentSong;
 	NSMutableArray *stationList;
+	
+	// Audio
 	AVAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
 	
@@ -68,9 +70,13 @@
 @property (assign) IBOutlet NSPopUpButton *mainActionButtonView;
 @property (assign) IBOutlet NSSegmentedControl *tabSelectionView;
 @property (assign) IBOutlet NSSegmentedControl *playbackControls;
+@property (assign) IBOutlet NSSlider *volumeSlider;
 - (IBAction)newTabSelected:(id)sender;
 - (IBAction)audioControlPushed:(id)sender;
 - (IBAction)ratingPushed:(id)sender;
+- (IBAction)changeVolume:(id)sender;
+- (IBAction)fullVolume:(id)sender;
+- (IBAction)muteVolume:(id)sender;
 
 // Time Bar
 @property (assign) IBOutlet NSView *timeBarView;

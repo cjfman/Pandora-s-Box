@@ -375,6 +375,7 @@
 		[audioPlayer retain];
 		[audioPlayer setDelegate:self];
 		//[audioPlayer play];
+		[audioPlayer setVolume:[self.volumeSlider floatValue]];
 		[self playPause:nil];
 		[currentSong saveSong:audioCachePath];
 		
@@ -485,6 +486,25 @@
 	}
 	[self.playlistView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
 								 columnIndexes:[NSIndexSet indexSetWithIndex:1]];
+}
+
+- (IBAction)changeVolume:(id)sender {
+	if (audioPlayer)
+		audioPlayer.volume = [self.volumeSlider floatValue];
+}
+
+- (IBAction)fullVolume:(id)sender {
+	if (audioPlayer) {
+		audioPlayer.volume = 1;
+	}
+	[self.volumeSlider setFloatValue:1];
+}
+
+- (IBAction)muteVolume:(id)sender {
+	if (audioPlayer) {
+		audioPlayer.volume = 0;
+	}
+	[self.volumeSlider setFloatValue:0];
 }
 
 - (IBAction)songScrubbing:(id)sender {
