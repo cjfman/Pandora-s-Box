@@ -93,7 +93,6 @@
 
 // Starting up
 - (void)startLoginSheet;
-//- (BOOL)startPandora:()
 
 // Audio Playing Methods
 - (void)playNextSong;
@@ -103,5 +102,7 @@
 - (void)stationSelected;
 - (void)clearPlayer;
 - (NSString *)timeFormatted:(NSInteger)totalSeconds;
+
+// Helper Functions
 
 @end

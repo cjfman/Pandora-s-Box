@@ -465,19 +465,28 @@
 
 - (IBAction)ratingPushed:(id)sender {
 	NSInteger selection = [sender selectedSegment];
+	PandoraSong *song;
+	NSInteger index;
+	if ([self.tabSelectionView selectedSegment] == 2) {
+		index = [self.playlistView selectedRow];
+		song = [selectedStation getSongAtIndex:index];
+	}
+	else {
+		index = [selectedStation getCurrentIndex];
+		song = selectedSong;
+	}
 	switch (selection) {
 		case 0:
-			[selectedSong rate:YES];
+			[song rate:YES];
 			break;
 		case 1:
-			[selectedSong rate:NO];
-			[self skipSong:sender];
+			[song rate:NO];
+			if (song == selectedSong)
+				[self skipSong:sender];
 			break;
 	}
-	[self.playlistView reloadDataForRowIndexes:
-	 [NSIndexSet indexSetWithIndex:[selectedStation getCurrentIndex]]
-								 columnIndexes:
-	 [NSIndexSet indexSetWithIndex:1]];
+	[self.playlistView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
+								 columnIndexes:[NSIndexSet indexSetWithIndex:1]];
 }
 
 - (IBAction)songScrubbing:(id)sender {
