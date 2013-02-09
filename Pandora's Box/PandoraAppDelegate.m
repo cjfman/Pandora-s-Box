@@ -363,20 +363,9 @@
 		
 		// Play Song
 		if (!(audioPlayer = currentSong.audioPlayer))
-		{
-			NSError *error = nil;
-			audioPlayer = [[AVAudioPlayer alloc] initWithData:currentSong.songData
-														error:&error];
-			if (error) {
-				NSLog(@"%@", error);
-				return;
-			}
-			[audioPlayer setDelegate:self];
-			currentSong.audioPlayer = audioPlayer;
-		}
-		else {
-			[audioPlayer retain];
-		}
+			return;
+		[audioPlayer retain];
+		[audioPlayer setDelegate:self];
 		[audioPlayer play];
 		[currentSong saveSong:audioCachePath];
 		
