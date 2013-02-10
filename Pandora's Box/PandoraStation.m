@@ -114,7 +114,6 @@
 		PandoraSong *song = [playList objectAtIndex:i];
 		if (!song.enabled) {
 			[playList removeObjectAtIndex:i--];
-			[song release];
 		}
 	}
 }

@@ -135,25 +135,9 @@
 	self.audioPlayer = nil;
 }
 
-- (void)rate:(BOOL)rating {
-	self.songRating = (rating) ? 1 : -1;
-	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-									   self.trackToken, @"trackToken",
-									   [NSNumber numberWithBool:rating], @"isPositive",
-									   nil];
-	NSError *error = nil;
-	NSDictionary *response = [connection jsonRequest:@"station.addFeedback"
-									  withParameters:parameters
-											  useTLS:NO
-										 isEncrypted:YES
-											   error:&error];
-	if (error)
-	{
-		NSLog(@"%@", error);
-		return;
-	}
-	NSLog(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
-}
+/*******************************************
+ Getters and Setters
+ *******************************************/
 
 - (void)setAudioPlayer:(AVAudioPlayer *)newPlayer {
 	audioPlayer = newPlayer;
@@ -182,6 +166,48 @@
 		[self loadAlbumArt];
 	}
 	return albumArt;
+}
+
+/*******************************************
+ Pandora Calls 
+ *******************************************/
+
+- (void)rate:(BOOL)rating {
+	self.songRating = (rating) ? 1 : -1;
+	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   self.trackToken, @"trackToken",
+									   [NSNumber numberWithBool:rating], @"isPositive",
+									   nil];
+	NSError *error = nil;
+	NSDictionary *response = [connection jsonRequest:@"station.addFeedback"
+									  withParameters:parameters
+											  useTLS:NO
+										 isEncrypted:YES
+											   error:&error];
+	if (error)
+	{
+		NSLog(@"%@", error);
+		return;
+	}
+	NSLog(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
+}
+
+- (void)sleep {
+	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   self.trackToken, @"trackToken",
+									   nil];
+	NSError *error = nil;
+	NSDictionary *response = [connection jsonRequest:@"user.sleepSong"
+									  withParameters:parameters
+											  useTLS:NO
+										 isEncrypted:YES
+											   error:&error];
+	if (error)
+	{
+		NSLog(@"%@\n%@", response, error);
+		return;
+	}
+	NSLog(@"Sleeping song: %@", self.songName);
 }
 
 @end

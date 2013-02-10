@@ -73,11 +73,16 @@
 - (void)loadSong;
 - (void)saveSong:(NSString*)path;
 - (void)clean;
-- (void)rate:(BOOL)rating;
+
+// Getters and Setters
 - (void)setAudioPlayer:(AVAudioPlayer*)newPlayer;
 - (AVAudioPlayer*)audioPlayer;
 - (void)setAlbumArt:(NSImage*)newArt;
 - (NSImage*)albumArt;
+
+// Pandora Calls
+- (void)rate:(BOOL)rating;
+- (void)sleep;
 
 @end
 

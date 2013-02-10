@@ -43,9 +43,6 @@
 {
 	if (!(self = [super init])) return self;
 	
-	// Make Pool for cleanup
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
 	// Load Error Codes
 	NSString *errorCodesPath = [[NSBundle mainBundle] pathForResource:@"PandoraExceptions" ofType:@"plist"];
 	errorCodes = [[NSDictionary dictionaryWithContentsOfFile:errorCodesPath] retain];
@@ -58,30 +55,10 @@
 	Blowfish_Init(&blowfishCTXEncrypt, (unsigned char*)[encryptKey UTF8String], (int)[encryptKey length]);
 	Blowfish_Init(&blowfishCTXDecrypt, (unsigned char*)[decryptKey UTF8String], (int)[decryptKey length]);
 	
-	// Prepare JSON Request
-	syncTime = 0;
-	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-							   [partner objectForKey:kUsername], kUsername,
-							   [partner objectForKey:kPassword], kPassword,
-							   [partner objectForKey:kDeviceModel], kDeviceModel,
-							   [NSString stringWithFormat:@"%d", pandoraVersion], kVersion,
-							   nil];
-	NSError *error = nil;
-	NSDictionary *response = [self jsonRequest:@"auth.partnerLogin" withParameters:parameters useTLS:TRUE isEncrypted:FALSE error:&error];
-	if(response == nil)
+	if(![self partnerLogin])
 	{
-		NSLog(@"%@", [error localizedDescription]);
-		[pool release];
 		return nil;
 	}
-	//NSLog(@"JSON Response:\n%@", response);
-	syncTime = [[self decryptBlowfishMessage:[response objectForKey:kSyncTime]] integerValue];
-	startTime = time(NULL);
-	partnerAuthToken = [[response objectForKey:kPartnerAuthToken] copy];
-	partner_id = [[response objectForKey:kPartnerId] copy];
-	
-	// Clean Pool
-	[pool release];
 	
 	// Initialize Other Members
 	stationList = [[NSMutableArray alloc] init];
@@ -101,6 +78,30 @@
 	[partnerAuthToken release];
 	[errorCodes release];
 	[super dealloc];
+}
+
+- (BOOL)partnerLogin {
+	// Prepare JSON Request
+	syncTime = 0;
+	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+								[partner objectForKey:kUsername], kUsername,
+								[partner objectForKey:kPassword], kPassword,
+								[partner objectForKey:kDeviceModel], kDeviceModel,
+								[NSString stringWithFormat:@"%d", pandoraVersion], kVersion,
+								nil];
+	NSError *error = nil;
+	NSDictionary *response = [self jsonRequest:@"auth.partnerLogin" withParameters:parameters useTLS:TRUE isEncrypted:FALSE error:&error];
+	if(response == nil)
+	{
+		NSLog(@"%@", [error localizedDescription]);
+		return FALSE;
+	}
+	//NSLog(@"JSON Response:\n%@", response);
+	syncTime = [[self decryptBlowfishMessage:[response objectForKey:kSyncTime]] integerValue];
+	startTime = time(NULL);
+	partnerAuthToken = [[response objectForKey:kPartnerAuthToken] copy];
+	partner_id = [[response objectForKey:kPartnerId] copy];
+	return TRUE;
 }
 
 - (NSArray*)loginWithUsername:(NSString*) aUsername
@@ -139,8 +140,9 @@
 }
 
 - (NSArray*)relogin {
-	if (username && password) {
-		return [self loginWithUsername:username andPassword:password error:nil];
+	if (username && password && partner) {
+		if ([self partnerLogin])
+			return [self loginWithUsername:username andPassword:password error:nil];
 	}
 	return nil;
 }

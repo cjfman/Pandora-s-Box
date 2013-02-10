@@ -10,8 +10,8 @@
 #import "blowfish_koc.h"
 #import "PandoraStation.h"
 
-#define PANDORA_PARSE_DEBUG
-#define SONG_DOWNLOAD_DEBUG
+//#define PANDORA_PARSE_DEBUG
+//#define SONG_DOWNLOAD_DEBUG
 
 @interface PandoraConnection : NSObject
 {
@@ -35,6 +35,7 @@
 }
 
 - (id)initWithPartner:(NSString*)partnerName;
+- (BOOL)partnerLogin;
 - (NSArray*)loginWithUsername:(NSString*) username
 				  andPassword:(NSString*) password
 						error:(NSError**)error;
