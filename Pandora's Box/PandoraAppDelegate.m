@@ -15,11 +15,7 @@
 #define kEncryptedPassword @"encryptedPassword"
 #define kRememberLogin @"rememberLogin"
 #define kOpenStation @"openStation"
-#define kPartnerId @"partnerId"
-#define kUserId @"userId"
-#define kPartnerAuthToken @"partnerAuthToken"
-#define kUserAuthToken @"userAuthToken"
-#define kSyncTime @"syncTime"
+#define kVolume @"volume"
 
 @implementation PandoraAppDelegate
 
@@ -68,11 +64,7 @@
 	  @"none", kEncryptedPassword,
 	  [NSNumber numberWithBool:false], kRememberLogin,
 	  [NSNumber numberWithInt:1], kOpenStation,
-	  @"none", kPartnerId,
-	  @"none", kUserId,
-	  @"none", kPartnerAuthToken,
-	  @"none", kUserAuthToken,
-	  [NSNumber numberWithInt:0], kSyncTime,
+	  [NSNumber numberWithFloat:.5], kVolume,
 	  nil]];
 	
 	[self startLoginSheet];
@@ -99,6 +91,7 @@
 	[[NSRunLoop currentRunLoop] addTimer:playHeadTimer forMode:NSDefaultRunLoopMode];
 	[self.playlistView setDoubleAction:@selector(songSelected)];
 	[self.stationsTableView setDoubleAction:@selector(stationSelected)];
+	[self.volumeSlider setFloatValue:[userDefaults floatForKey:kVolume]];
 }
 
 - (void)startLoginSheet {
@@ -149,7 +142,7 @@
 	stationList = [[NSMutableArray arrayWithArray:[pandora getStationList]] retain];
 	[self.stationsTableView reloadData];
 	//[self.playlistView reloadData];
-	NSInteger first_selected_station = 1; //[userDefaults integerForKey:kOpenStation];
+	NSInteger first_selected_station = [userDefaults integerForKey:kOpenStation];
 	PandoraStation *station = [pandora getStation:[stationList objectAtIndex:first_selected_station]];
 	[self changeStation: station];
 }
@@ -175,6 +168,7 @@
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
 	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]] forKey:kOpenStation];
+	[userDefaults setFloat:[self.volumeSlider floatValue] forKey:kVolume];
 	
 	// Clear Cache
 	NSError *error = nil;
@@ -397,9 +391,18 @@
 }
 
 - (void)songSelected {
-	[self clearPlayer];
 	PandoraSong *song = [currentStation setCurrentIndex:
 						 [self.playlistView selectedRow]];
+	if (song == currentSong) {
+		if (audioPlayer) {
+			if (![audioPlayer isPlaying]) {
+				[audioPlayer play];
+			}
+			return;
+		}
+	}
+	
+	[self clearPlayer];
 	if (!song.enabled) {
 		NSLog(@"Selected song %@ is disabled", [song songName]);
 		return;
