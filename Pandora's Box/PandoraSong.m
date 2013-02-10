@@ -78,7 +78,9 @@
 	@synchronized(self.songData) {
 #ifndef SONG_DOWNLOAD_DEBUG
 		if (cached) {
-			self.songData = [[[NSFileManager defaultManager] contentsAtPath:songPath] retain];
+			self.songData = [[[NSFileManager defaultManager]
+							  contentsAtPath:songPath] retain];
+			return;
 		}
 		else {
 			NSLog(@"Downloading song data for song: %@", self.songName);
@@ -120,7 +122,7 @@
 						  self.artistName,
 						  self.albumName,
 						  audioContainer];
-	songPath = [fileName stringByExpandingTildeInPath];
+	songPath = [[fileName stringByExpandingTildeInPath] retain];
 	NSError *error = nil;
 	cached = [self.songData writeToFile:songPath options:0 error:&error];
 	if (error) {
