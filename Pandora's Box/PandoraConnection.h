@@ -39,7 +39,7 @@
 - (NSArray*)loginWithUsername:(NSString*) username
 				  andPassword:(NSString*) password
 						error:(NSError**)error;
-- (NSArray*)relogin;
+- (BOOL)relogin;
 - (NSArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
 

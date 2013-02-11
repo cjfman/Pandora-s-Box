@@ -113,6 +113,9 @@
 	for (i = 0; i < [playList count]; i++) {
 		PandoraSong *song = [playList objectAtIndex:i];
 		if (!song.enabled) {
+			if (i < currentIndex) {
+				currentIndex--;
+			}
 			[playList removeObjectAtIndex:i--];
 		}
 	}

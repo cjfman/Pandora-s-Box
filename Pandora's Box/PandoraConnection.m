@@ -81,9 +81,11 @@
 }
 
 - (BOOL)partnerLogin {
+	NSLog(@"Partner Login");
+	
 	// Prepare JSON Request
 	syncTime = 0;
-	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+	NSMutableDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 								[partner objectForKey:kUsername], kUsername,
 								[partner objectForKey:kPassword], kPassword,
 								[partner objectForKey:kDeviceModel], kDeviceModel,
@@ -139,12 +141,31 @@
 	return nil; //[self getStationList];
 }
 
-- (NSArray*)relogin {
+- (BOOL)relogin {
 	if (username && password && partner) {
-		if ([self partnerLogin])
-			return [self loginWithUsername:username andPassword:password error:nil];
+		// Clear credentials
+		syncTime = 0;
+		[userAuthToken release];
+		userAuthToken = nil;
+		[partner_id release];
+		partner_id = nil;
+		[user_id release];
+		user_id = nil;
+		[userAuthToken release];
+		userAuthToken = nil;
+		[partnerAuthToken release];
+		partnerAuthToken = nil;
+		
+		// Initiate relogin
+		if ([self partnerLogin]) {
+			NSError *error;
+			[self loginWithUsername:username andPassword:password error:&error];
+			if(!error) {
+				return TRUE;
+			}
+		}
 	}
-	return nil;
+	return FALSE;
 }
 
 - (NSArray*)getStationList
@@ -281,12 +302,12 @@
 	{
 		NSLog(@"%@", jsonResult);
 		NSInteger code = [[response objectForKey:@"code"] integerValue];
-		NSString *codeString = [NSString stringWithFormat:
-						  @"%ld",code];
+		//NSString *codeString = [NSString stringWithFormat:@"%ld",code];
 
 		// Try to handle error
 		if (code == 1001) {
 			[self relogin];
+			NSLog(@"Successfully relogged in. Reattempting: %@", method);
 			return [self jsonRequest:method
 					  withParameters:parameters
 							  useTLS:useTLS
@@ -295,8 +316,8 @@
 		}
 		
 		// Pass error to calling method
-		NSString *errorName = [errorCodes objectForKey:codeString];
-		*error = [NSError errorWithDomain:errorName  code:code userInfo:response];
+		//NSString *errorName = [errorCodes objectForKey:codeString];
+		*error = [NSError errorWithDomain:@"Pandora" code:code userInfo:response];
 		return nil;
 	}
 	
