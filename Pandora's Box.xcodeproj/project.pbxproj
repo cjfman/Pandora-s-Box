@@ -40,6 +40,7 @@
 		5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */; };
 		5628279E16B608AA00C7DECB /* SpeakerQuietTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */; };
 		562827A216B60E1900C7DECB /* PlaylistTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562827A116B60E1900C7DECB /* PlaylistTableCellView.m */; };
+		5648C83516CABE1F0070DF07 /* PandoraSeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5648C83416CABE1F0070DF07 /* PandoraSeed.m */; };
 		56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,8 @@
 		5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerQuietTemplate.pdf; sourceTree = "<group>"; };
 		562827A016B60E1900C7DECB /* PlaylistTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistTableCellView.h; sourceTree = "<group>"; };
 		562827A116B60E1900C7DECB /* PlaylistTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistTableCellView.m; sourceTree = "<group>"; };
+		5648C83316CABE1F0070DF07 /* PandoraSeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSeed.h; sourceTree = "<group>"; };
+		5648C83416CABE1F0070DF07 /* PandoraSeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSeed.m; sourceTree = "<group>"; };
 		56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PartnerInfo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -229,6 +232,8 @@
 				5623D03716B5C2C2002B2E0C /* PandoraStation.m */,
 				5623D03416B5C2C2002B2E0C /* PandoraSong.h */,
 				5623D03516B5C2C2002B2E0C /* PandoraSong.m */,
+				5648C83316CABE1F0070DF07 /* PandoraSeed.h */,
+				5648C83416CABE1F0070DF07 /* PandoraSeed.m */,
 				5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */,
 				5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */,
 				56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */,
@@ -422,6 +427,7 @@
 				5623D05916B5C34C002B2E0C /* JSONKit.m in Sources */,
 				5623D05D16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m in Sources */,
 				562827A216B60E1900C7DECB /* PlaylistTableCellView.m in Sources */,
+				5648C83516CABE1F0070DF07 /* PandoraSeed.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,10 +27,12 @@
 @property (copy) NSArray *quickMixStationIds;
 
 // Additional Info
-@property (copy) NSDictionary *music;
+//@property (copy) NSDictionary *music;
 @property (copy) NSString *stationDetailUrl;
 @property (copy) NSString *stationSharingUrl;
 //@property (copy) NSString *artUrl;
+@property (retain) NSMutableArray *seedSongs;
+@property (retain) NSMutableArray *seedArtists;
 
 // Station Properties
 @property BOOL allowAddMusic;
@@ -44,7 +46,10 @@
 @property BOOL requiresCleanAds;
 
 - (id)initWithDictionary: info connection:(PandoraConnection*)newConnection;
+- (void)requestExtendedInfo;
 - (NSArray*)getPlaylist;
+
+// Songs
 - (PandoraSong *) getCurrentSong;
 - (PandoraSong *) getNextSong;
 - (PandoraSong *) getSongAtIndex:(NSInteger)index;
