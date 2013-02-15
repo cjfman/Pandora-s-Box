@@ -80,6 +80,7 @@
 
 // Time Bar
 @property (assign) IBOutlet NSView *timeBarView;
+@property (assign) IBOutlet NSTextField *songMetaDataView;
 @property (assign) IBOutlet NSTextField *elapsedTimeView;
 @property (assign) IBOutlet NSTextField *remainingTimeView;
 @property (assign) IBOutlet NSSlider *playHeadView;
@@ -90,8 +91,6 @@
 @property (assign) IBOutlet NSTabView *mainTabView;
 
 // Stations Tab
-@property (assign) IBOutlet NSImageView *stationsTabAlbumView;
-@property (assign) IBOutlet NSTextField *stationsTabSongTextView;
 @property (assign) IBOutlet NSTableView *stationsTableView;
 @property (assign) IBOutlet NSTextField *stationsTabStationNameView;
 

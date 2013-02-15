@@ -19,7 +19,7 @@
 	[self setValuesForKeysWithDictionary:info];
 	connection = [newConnection retain];
 	playList = [[NSMutableArray alloc] init];
-    [self requestExtendedInfo];
+    //[self requestExtendedInfo];
 	currentIndex = -1;
 	return self;
 }

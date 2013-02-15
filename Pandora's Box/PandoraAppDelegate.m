@@ -79,7 +79,7 @@
 	 multiplier:1.0
 	 constant:1]];
 	 //*/
-	[self.stationsTabSongTextView setStringValue:@"No Song Playing"];
+	[self.songMetaDataView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:0]; //[userDefaults integerForKey:kOpenTab]];
 	[self.tabSelectionView selectSegmentWithTag:0]; //[userDefaults integerForKey:kOpenTab]];
 	playHeadTimer = [[NSTimer timerWithTimeInterval:.1
@@ -379,9 +379,8 @@
 		[self.playlistView reloadData];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];
 		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
-		[self.stationsTabAlbumView setImage:currentSong.albumArt];
 		[self.playingTabAlbumView setImage:currentSong.albumArt];
-		[self.stationsTabSongTextView setStringValue:[NSString stringWithFormat:@"%@\n%@ - %@",
+		[self.songMetaDataView setStringValue:[NSString stringWithFormat:@"%@\n%@ - %@",
 													  [currentSong songName],
 													  [currentSong artistName],
 													  [currentSong albumName]]];
