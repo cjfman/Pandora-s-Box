@@ -346,6 +346,7 @@
 	}
 	PandoraSong *song = [newStation getCurrentSong];
 	[self.playlistView reloadData];
+	[self.window setTitle:currentStation.stationName];
 	[self changeSong: song];
 }
 
@@ -374,16 +375,13 @@
 		[currentSong saveSong:audioCachePath];
 		
 		// Setup gui elemets
-		[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",
-							   [currentSong songName],
-							   [currentStation stationName]]];
 		[currentStation cleanPlayList];
 		[self.playlistView reloadData];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];
 		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
 		[self.stationsTabAlbumView setImage:currentSong.albumArt];
 		[self.playingTabAlbumView setImage:currentSong.albumArt];
-		[self.stationsTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
+		[self.stationsTabSongTextView setStringValue:[NSString stringWithFormat:@"%@\n%@ - %@",
 													  [currentSong songName],
 													  [currentSong artistName],
 													  [currentSong albumName]]];

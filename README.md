@@ -6,7 +6,7 @@ Features
 - See current playlist
 - Seeking
 - Ability to skip arbitrarily forward and back in the play list
-- Leave feedback on song that is currently playing
+- Leave feedback on any song in the playlist
 - Play/Pause
 
 Upcomming Features

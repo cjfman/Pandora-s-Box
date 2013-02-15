@@ -295,7 +295,9 @@
 	}
 	if (jsonData == nil) return nil;
 	NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-	//NSLog(@"%@", jsonResult);
+    /*
+    if ([method isEqualTo:@"station.getStation"])
+        NSLog(@"%@", jsonResult);//*/
 	
 	NSDictionary *response = [jsonData objectFromJSONData];
 	if ([[response objectForKey:kStat] isEqualTo:@"fail"])

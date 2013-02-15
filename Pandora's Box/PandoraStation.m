@@ -9,6 +9,7 @@
 #import "PandoraStation.h"
 #import "PandoraConnection.h"
 #import "PandoraSong.h"
+#import "PandoraSeed.h"
 
 @implementation PandoraStation
 
@@ -18,6 +19,7 @@
 	[self setValuesForKeysWithDictionary:info];
 	connection = [newConnection retain];
 	playList = [[NSMutableArray alloc] init];
+    [self requestExtendedInfo];
 	currentIndex = -1;
 	return self;
 }
@@ -31,10 +33,48 @@
 	[self.stationToken release];
 	[self.genre release];
 	[self.quickMixStationIds release];
-	[self.music release];
+	//[self.music release];
 	[self.stationDetailUrl release];
 	[self.stationSharingUrl release];
+    [self.seedSongs release];
+    [self.seedArtists release];
 	[super dealloc];
+}
+
+- (void)requestExtendedInfo {
+    NSLog(@"Getting extended info for station: %@", self.stationName);
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   self.stationToken, @"stationToken",
+									   [NSNumber numberWithBool:TRUE], @"includeExtendedAttributes",
+									   nil];
+	NSError *error = nil;
+	NSDictionary *response = [connection jsonRequest:@"station.getStation"
+									  withParameters:parameters
+											  useTLS:NO
+										 isEncrypted:TRUE
+											   error:&error];
+    if (error) {
+        NSLog(@"%@", error);
+        return;
+    }
+    //NSLog(@"%@",response);
+	
+    NSDictionary *music = [response objectForKey:@"music"];
+	self.seedArtists = [[NSMutableArray alloc] init];
+	for (NSDictionary *artist in [music objectForKey:@"artists"]) {
+		PandoraSeed *seed = [[[PandoraSeed alloc] initWithDictionary:artist
+														 connection:connection]
+							 autorelease];
+		[self.seedArtists addObject:seed];
+	}
+	self.seedSongs = [[NSMutableArray alloc] init];
+	for (NSDictionary *song in [music objectForKey:@"songs"]) {
+		PandoraSeed *seed = [[[PandoraSeed alloc] initWithDictionary:song
+														  connection:connection]
+							 autorelease];
+		[self.seedArtists addObject:seed];
+	}
 }
 
 - (NSArray*)getPlaylist
