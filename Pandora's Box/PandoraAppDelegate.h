@@ -120,6 +120,7 @@
 - (NSString *)timeFormatted:(NSInteger)totalSeconds;
 
 // Helper Methods
+- (NSInteger)playingSongIndex;
 - (NSInteger)selectedSongIndex;
 - (PandoraSong*)selectedSong;
 

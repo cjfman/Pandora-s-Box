@@ -209,7 +209,7 @@
 	}
 	
 	// Update UI
-	NSInteger index = [self selectedSongIndex];
+	NSInteger index = [self playingSongIndex];
 	[self.playlistView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
 						 columnIndexes:[NSIndexSet indexSetWithIndex:1]];
 }
@@ -550,6 +550,10 @@
 /*****************************************
  Helper Methods
  *****************************************/
+
+- (NSInteger)playingSongIndex {
+	return [currentStation getCurrentIndex];
+}
 
 - (NSInteger)selectedSongIndex {
 	if ([self.tabSelectionView selectedSegment] == 2) {
