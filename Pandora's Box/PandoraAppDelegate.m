@@ -240,6 +240,13 @@
 	[self startLoginSheet];
 }
 
+- (IBAction)tired:(id)sender {
+	if (currentSong) {
+		[currentSong sleep];
+		[self playNextSong];
+	}
+}
+
 /*****************************************
  Tabel View Deligate Methods
  *****************************************/
@@ -347,6 +354,10 @@
 	PandoraSong *song = [newStation getCurrentSong];
 	[self.playlistView reloadData];
 	[self changeSong: song];
+	
+	// Change Window Title
+	[self.window setTitle:[NSString stringWithFormat:@"%@",
+							   [currentStation stationName]]];
 }
 
 - (void)changeSong:(PandoraSong *)newSong {
@@ -374,9 +385,9 @@
 		[currentSong saveSong:audioCachePath];
 		
 		// Setup gui elemets
-		[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",
-							   [currentSong songName],
-							   [currentStation stationName]]];
+		//[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",
+		//					   [currentSong songName],
+		//					   [currentStation stationName]]];
 		[currentStation cleanPlayList];
 		[self.playlistView reloadData];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];

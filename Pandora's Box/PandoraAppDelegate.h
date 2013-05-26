@@ -47,6 +47,13 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSView *windowView;
 
+// App Delagate Methods
+- (void)applicationWillFinishLaunching:(NSNotification *)notification;
+- (void)applicationDidFinishLaunching:(NSNotification *)notification;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem;
+- (void)applicationWillTerminate:(NSNotification *)notification;
+
 // Login Sheet
 @property (assign) IBOutlet NSPanel *loginWindow;
 @property (assign) IBOutlet NSTextField *usernameView;
@@ -54,6 +61,7 @@
 @property (assign) IBOutlet NSButton *rememberMeView;
 @property (assign) IBOutlet NSTextField *loginErrorView;
 @property (assign) IBOutlet NSImageView *loginErrorImage;
+- (void)startLoginSheet;
 - (IBAction)login:(id)sender;
 
 // Menu Bar
@@ -65,6 +73,7 @@
 - (IBAction)skipSong:(id)sender;
 - (IBAction)playPreviousSong:(id)sender;
 - (IBAction)logout:(id)sender;
+- (IBAction)tired:(id)sender;
 
 // Toolbar Buttons
 @property (assign) IBOutlet NSPopUpButton *mainActionButtonView;
@@ -100,11 +109,6 @@
 
 // Playlist Tab
 @property (assign) IBOutlet NSTableView *playlistView;
-
-
-
-// Starting up
-- (void)startLoginSheet;
 
 // Audio Playing Methods
 - (void)playNextSong;

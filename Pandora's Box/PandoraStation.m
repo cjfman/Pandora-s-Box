@@ -42,7 +42,7 @@
 }
 
 - (void)requestExtendedInfo {
-    NSLog(@"Getting extended info for station: %@", self.stationName);
+    //NSLog(@"Getting extended info for station: %@", self.stationName);
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   self.stationToken, @"stationToken",
