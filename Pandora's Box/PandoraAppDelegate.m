@@ -45,10 +45,10 @@
 	// Load Images
 	thumbsDownImage = [[NSImage imageNamed:@"ThumbsDownTemplate.pdf"] retain];
 	thumbsUpImage = [[NSImage imageNamed:@"ThumbsUpTemplate.pdf"] retain];
-	speakerLoud = [[NSImage imageNamed:@"speakerLoudTemplate.pdf"] retain];
-	speakerMid = [[NSImage imageNamed:@"speakerMidTemplate.pdf"] retain];
-	speakerQuiet = [[NSImage imageNamed:@"speakerQuietTemplate.pdf"] retain];
-	speakerMute = [[NSImage imageNamed:@"speakerMuteTemplate.pdf"] retain];
+	speakerLoud = [[NSImage imageNamed:@"SpeakerLoudTemplate.pdf"] retain];
+	speakerMid = [[NSImage imageNamed:@"SpeakerMidTemplate.pdf"] retain];
+	speakerQuiet = [[NSImage imageNamed:@"SpeakerQuietTemplate.pdf"] retain];
+	speakerMute = [[NSImage imageNamed:@"SpeakerMuteTemplate.pdf"] retain];
 	playSymbol = [[NSImage imageNamed:@"audioControlPlayTemplate.pdf"] retain];
 	pauseSymbol = [[NSImage imageNamed:@"audioControlPauseTemplate.pdf"] retain];
 }
@@ -207,6 +207,11 @@
 	else {
 		[self playNextSong];
 	}
+	
+	// Update UI
+	NSInteger index = [self selectedSongIndex];
+	[self.playlistView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
+						 columnIndexes:[NSIndexSet indexSetWithIndex:1]];
 }
 
 - (IBAction)skipSong:(id)sender {
@@ -290,6 +295,13 @@
 											  [song albumName]];
 			
 			// Now Playing
+			///*
+			if ([audioPlayer isPlaying]) {
+				[thisCell.imageView setImage:speakerLoud];
+			}
+			else {
+				[thisCell.imageView setImage:speakerMute];
+			 }//*/
 			if (row == [currentStation getCurrentIndex]) {
 				[thisCell.imageView setHidden:NO];
 			}
