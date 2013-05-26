@@ -100,6 +100,8 @@
 			return;
 		}
 	}
+	
+	// Find file extension by cleaning URL
 	NSMutableString *temp = [NSMutableString stringWithString:usedURL];
 	NSRange range = [temp rangeOfString:@"?"];
 	if (range.location != NSNotFound) {

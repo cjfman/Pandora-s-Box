@@ -302,11 +302,11 @@
 	NSDictionary *response = [jsonData objectFromJSONData];
 	if ([[response objectForKey:kStat] isEqualTo:@"fail"])
 	{
-		NSLog(@"%@", jsonResult);
 		NSInteger code = [[response objectForKey:@"code"] integerValue];
 		//NSString *codeString = [NSString stringWithFormat:@"%ld",code];
 
 		// Try to handle error
+		// Expired Credentials
 		if (code == 1001) {
 			[self relogin];
 			NSLog(@"Successfully relogged in. Reattempting: %@", method);
@@ -316,7 +316,12 @@
 						 isEncrypted:isEncrypted
 							   error:error];
 		}
-		
+		// Invalid Login Credentials
+		else if (code == 1002) {
+			*error = [NSError errorWithDomain:@"Pandora" code:1002 userInfo:response];
+			return nil;
+		}
+		NSLog(@"%@", jsonResult);
 		// Pass error to calling method
 		//NSString *errorName = [errorCodes objectForKey:codeString];
 		*error = [NSError errorWithDomain:@"Pandora" code:code userInfo:response];
