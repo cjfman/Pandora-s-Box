@@ -51,6 +51,11 @@
 	speakerMute = [[NSImage imageNamed:@"SpeakerMuteTemplate.pdf"] retain];
 	playSymbol = [[NSImage imageNamed:@"audioControlPlayTemplate.pdf"] retain];
 	pauseSymbol = [[NSImage imageNamed:@"audioControlPauseTemplate.pdf"] retain];
+	
+#ifdef DEBUG
+	[self.debugMenuItem setEnabled:YES];
+	[self.debugMenuItem setHidden:NO];
+#endif
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -100,7 +105,6 @@
 		modalDelegate: nil //self
 	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
 		  contextInfo: nil];
-	[NSApp endSheet:self.loginWindow];
 }
 
 - (IBAction)login:(id)sender {
@@ -113,14 +117,15 @@
 	NSError *error = nil;
 	[pandora loginWithUsername:username andPassword:password error:&error];
 	if (error) {
-		NSLog(@"Login error:\n%@", error);
 		if ([error code] == 1002)
 		{
+			NSLog(@"Invalid User Credentials");
 			[self.loginErrorView setHidden:NO];
 			[self.loginErrorImage setHidden:NO];
 		}
 		else
 		{
+			NSLog(@"Login error:\n%@", error);
 			[self.loginErrorView setStringValue:@"Unknown Error"];
 			[self.loginErrorView setHidden:NO];
 			[self.loginErrorImage setHidden:NO];
@@ -129,8 +134,8 @@
 	}
 	
 	// Close Modal Sheet
+	[NSApp endSheet:self.loginWindow];
 	[self.loginWindow orderOut:self];
-
 	
 	// Save Settings
 	/*[userDefaults setBool:remember forKey:kRememberLogin];
@@ -156,7 +161,8 @@
 	if (item == self.logoutMenuItem) {
 		ans = (pandora) ? YES : NO;
 	}
-	else if (item == self.playPauseMenuItem || item == self.nextMenuItem) {
+	else if (item == self.playPauseMenuItem || item == self.nextMenuItem
+			 || item == self.tiredMenuItem) {
 		ans = (currentStation) ? YES : NO;
 	}
 	else if (item == self.backMenuItem) {
@@ -250,6 +256,10 @@
 		[currentSong sleep];
 		[self playNextSong];
 	}
+}
+
+- (IBAction)relogin:(id)sender {
+	[pandora relogin];
 }
 
 /*****************************************

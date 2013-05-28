@@ -69,11 +69,14 @@
 @property (assign) IBOutlet NSMenuItem *playPauseMenuItem;
 @property (assign) IBOutlet NSMenuItem *nextMenuItem;
 @property (assign) IBOutlet NSMenuItem *backMenuItem;
+@property (assign) IBOutlet NSMenuItem *tiredMenuItem;
+@property (assign) IBOutlet NSMenuItem *debugMenuItem;
 - (IBAction)playPause:(id)sender;
 - (IBAction)skipSong:(id)sender;
 - (IBAction)playPreviousSong:(id)sender;
 - (IBAction)logout:(id)sender;
 - (IBAction)tired:(id)sender;
+- (IBAction)relogin:(id)sender;
 
 // Toolbar Buttons
 @property (assign) IBOutlet NSPopUpButton *mainActionButtonView;

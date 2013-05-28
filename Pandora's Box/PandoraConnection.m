@@ -110,8 +110,8 @@
 				  andPassword:(NSString*) aPassword
 						error: (NSError**)error
 {
-	username = aUsername;
-	password = aPassword;
+	username = [aUsername copy];
+	password = [aPassword copy];
 	NSLog(@"Logging in user: %@", username);
 	if (!partnerAuthToken) return nil;
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -142,23 +142,24 @@
 }
 
 - (BOOL)relogin {
+	NSLog(@"Relogging in");
 	if (username && password && partner) {
 		// Clear credentials
-		syncTime = 0;
-		[userAuthToken release];
-		userAuthToken = nil;
-		[partner_id release];
+		syncTime = 0;				// Sync Time
+		[auth_token release];		// Auth Token
+		auth_token = nil;
+		[partner_id release];		// Partner ID
 		partner_id = nil;
-		[user_id release];
+		[user_id release];			// User ID
 		user_id = nil;
-		[userAuthToken release];
+		[userAuthToken release];	// User Auth Token
 		userAuthToken = nil;
-		[partnerAuthToken release];
+		[partnerAuthToken release]; // Parther Auth Token
 		partnerAuthToken = nil;
 		
 		// Initiate relogin
 		if ([self partnerLogin]) {
-			NSError *error;
+			NSError *error = nil;
 			[self loginWithUsername:username andPassword:password error:&error];
 			if(!error) {
 				return TRUE;
@@ -308,7 +309,9 @@
 		// Try to handle error
 		// Expired Credentials
 		if (code == 1001) {
-			[self relogin];
+			if(![self relogin]) {
+				[NSException raise:@"AuthTimeout" format:@"Authentication has timed out"];
+			}
 			NSLog(@"Successfully relogged in. Reattempting: %@", method);
 			return [self jsonRequest:method
 					  withParameters:parameters
