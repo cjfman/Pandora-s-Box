@@ -118,17 +118,18 @@
 }
 
 - (void)saveSong:(NSString*)path {
-	NSString *fileName = [NSString stringWithFormat:@"%@/%@_%@_%@.%@",
-						  path,
+	NSString *filename = [NSString stringWithFormat:@"%@_%@_%@.%@",
 						  self.songName,
 						  self.artistName,
 						  self.albumName,
 						  audioContainer];
-	songPath = [[fileName stringByExpandingTildeInPath] retain];
+	filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@":"];
+	path = [path stringByAppendingPathComponent:filename];
+	songPath = [[path stringByExpandingTildeInPath] retain];
 	NSError *error = nil;
 	cached = [self.songData writeToFile:songPath options:0 error:&error];
 	if (error) {
-		NSLog(@"Error saveing song :%@\n%@",self.songName, error);
+		NSLog(@"Error saveing song: %@\n%@",self.songName, error);
 	}
 }
 
