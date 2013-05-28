@@ -214,7 +214,7 @@
 -(void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
 {
 	NSAssert([event type] == NSSystemDefined && [event subtype] == SPSystemDefinedEventMediaKeys, @"Unexpected NSEvent in mediaKeyTap:receivedMediaKeyEvent:");
-	// here be dragons...
+	// magic code
 	int keyCode = (([event data1] & 0xFFFF0000) >> 16);
 	int keyFlags = ([event data1] & 0x0000FFFF);
 	BOOL keyIsPressed = (((keyFlags & 0xFF00) >> 8)) == 0xA;
