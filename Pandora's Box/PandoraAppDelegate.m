@@ -70,7 +70,15 @@
 	  [NSNumber numberWithBool:false], kRememberLogin,
 	  [NSNumber numberWithInt:1], kOpenStation,
 	  [NSNumber numberWithFloat:.5], kVolume,
+	  [SPMediaKeyTap defaultMediaKeyUserBundleIdentifiers],kMediaKeyUsingBundleIdentifiersDefaultsKey,
 	  nil]];
+	  
+	// Media Key Support
+	keyTap = [[SPMediaKeyTap alloc] initWithDelegate:self];
+	if([SPMediaKeyTap usesGlobalMediaKeyTap])
+		[keyTap startWatchingMediaKeys];
+	else
+		NSLog(@"Media key monitoring disabled");
 	
 	[self startLoginSheet];
 	
@@ -191,6 +199,43 @@
 		}
 		if (error) {
 			NSLog(@"%@", error);
+		}
+	}
+}
+
+
+/*****************************************
+ Media Key Support
+ *****************************************/
+
+/*
+ * Code Provided by https://github.com/nevyn/SPMediaKeyTap
+ */
+-(void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
+{
+	NSAssert([event type] == NSSystemDefined && [event subtype] == SPSystemDefinedEventMediaKeys, @"Unexpected NSEvent in mediaKeyTap:receivedMediaKeyEvent:");
+	// here be dragons...
+	int keyCode = (([event data1] & 0xFFFF0000) >> 16);
+	int keyFlags = ([event data1] & 0x0000FFFF);
+	BOOL keyIsPressed = (((keyFlags & 0xFF00) >> 8)) == 0xA;
+	//int keyRepeat = (keyFlags & 0x1);
+	
+	if (keyIsPressed) {
+		switch (keyCode) {
+			case NX_KEYTYPE_PLAY:
+				[self playPause:nil];
+				break;
+				
+			case NX_KEYTYPE_FAST:
+				[self playNextSong];
+				break;
+				
+			case NX_KEYTYPE_REWIND:
+				[self playPreviousSong:nil];
+				break;
+			default:
+				break;
+			// More cases defined in hidsystem/ev_keymap.h
 		}
 	}
 }
@@ -401,15 +446,11 @@
 			return;
 		[audioPlayer retain];
 		[audioPlayer setDelegate:self];
-		//[audioPlayer play];
 		[audioPlayer setVolume:[self.volumeSlider floatValue]];
 		[self playPause:nil];
 		[currentSong saveSong:audioCachePath];
 		
 		// Setup gui elemets
-		//[self.window setTitle:[NSString stringWithFormat:@"Playing '%@' on %@",
-		//					   [currentSong songName],
-		//					   [currentStation stationName]]];
 		[currentStation cleanPlayList];
 		[self.playlistView reloadData];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];

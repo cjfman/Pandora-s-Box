@@ -10,6 +10,7 @@
 #import <Quartz/Quartz.h>
 #import <AVFoundation/AVFoundation.h>
 #import "PandoraConnection.h"
+#import "SPMediaKeyTap.h"
 
 #define audioCacheFolder @"Audio File Cache"
 
@@ -42,6 +43,9 @@
 	//Paths
 	NSString *supportPath;
 	NSString *audioCachePath;
+	
+	// Media Key Support
+	SPMediaKeyTap *keyTap;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -63,6 +67,9 @@
 @property (assign) IBOutlet NSImageView *loginErrorImage;
 - (void)startLoginSheet;
 - (IBAction)login:(id)sender;
+
+// Media Keys
+- (void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
 
 // Menu Bar
 @property (assign) IBOutlet NSMenuItem *logoutMenuItem;
