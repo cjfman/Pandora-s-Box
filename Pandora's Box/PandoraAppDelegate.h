@@ -25,6 +25,8 @@
 	PandoraStation *currentStation;
 	PandoraSong *currentSong;
 	NSMutableArray *stationList;
+	NSString *username;
+	NSString *password;
 	
 	// Audio
 	AVAudioPlayer *audioPlayer;

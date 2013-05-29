@@ -41,8 +41,9 @@
 		5628279E16B608AA00C7DECB /* SpeakerQuietTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */; };
 		562827A216B60E1900C7DECB /* PlaylistTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562827A116B60E1900C7DECB /* PlaylistTableCellView.m */; };
 		5648C83516CABE1F0070DF07 /* PandoraSeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5648C83416CABE1F0070DF07 /* PandoraSeed.m */; };
+		565DD96A1756A5C000E0903A /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C80041756780D00C55025 /* SSKeychain.m */; };
+		565DD96C1756A61900E0903A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565DD96B1756A61800E0903A /* Security.framework */; };
 		56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */; };
-		56E73E75175518F500815678 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 56E73E65175518F500815678 /* LICENSE */; };
 		56E73E7A175518F500815678 /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */; };
 		56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6E175518F500815678 /* SPMediaKeyTap.m */; };
 		56E73E81175523DD00815678 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E73E80175523DD00815678 /* Carbon.framework */; };
@@ -112,8 +113,10 @@
 		562827A116B60E1900C7DECB /* PlaylistTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistTableCellView.m; sourceTree = "<group>"; };
 		5648C83316CABE1F0070DF07 /* PandoraSeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSeed.h; sourceTree = "<group>"; };
 		5648C83416CABE1F0070DF07 /* PandoraSeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSeed.m; sourceTree = "<group>"; };
+		565DD96B1756A61800E0903A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		569C80031756780D00C55025 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		569C80041756780D00C55025 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PartnerInfo.plist; sourceTree = "<group>"; };
-		56E73E65175518F500815678 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		56E73E6B175518F500815678 /* NSObject+SPInvocationGrabbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SPInvocationGrabbing.h"; sourceTree = "<group>"; };
 		56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SPInvocationGrabbing.m"; sourceTree = "<group>"; };
 		56E73E6D175518F500815678 /* SPMediaKeyTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPMediaKeyTap.h; sourceTree = "<group>"; };
@@ -128,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				565DD96C1756A61900E0903A /* Security.framework in Frameworks */,
 				56E73E81175523DD00815678 /* Carbon.framework in Frameworks */,
 				5623D02D16B5C24B002B2E0C /* Quartz.framework in Frameworks */,
 				5623D02E16B5C24B002B2E0C /* QuartzCore.framework in Frameworks */,
@@ -151,6 +155,7 @@
 		5623CFE616B5C220002B2E0C = {
 			isa = PBXGroup;
 			children = (
+				565DD96B1756A61800E0903A /* Security.framework */,
 				56E73E80175523DD00815678 /* Carbon.framework */,
 				5623D02B16B5C24B002B2E0C /* Quartz.framework */,
 				5623D02C16B5C24B002B2E0C /* QuartzCore.framework */,
@@ -204,6 +209,7 @@
 				5623D04B16B5C34C002B2E0C /* JSONKit */,
 				5623D03D16B5C34C002B2E0C /* bfsh-koc */,
 				56E73E57175518F500815678 /* SPMediaKeyTap */,
+				569C7FFD1756780D00C55025 /* sskeychain */,
 				5623CFFC16B5C220002B2E0C /* Supporting Files */,
 			);
 			path = "Pandora's Box";
@@ -314,10 +320,18 @@
 			name = "My UI Elements";
 			sourceTree = "<group>";
 		};
+		569C7FFD1756780D00C55025 /* sskeychain */ = {
+			isa = PBXGroup;
+			children = (
+				569C80031756780D00C55025 /* SSKeychain.h */,
+				569C80041756780D00C55025 /* SSKeychain.m */,
+			);
+			path = sskeychain;
+			sourceTree = "<group>";
+		};
 		56E73E57175518F500815678 /* SPMediaKeyTap */ = {
 			isa = PBXGroup;
 			children = (
-				56E73E65175518F500815678 /* LICENSE */,
 				56E73E67175518F500815678 /* SPInvocationGrabbing */,
 				56E73E6D175518F500815678 /* SPMediaKeyTap.h */,
 				56E73E6E175518F500815678 /* SPMediaKeyTap.m */,
@@ -424,7 +438,6 @@
 				5628279C16B608AA00C7DECB /* SpeakerMidTemplate.pdf in Resources */,
 				5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */,
 				5628279E16B608AA00C7DECB /* SpeakerQuietTemplate.pdf in Resources */,
-				56E73E75175518F500815678 /* LICENSE in Resources */,
 				56F67D7D1755B034005C2037 /* Pandora.icns in Resources */,
 				56F67D7E1755B034005C2037 /* Pandora.iconset in Resources */,
 			);
@@ -461,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				565DD96A1756A5C000E0903A /* SSKeychain.m in Sources */,
 				5623D00216B5C220002B2E0C /* main.m in Sources */,
 				5623D00916B5C220002B2E0C /* PandoraAppDelegate.m in Sources */,
 				5623D03816B5C2C2002B2E0C /* PandoraConnection.m in Sources */,

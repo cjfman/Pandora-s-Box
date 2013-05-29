@@ -9,6 +9,7 @@
 #import "PandoraAppDelegate.h"
 #import "PandoraConnection.h"
 #import "PlaylistTableCellView.h"
+#import "SSKeychain.h"
 
 #define kOpenTab @"openTab"
 #define kUsername @"username"
@@ -65,8 +66,7 @@
 	[userDefaults registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
 	  [NSNumber numberWithInt:0], kOpenTab,
-	  @"none", kUsername,
-	  @"none", kEncryptedPassword,
+	  @"", kUsername,
 	  [NSNumber numberWithBool:false], kRememberLogin,
 	  [NSNumber numberWithInt:1], kOpenStation,
 	  [NSNumber numberWithFloat:.5], kVolume,
@@ -79,9 +79,6 @@
 		[keyTap startWatchingMediaKeys];
 	else
 		NSLog(@"Media key monitoring disabled");
-	
-	// Start Modal Login Sheet
-	[self startLoginSheet];
 	
 	// Setup UI Elements
 	/*
@@ -106,6 +103,21 @@
 	[self.playlistView setDoubleAction:@selector(songSelected)];
 	[self.stationsTableView setDoubleAction:@selector(stationSelected)];
 	[self.volumeSlider setFloatValue:[userDefaults floatForKey:kVolume]];
+	
+	
+	// Login
+	if ([userDefaults boolForKey:kRememberLogin]) {
+		// Login using saved credentials from keychain
+		username = [userDefaults objectForKey:kUsername];
+		password = [SSKeychain passwordForService:applicationName account:username];
+		if (password) {
+			[self login:nil];
+			return;
+		}
+	}
+	
+	// Start Modal Login Sheet
+	[self startLoginSheet];
 }
 
 - (void)startLoginSheet {
@@ -115,43 +127,79 @@
 	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
 		  contextInfo: nil];
 	[self.loginWindow setPreventsApplicationTerminationWhenModal:NO];
+	[self.usernameView setStringValue:@""];
+	[self.passwordView setStringValue:@""];
+	[self.rememberMeView setState:false];
 }
 
 - (IBAction)login:(id)sender {
-	NSString *username = [self.usernameView stringValue];
-	NSString *password = [self.passwordView stringValue];
-	//bool remember = [self.rememberMeView state];
+	if (sender) {
+		username = [[self.usernameView stringValue] copy];
+		password = [self.passwordView stringValue];
+		bool remember = [self.rememberMeView state];
+		
+		// Start Pandora
+		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
+		NSError *error = nil;
+		[pandora loginWithUsername:username andPassword:password error:&error];
+		if (error) {
+			if ([error code] == 1002)
+			{
+				NSLog(@"Invalid User Credentials");
+				[self.loginErrorView setHidden:NO];
+				[self.loginErrorImage setHidden:NO];
+			}
+			else
+			{
+				NSLog(@"Login error:\n%@", error);
+				[self.loginErrorView setStringValue:@"Unknown Error"];
+				[self.loginErrorView setHidden:NO];
+				[self.loginErrorImage setHidden:NO];
+			}
+			return;
+		}
+		
+		// Close Modal Sheet
+		[NSApp endSheet:self.loginWindow];
+		[self.loginWindow orderOut:self];
 	
-	// Start Pandora
-	pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
-	NSError *error = nil;
-	[pandora loginWithUsername:username andPassword:password error:&error];
-	if (error) {
-		if ([error code] == 1002)
-		{
-			NSLog(@"Invalid User Credentials");
-			[self.loginErrorView setHidden:NO];
-			[self.loginErrorImage setHidden:NO];
-		}
-		else
-		{
-			NSLog(@"Login error:\n%@", error);
-			[self.loginErrorView setStringValue:@"Unknown Error"];
-			[self.loginErrorView setHidden:NO];
-			[self.loginErrorImage setHidden:NO];
-		}
-		return;
+		// Save Settings
+		[userDefaults setBool:remember forKey:kRememberLogin];
+		 if (remember) {
+			 //[pandora saveToDefaults:userDefaults];
+			 // Save password to keychain
+			 BOOL keySet = [SSKeychain setPassword:password
+										forService:applicationName
+										   account:username];
+			 if (keySet) {
+				 // Save user to settings
+				 [userDefaults setObject:username forKey:kUsername];
+			 }
+			 else {
+				 [userDefaults setBool:FALSE forKey:kRememberLogin];
+			 }
+		 }
 	}
-	
-	// Close Modal Sheet
-	[NSApp endSheet:self.loginWindow];
-	[self.loginWindow orderOut:self];
-	
-	// Save Settings
-	/*[userDefaults setBool:remember forKey:kRememberLogin];
-	 if (remember) {
-	 [pandora saveToDefaults:userDefaults];
-	 }*/
+	else {
+		// Start Pandora
+		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
+		NSError *error = nil;
+		[pandora loginWithUsername:username andPassword:password error:&error];
+		if (error) {
+			if ([error code] == 1002)
+			{
+				NSLog(@"Invalid User Credentials");
+				[self startLoginSheet];
+			}
+			else
+			{
+				NSLog(@"Login error:\n%@", error);
+				[self.loginErrorView setStringValue:@"Unknown Error"];
+				[self startLoginSheet];
+			}
+			return;
+		}
+	}
 	
 	// Start Station
 	stationList = [[NSMutableArray arrayWithArray:[pandora getStationList]] retain];
@@ -282,6 +330,7 @@
 }
 
 - (IBAction)logout:(id)sender {
+	// Deallocate memory
 	if (audioPlayer) {
 		[audioPlayer stop];
 		[audioPlayer release];
@@ -295,6 +344,21 @@
 	currentSong = nil;
 	currentStation = nil;
 	pandora = nil;
+	
+	// Remove password from keychain
+	if ([userDefaults boolForKey:kRememberLogin]) {
+		[userDefaults setBool:FALSE forKey:kRememberLogin];
+		NSError *error = nil;
+		[SSKeychain deletePasswordForService:applicationName account:username error:&error];
+		if (error) {
+			NSLog(@"Failed to remove %@ from keychain\n%@", username, error);
+		}
+	}
+	[username release];
+	username = nil;
+	[password release];
+	password = nil;
+	
 	[self startLoginSheet];
 }
 
