@@ -80,6 +80,7 @@
 	else
 		NSLog(@"Media key monitoring disabled");
 	
+	// Start Modal Login Sheet
 	[self startLoginSheet];
 	
 	// Setup UI Elements
@@ -113,6 +114,7 @@
 		modalDelegate: nil //self
 	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
 		  contextInfo: nil];
+	[self.loginWindow setPreventsApplicationTerminationWhenModal:NO];
 }
 
 - (IBAction)login:(id)sender {
