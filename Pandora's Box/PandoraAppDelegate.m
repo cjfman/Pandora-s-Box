@@ -81,7 +81,7 @@
 		NSLog(@"Media key monitoring disabled");
 	
 	// Setup UI Elements
-	/*
+	//*
 	 [self.windowView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainTabView
 	 attribute:NSLayoutAttributeHeight
 	 relatedBy:NSLayoutRelationEqual
@@ -90,6 +90,7 @@
 	 multiplier:1.0
 	 constant:1]];
 	 //*/
+	[self.playingTabAlbumView setImageScaling:NSScaleToFit];
 	[self.stationsTabSongTextView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:0]; //[userDefaults integerForKey:kOpenTab]];
 	[self.tabSelectionView selectSegmentWithTag:0]; //[userDefaults integerForKey:kOpenTab]];
