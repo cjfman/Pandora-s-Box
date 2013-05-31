@@ -480,8 +480,8 @@
 
 - (void)changeStation:(PandoraStation *)newStation {
 	currentStation = newStation;
-	[self.stationsTabStationNameView setStringValue:
-	 [newStation stationName]];
+	//[self.stationsTabStationNameView setStringValue:
+	// [newStation stationName]];
 	if (audioPlayer) {
 		[audioPlayer pause];
 	}

@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
 #import <AVFoundation/AVFoundation.h>
+#import <WebKit/WebKit.h>
 #import "PandoraConnection.h"
 #import "SPMediaKeyTap.h"
 
