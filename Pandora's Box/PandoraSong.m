@@ -125,13 +125,16 @@
 - (void)loadLyrics:(NSString*)host {
 	if (self.lyrics) return;
 	@try {
+		NSString *artist;
+		artist = [self.artistName stringByReplacingOccurrencesOfString:@"The "
+															withString:@""
+															   options:0
+																 range:NSMakeRange(0, 4)];
 		NSURL *url = [NSURL URLWithString:host];
 		url = [url URLByAppendingPathComponent:
-			   [[self.artistName toAlphaNumeric] lowercaseString]];
+			   [[artist toAlphaNumeric] lowercaseString]];
 		url = [url URLByAppendingPathComponent:
-			   [[[self.songName
-				  stringByReplacingOccurrencesOfString:@"The " withString:@""]
-				 toAlphaNumeric] lowercaseString]];
+			   [[self.songName toAlphaNumeric] lowercaseString]];
 		url = [url URLByAppendingPathExtension:@"html"];
 		
 		NSLog(@"Loading Lyrics from site: %@", url);
@@ -161,9 +164,13 @@
 		NSRange startRange = [htmlString rangeOfString:@"<!-- start of lyrics -->"];
 		NSRange endRange = [htmlString rangeOfString:@"<!-- end of lyrics -->"];
 		if (startRange.location == NSNotFound) {
-			if (![host isEqualToString:@"http://www.plyrics.com"]) {
-				NSLog(@"Failed. Now Trying http://www.plyrics.com");
-				[self loadLyrics:@"http://www.plyrics.com"];
+			NSLog(@"Failed to find lyrics at %@", host);
+			NSString *backupHost = @"http://www.plyrics.com/lyrics";
+			if (![host isEqualToString:backupHost]) {
+				[self loadLyrics:backupHost];
+			}
+			else {
+				self.lyrics = [@"Not Available" retain];
 			}
 			return;
 		}
