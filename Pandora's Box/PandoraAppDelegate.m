@@ -374,6 +374,12 @@
 	[pandora relogin];
 }
 
+- (IBAction)getLyricsMenuItem:(id)sender {
+	if (currentSong) {
+		[currentSong loadLyrics];
+	}
+}
+
 /*****************************************
  Tabel View Deligate Methods
  *****************************************/
@@ -528,6 +534,8 @@
 													  [currentSong songName],
 													  [currentSong artistName],
 													  [currentSong albumName]]];
+		[self.lyricsView setString:[currentSong lyrics]];
+		[self.lyricsView scrollToBeginningOfDocument:nil];
 	}
 }
 

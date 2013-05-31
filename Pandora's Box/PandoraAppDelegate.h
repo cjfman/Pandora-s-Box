@@ -86,6 +86,7 @@
 - (IBAction)logout:(id)sender;
 - (IBAction)tired:(id)sender;
 - (IBAction)relogin:(id)sender;
+- (IBAction)getLyricsMenuItem:(id)sender;
 
 // Toolbar Buttons
 @property (assign) IBOutlet NSPopUpButton *mainActionButtonView;
@@ -115,6 +116,8 @@
 @property (assign) IBOutlet NSTextField *stationsTabSongTextView;
 @property (assign) IBOutlet NSTableView *stationsTableView;
 @property (assign) IBOutlet NSTextField *stationsTabStationNameView;
+@property (assign) IBOutlet NSTextView *lyricsView;
+
 
 // Now Playing Tab
 @property (assign) IBOutlet NSImageView *playingTabAlbumView;

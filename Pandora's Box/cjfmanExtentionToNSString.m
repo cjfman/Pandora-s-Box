@@ -45,4 +45,25 @@
 	return [NSString stringWithString:tempString];
 }
 
+- (NSString*)toAlphaNumeric {
+	/*
+	NSMutableString *result;
+	for (int i = 0; i < [self length]; i++) {
+		char c = [self characterAtIndex:i];
+		if (c < '0' || (c > '9' && c < 'A') || (c > 'Z' && c < 'a') || c > 'z') {
+			continue;	// Skip non alpha numeric characters
+		}
+		if (c >= 'A' && c <= 'Z') {
+			c |= 0x40;	// Set to upper case
+		}
+	}
+	return [NSString stringWithString:result];//*/
+	
+	NSCharacterSet *charactersToRemove =
+	[[ NSCharacterSet alphanumericCharacterSet ] invertedSet ];
+	
+	return [[self componentsSeparatedByCharactersInSet:charactersToRemove]
+	 componentsJoinedByString:@""];
+}
+
 @end

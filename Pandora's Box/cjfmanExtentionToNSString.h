@@ -13,5 +13,6 @@
 - (unsigned int)hexIntValue;
 - (unsigned char*)decodeHex;
 + (NSString*)encodeHex:(unsigned char*)charString length:(unsigned long)l;
+- (NSString*)toAlphaNumeric;
 
 @end

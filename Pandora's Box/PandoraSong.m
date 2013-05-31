@@ -60,6 +60,7 @@
 - (void)loadData {
 	[self loadAlbumArt];
 	[self loadSong];
+	[self loadLyrics];
 }
 
 - (void)loadAlbumArt {
@@ -115,6 +116,78 @@
 		[temp deleteCharactersInRange:range];
 	}
 	audioContainer = [NSString stringWithString:temp];
+}
+
+- (void)loadLyrics {
+	[self loadLyrics:@"http://www.azlyrics.com/lyrics/"];
+}
+
+- (void)loadLyrics:(NSString*)host {
+	if (self.lyrics) return;
+	@try {
+		NSURL *url = [NSURL URLWithString:host];
+		url = [url URLByAppendingPathComponent:
+			   [[self.artistName toAlphaNumeric] lowercaseString]];
+		url = [url URLByAppendingPathComponent:
+			   [[[self.songName
+				  stringByReplacingOccurrencesOfString:@"The " withString:@""]
+				 toAlphaNumeric] lowercaseString]];
+		url = [url URLByAppendingPathExtension:@"html"];
+		
+		NSLog(@"Loading Lyrics from site: %@", url);
+		
+		// Build HTTP Request
+		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+		[request setHTTPMethod:@"GET"];
+		[request setValue:@"text/plain" forHTTPHeaderField:@"Content-type"];
+		[request setTimeoutInterval:15];
+		NSData *lyricData;
+		NSError *error = nil;
+		NSURLResponse *urlResponse;
+		@synchronized(self) {
+			lyricData = [NSURLConnection sendSynchronousRequest:request
+											 returningResponse:&urlResponse
+														 error:&error];
+		}
+		/*if (lyricData == nil) {
+			self.lyrics = [@"Not Available" retain];
+			return;
+		}*/
+		
+		NSString *htmlString = [[NSString alloc] initWithData:lyricData encoding:NSUTF8StringEncoding];
+		//NSLog(@"%@", htmlString);
+		
+		// Extract Lyrics from HTML
+		NSRange startRange = [htmlString rangeOfString:@"<!-- start of lyrics -->"];
+		NSRange endRange = [htmlString rangeOfString:@"<!-- end of lyrics -->"];
+		if (startRange.location == NSNotFound) {
+			if (![host isEqualToString:@"http://www.plyrics.com"]) {
+				NSLog(@"Failed. Now Trying http://www.plyrics.com");
+				[self loadLyrics:@"http://www.plyrics.com"];
+			}
+			return;
+		}
+		
+		NSInteger startIndex = startRange.length + startRange.location + 2;
+		NSInteger endIndex = endRange.location;
+		NSRange lyricRange = NSMakeRange(startIndex, endIndex - startIndex);
+		self.lyrics = [htmlString substringWithRange:lyricRange];
+		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+					   @"<br>" withString:@""];
+		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+					   @"<br />" withString:@""];
+		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+					   @"<i>" withString:@""];
+		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+					   @"</i>" withString:@""];
+		self.lyrics = [self.lyrics stringByAppendingString:
+					   @"\nLyrics provided by www.azlyrics.com"];
+		[self.lyrics retain];
+		//NSLog(@"Lyrics:\n%@", self.lyrics);
+	}
+	@catch (NSException *e) {
+		self.lyrics = [@"Not Available" retain];
+	}
 }
 
 - (void)saveSong:(NSString*)path {

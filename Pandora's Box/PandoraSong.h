@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+#import "cjfmanExtentionToNSString.h"
 
 @class PandoraConnection;
 @class PandoraStation;
@@ -36,6 +37,7 @@
 @property (copy) NSString *albumArtUrl;
 @property (copy) NSDictionary *audioUrlMap;
 @property (copy) NSArray *additionalAudioUrl;
+@property (assign) NSString *lyrics;
 
 // Song Properties
 @property BOOL allowFeedback;
@@ -71,6 +73,8 @@
 - (void)loadData;
 - (void)loadAlbumArt;
 - (void)loadSong;
+- (void)loadLyrics;
+- (void)loadLyrics:(NSString*)host;
 - (void)saveSong:(NSString*)path;
 - (void)clean;
 
