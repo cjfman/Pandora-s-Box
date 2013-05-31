@@ -18,8 +18,6 @@
 		5623D01D16B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623D01B16B5C220002B2E0C /* InfoPlist.strings */; };
 		5623D02016B5C220002B2E0C /* Pandora_s_BoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */; };
 		5623D02A16B5C23F002B2E0C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02916B5C23F002B2E0C /* AVFoundation.framework */; };
-		5623D02D16B5C24B002B2E0C /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02B16B5C24B002B2E0C /* Quartz.framework */; };
-		5623D02E16B5C24B002B2E0C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02C16B5C24B002B2E0C /* QuartzCore.framework */; };
 		5623D03816B5C2C2002B2E0C /* PandoraConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03116B5C2C2002B2E0C /* PandoraConnection.m */; };
 		5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */; };
 		5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */; };
@@ -82,8 +80,6 @@
 		5623D01E16B5C220002B2E0C /* Pandora_s_BoxTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pandora_s_BoxTests.h; sourceTree = "<group>"; };
 		5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pandora_s_BoxTests.m; sourceTree = "<group>"; };
 		5623D02916B5C23F002B2E0C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		5623D02B16B5C24B002B2E0C /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
-		5623D02C16B5C24B002B2E0C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5623D03016B5C2C2002B2E0C /* PandoraConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraConnection.h; sourceTree = "<group>"; };
 		5623D03116B5C2C2002B2E0C /* PandoraConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraConnection.m; sourceTree = "<group>"; };
 		5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PandoraDebugResponses.plist; sourceTree = "<group>"; };
@@ -134,8 +130,6 @@
 			files = (
 				565DD96C1756A61900E0903A /* Security.framework in Frameworks */,
 				56E73E81175523DD00815678 /* Carbon.framework in Frameworks */,
-				5623D02D16B5C24B002B2E0C /* Quartz.framework in Frameworks */,
-				5623D02E16B5C24B002B2E0C /* QuartzCore.framework in Frameworks */,
 				5623D02A16B5C23F002B2E0C /* AVFoundation.framework in Frameworks */,
 				5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */,
 			);
@@ -159,8 +153,6 @@
 				5630CBA4175830AC006DCC0C /* WebKit.framework */,
 				565DD96B1756A61800E0903A /* Security.framework */,
 				56E73E80175523DD00815678 /* Carbon.framework */,
-				5623D02B16B5C24B002B2E0C /* Quartz.framework */,
-				5623D02C16B5C24B002B2E0C /* QuartzCore.framework */,
 				5623D02916B5C23F002B2E0C /* AVFoundation.framework */,
 				5623CFFB16B5C220002B2E0C /* Pandora's Box */,
 				5623D01816B5C220002B2E0C /* Pandora's BoxTests */,
