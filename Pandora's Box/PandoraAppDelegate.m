@@ -90,8 +90,18 @@
 	 multiplier:1.0
 	 constant:1]];
 	 //*/
-	[self.playingTabAlbumView setImageScaling:NSScaleToFit];
-	[self.stationsTabSongTextView setStringValue:@"No Song Playing"];
+	 /*
+	[self.windowView addConstraint:
+	 [NSLayoutConstraint constraintWithItem:self.stationsScrollView
+								  attribute:NSLayoutAttributeTrailing
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:self.mainTabView
+								  attribute:NSLayoutAttributeLeading
+								 multiplier:1
+								   constant:0]];
+	 //*/
+	[self.albumTabAlbumView setImageScaling:NSScaleToFit];
+	[self.songTabSongTextView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:0]; //[userDefaults integerForKey:kOpenTab]];
 	[self.tabSelectionView selectSegmentWithTag:0]; //[userDefaults integerForKey:kOpenTab]];
 	playHeadTimer = [[NSTimer timerWithTimeInterval:.1
@@ -380,6 +390,30 @@
 	}
 }
 
+- (IBAction)toggleStationList:(id)sender {
+	NSRect frame = [self.stationsScrollView frame];
+	NSRect wframe = [self.window frame];
+	NSInteger diff = frame.size.width;
+	if (diff) {
+		frame.size.width = 0;
+		wframe.size.width -= diff;
+	}
+	else {
+		diff = 250;
+		frame.size.width = diff;
+		wframe.size.width += diff;
+	}
+	[[self.stationsScrollView animator] setFrame:frame];
+	[[self.window animator] setFrame:wframe display:YES animate:YES];
+	/*[self.windowView addConstraint:
+	 [NSLayoutConstraint constraintWithItem:self.stationsScrollView
+								  attribute:NSLayoutAttributeWidth
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:nil attribute:nil
+								 multiplier:1
+								   constant:diff]];*/
+}
+
 /*****************************************
  Tabel View Deligate Methods
  *****************************************/
@@ -528,9 +562,9 @@
 		[self.playlistView reloadData];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];
 		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
-		[self.stationsTabAlbumView setImage:currentSong.albumArt];
-		[self.playingTabAlbumView setImage:currentSong.albumArt];
-		[self.stationsTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
+		[self.songTabAlbumView setImage:currentSong.albumArt];
+		[self.albumTabAlbumView setImage:currentSong.albumArt];
+		[self.songTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
 													  [currentSong songName],
 													  [currentSong artistName],
 													  [currentSong albumName]]];

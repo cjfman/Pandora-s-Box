@@ -87,9 +87,9 @@
 - (IBAction)tired:(id)sender;
 - (IBAction)relogin:(id)sender;
 - (IBAction)getLyricsMenuItem:(id)sender;
+- (IBAction)toggleStationList:(id)sender;
 
 // Toolbar Buttons
-@property (assign) IBOutlet NSPopUpButton *mainActionButtonView;
 @property (assign) IBOutlet NSSegmentedControl *tabSelectionView;
 @property (assign) IBOutlet NSSegmentedControl *playbackControls;
 @property (assign) IBOutlet NSSlider *volumeSlider;
@@ -108,19 +108,20 @@
 - (IBAction)songScrubbing:(id)sender;
 - (void)updatePlayHead;
 
+// Stations Table
+@property (assign) IBOutlet NSTableView *stationsTableView;
+@property (assign) IBOutlet NSScrollView *stationsScrollView;
+
 // Tab View
 @property (assign) IBOutlet NSTabView *mainTabView;
 
-// Stations Tab
-@property (assign) IBOutlet NSImageView *stationsTabAlbumView;
-@property (assign) IBOutlet NSTextField *stationsTabSongTextView;
-@property (assign) IBOutlet NSTableView *stationsTableView;
-@property (assign) IBOutlet NSTextField *stationsTabStationNameView;
+// Song Info Tab
+@property (assign) IBOutlet NSImageView *songTabAlbumView;
+@property (assign) IBOutlet NSTextField *songTabSongTextView;
 @property (assign) IBOutlet NSTextView *lyricsView;
 
-
-// Now Playing Tab
-@property (assign) IBOutlet NSImageView *playingTabAlbumView;
+// Album Art Tab
+@property (assign) IBOutlet NSImageView *albumTabAlbumView;
 
 // Playlist Tab
 @property (assign) IBOutlet NSTableView *playlistView;
