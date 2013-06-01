@@ -7,8 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PandoraAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
-	return NSApplicationMain(argc, (const char **)argv);
+	NSAutoreleasePool *pool = [[NSAutoreleasePool new] init];
+	[NSApplication sharedApplication];
+	PandoraAppDelegate *delegate = [[[PandoraAppDelegate new] init] autorelease];
+	[NSApp setDelegate:delegate];
+	[NSApp run];
+	[pool release];
 }

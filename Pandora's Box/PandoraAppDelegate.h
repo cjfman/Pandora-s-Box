@@ -50,8 +50,10 @@
 	SPMediaKeyTap *keyTap;
 }
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSView *windowView;
+@property (assign) NSWindow *window;
+@property (assign) NSView *windowView;
+
+- (id)init;
 
 // App Delagate Methods
 - (void)applicationWillFinishLaunching:(NSNotification *)notification;

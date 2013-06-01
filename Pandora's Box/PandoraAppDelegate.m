@@ -20,6 +20,40 @@
 
 @implementation PandoraAppDelegate
 
+- (id)init {
+	if (!(self = [super init])) {
+		return nil;
+	}
+	
+	// Load GUI
+	// Menubar
+	NSMenu *menubar = [[NSMenu new] autorelease];
+	NSMenuItem *appMenuItem = [[NSMenuItem new] autorelease];
+	[menubar addItem:appMenuItem];
+	[NSApp setMainMenu:menubar];
+	NSMenu *appMenu = [[NSMenu new] autorelease];
+	NSString *appName = [[NSProcessInfo processInfo] processName];
+	NSString *quitTitle = [@"Quit " stringByAppendingString:appName];
+	NSMenuItem *quitMenuItem = [[[NSMenuItem alloc] initWithTitle:quitTitle
+														 action:@selector(terminate:)
+												  keyEquivalent:@"q"] autorelease];
+	[appMenu addItem:quitMenuItem];
+	[appMenuItem setSubmenu:appMenu];
+	
+	// Main Window
+	self.window = [[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 728, 475)
+											   styleMask:0xF	// Normal Window
+												 backing:NSBackingStoreBuffered
+												   defer:YES]
+				   autorelease];
+	[self.window cascadeTopLeftFromPoint:NSMakePoint(20, 20)];
+	[self.window setTitle:appName];
+	[self.window makeKeyAndOrderFront:NSApp];
+	[NSApp activateIgnoringOtherApps:YES];
+	
+	return self;
+}
+
 - (void)dealloc
 {
     [super dealloc];
@@ -61,6 +95,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	
 	// Setup Default Settings
 	userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults registerDefaults:

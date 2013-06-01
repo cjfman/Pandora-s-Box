@@ -24,7 +24,6 @@
 		5623D03B16B5C2C2002B2E0C /* PandoraSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03516B5C2C2002B2E0C /* PandoraSong.m */; };
 		5623D03C16B5C2C2002B2E0C /* PandoraStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03716B5C2C2002B2E0C /* PandoraStation.m */; };
 		5623D04E16B5C34C002B2E0C /* blowfish_koc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03E16B5C34C002B2E0C /* blowfish_koc.c */; };
-		5623D05016B5C34C002B2E0C /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04116B5C34C002B2E0C /* readme.txt */; };
 		5623D05116B5C34C002B2E0C /* audioControlBackTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04316B5C34C002B2E0C /* audioControlBackTemplate.pdf */; };
 		5623D05216B5C34C002B2E0C /* audioControlNextTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04416B5C34C002B2E0C /* audioControlNextTemplate.pdf */; };
 		5623D05316B5C34C002B2E0C /* audioControlPauseTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04516B5C34C002B2E0C /* audioControlPauseTemplate.pdf */; };
@@ -420,7 +419,6 @@
 				5623D00C16B5C220002B2E0C /* MainMenu.xib in Resources */,
 				5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */,
 				5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */,
-				5623D05016B5C34C002B2E0C /* readme.txt in Resources */,
 				5623D05116B5C34C002B2E0C /* audioControlBackTemplate.pdf in Resources */,
 				5623D05216B5C34C002B2E0C /* audioControlNextTemplate.pdf in Resources */,
 				5623D05316B5C34C002B2E0C /* audioControlPauseTemplate.pdf in Resources */,
