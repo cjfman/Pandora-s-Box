@@ -224,9 +224,11 @@
 	// Start Station
 	stationList = [[NSMutableArray arrayWithArray:[pandora getStationList]] retain];
 	[self.stationsTableView reloadData];
-	//[self.playlistView reloadData];
-	NSInteger first_selected_station = [userDefaults integerForKey:kOpenStation];
-	PandoraStation *station = [pandora getStation:[stationList objectAtIndex:first_selected_station]];
+	NSInteger stationIndex = [userDefaults integerForKey:kOpenStation];
+	if (stationIndex >= [stationList count]) {
+		stationIndex = 0;
+	}
+	PandoraStation *station = [pandora getStation:[stationList objectAtIndex:stationIndex]];
 	[self changeStation: station];
 }
 
@@ -440,10 +442,6 @@
 	[[self.stationsScrollView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
 	[NSAnimationContext endGrouping];
-}
-
-- (void)toggleStationListEnd {
-	
 }
 
 /*****************************************
