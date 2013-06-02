@@ -281,9 +281,6 @@
 			children = (
 				5628279716B608AA00C7DECB /* SpeakerLoudTemplate.pdf */,
 				5628279816B608AA00C7DECB /* SpeakerMidTemplate.pdf */,
-				56A422B7175B03B000EE9460 /* CloseDrawerTemplate.pdf */,
-				56A422BB175B096100EE9460 /* RowViewTemplate.pdf */,
-				56A422B8175B03B000EE9460 /* OpenDrawerTemplate.pdf */,
 				5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */,
 				5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */,
 				5623D04316B5C34C002B2E0C /* audioControlBackTemplate.pdf */,
@@ -292,6 +289,9 @@
 				5623D04616B5C34C002B2E0C /* audioControlPlayTemplate.pdf */,
 				5623D04916B5C34C002B2E0C /* ThumbsDownTemplate.pdf */,
 				5623D04A16B5C34C002B2E0C /* ThumbsUpTemplate.pdf */,
+				56A422B8175B03B000EE9460 /* OpenDrawerTemplate.pdf */,
+				56A422B7175B03B000EE9460 /* CloseDrawerTemplate.pdf */,
+				56A422BB175B096100EE9460 /* RowViewTemplate.pdf */,
 			);
 			path = images;
 			sourceTree = "<group>";

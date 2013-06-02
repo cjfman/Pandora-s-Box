@@ -105,6 +105,7 @@
 											  views:@{@"view":self.stationsScrollView}]
 	 retain];
 	[self.windowView addConstraints:stationsScrollViewConstraints];
+	// Set Toggle Stations Controls
 	if (stationsWidth) {
 		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
 		[self.toggleStationsButton setImage:closeDrawer];
@@ -117,6 +118,7 @@
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:[userDefaults integerForKey:kOpenTab]];
 	[self.tabSelectionView selectSegmentWithTag:[userDefaults integerForKey:kOpenTab]];
+	// Setup the playhead in the timebar
 	playHeadTimer = [[NSTimer timerWithTimeInterval:.1
 											 target:self
 										   selector:@selector(updatePlayHead)
@@ -157,7 +159,10 @@
 }
 
 - (IBAction)login:(id)sender {
+	// If sender, than get login credentials from sheet
+	// otherwise use credentials preset by caller
 	if (sender) {
+		// Get Values from sheet
 		username = [[self.usernameView stringValue] copy];
 		password = [self.passwordView stringValue];
 		bool remember = [self.rememberMeView state];
@@ -167,12 +172,14 @@
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
 		if (error) {
+			// Bad username/password
 			if ([error code] == 1002)
 			{
 				NSLog(@"Invalid User Credentials");
 				[self.loginErrorView setHidden:NO];
 				[self.loginErrorImage setHidden:NO];
 			}
+			// Unknown Error
 			else
 			{
 				NSLog(@"Login error:\n%@", error);
@@ -205,7 +212,7 @@
 		 }
 	}
 	else {
-		// Start Pandora
+		// Start Pandora with preset credentials
 		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
@@ -229,6 +236,7 @@
 	stationList = [[NSMutableArray arrayWithArray:[pandora getStationList]] retain];
 	[self.stationsTableView reloadData];
 	NSInteger stationIndex = [userDefaults integerForKey:kOpenStation];
+	// Check bounds
 	if (stationIndex >= [stationList count]) {
 		stationIndex = 0;
 	}
@@ -243,13 +251,16 @@
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
 	BOOL ans = YES;
 	if (item == self.logoutMenuItem) {
+		// Should only be able to log out if logged in
 		ans = (pandora) ? YES : NO;
 	}
 	else if (item == self.playPauseMenuItem || item == self.nextMenuItem
 			 || item == self.tiredMenuItem) {
+		// Should only work if a station is playing music
 		ans = (currentStation) ? YES : NO;
 	}
 	else if (item == self.backMenuItem) {
+		// Should only work if there is a song to go back to
 		ans = (currentStation && [currentStation getCurrentIndex] != 0) ? YES : NO;
 	}
 	else if (item == self.toggleStationsMenuItem) {
@@ -259,6 +270,7 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
+	// Save layout at other settings
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
 	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]] forKey:kOpenStation];
 	[userDefaults setFloat:[self.volumeSlider floatValue] forKey:kVolume];
