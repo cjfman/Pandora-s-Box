@@ -111,7 +111,6 @@
 		5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerQuietTemplate.pdf; sourceTree = "<group>"; };
 		562827A016B60E1900C7DECB /* PlaylistTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistTableCellView.h; sourceTree = "<group>"; };
 		562827A116B60E1900C7DECB /* PlaylistTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistTableCellView.m; sourceTree = "<group>"; };
-		5630CBA4175830AC006DCC0C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5648C83316CABE1F0070DF07 /* PandoraSeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSeed.h; sourceTree = "<group>"; };
 		5648C83416CABE1F0070DF07 /* PandoraSeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSeed.m; sourceTree = "<group>"; };
 		565DD96B1756A61800E0903A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -158,7 +157,6 @@
 		5623CFE616B5C220002B2E0C = {
 			isa = PBXGroup;
 			children = (
-				5630CBA4175830AC006DCC0C /* WebKit.framework */,
 				565DD96B1756A61800E0903A /* Security.framework */,
 				56E73E80175523DD00815678 /* Carbon.framework */,
 				5623D02916B5C23F002B2E0C /* AVFoundation.framework */,
