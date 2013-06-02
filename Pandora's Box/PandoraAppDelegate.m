@@ -68,7 +68,7 @@
 	userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
-	  [NSNumber numberWithInt:0], kOpenTab,
+	  [NSNumber numberWithInt:2], kOpenTab,
 	  @"", kUsername,
 	  [NSNumber numberWithBool:false], kRememberLogin,
 	  [NSNumber numberWithInt:1], kOpenStation,
@@ -115,8 +115,8 @@
 	}
 	// Other GUI Setup
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
-	[self.mainTabView selectTabViewItemAtIndex:0]; //[userDefaults integerForKey:kOpenTab]];
-	[self.tabSelectionView selectSegmentWithTag:0]; //[userDefaults integerForKey:kOpenTab]];
+	[self.mainTabView selectTabViewItemAtIndex:[userDefaults integerForKey:kOpenTab]];
+	[self.tabSelectionView selectSegmentWithTag:[userDefaults integerForKey:kOpenTab]];
 	playHeadTimer = [[NSTimer timerWithTimeInterval:.1
 											 target:self
 										   selector:@selector(updatePlayHead)
