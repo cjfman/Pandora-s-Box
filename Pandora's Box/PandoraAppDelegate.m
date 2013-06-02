@@ -246,6 +246,9 @@
 	else if (item == self.backMenuItem) {
 		ans = (currentStation && [currentStation getCurrentIndex] != 0) ? YES : NO;
 	}
+	else if (item == self.toggleStationsMenuItem) {
+		ans = (pandora) ? YES : NO;
+	}
 	return ans;
 }
 
@@ -401,6 +404,7 @@
 }
 
 - (IBAction)toggleStationList:(id)sender {
+	[sender setEnabled:NO];
 	NSRect frame = [self.stationsScrollView frame];
 	NSRect wframe = [self.window frame];
 	NSInteger diff = frame.size.width;
@@ -431,11 +435,11 @@
 												   views:@{@"view":self.stationsScrollView}]
 		 retain];
 		[self.windowView addConstraints:stationsScrollViewConstraints];
+		[sender setEnabled:YES];
 	}];
 	[[self.stationsScrollView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
 	[NSAnimationContext endGrouping];
-	
 }
 
 - (void)toggleStationListEnd {
