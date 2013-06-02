@@ -44,6 +44,7 @@
 		56A422B9175B03B000EE9460 /* CloseDrawerTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 56A422B7175B03B000EE9460 /* CloseDrawerTemplate.pdf */; };
 		56A422BA175B03B000EE9460 /* OpenDrawerTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 56A422B8175B03B000EE9460 /* OpenDrawerTemplate.pdf */; };
 		56A422BC175B096100EE9460 /* RowViewTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 56A422BB175B096100EE9460 /* RowViewTemplate.pdf */; };
+		56AB4C8E175BDBB30030A610 /* errorImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 56AB4C8D175BDBB30030A610 /* errorImage.png */; };
 		56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */; };
 		56E73E7A175518F500815678 /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */; };
 		56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6E175518F500815678 /* SPMediaKeyTap.m */; };
@@ -119,6 +120,7 @@
 		56A422B7175B03B000EE9460 /* CloseDrawerTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CloseDrawerTemplate.pdf; sourceTree = "<group>"; };
 		56A422B8175B03B000EE9460 /* OpenDrawerTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = OpenDrawerTemplate.pdf; sourceTree = "<group>"; };
 		56A422BB175B096100EE9460 /* RowViewTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = RowViewTemplate.pdf; sourceTree = "<group>"; };
+		56AB4C8D175BDBB30030A610 /* errorImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = errorImage.png; sourceTree = "<group>"; };
 		56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PartnerInfo.plist; sourceTree = "<group>"; };
 		56E73E6B175518F500815678 /* NSObject+SPInvocationGrabbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SPInvocationGrabbing.h"; sourceTree = "<group>"; };
 		56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SPInvocationGrabbing.m"; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 		5623D04216B5C34C002B2E0C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				56AB4C8D175BDBB30030A610 /* errorImage.png */,
 				5628279716B608AA00C7DECB /* SpeakerLoudTemplate.pdf */,
 				5628279816B608AA00C7DECB /* SpeakerMidTemplate.pdf */,
 				5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */,
@@ -446,6 +449,7 @@
 				56A422B9175B03B000EE9460 /* CloseDrawerTemplate.pdf in Resources */,
 				56A422BA175B03B000EE9460 /* OpenDrawerTemplate.pdf in Resources */,
 				56A422BC175B096100EE9460 /* RowViewTemplate.pdf in Resources */,
+				56AB4C8E175BDBB30030A610 /* errorImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -39,14 +39,28 @@
 
 @implementation PandoraConnection
 
-- (id)initWithPartner:(NSString*)partnerName
-{
+- (id)init {
 	if (!(self = [super init])) return self;
 	
 	// Load Error Codes
 	NSString *errorCodesPath = [[NSBundle mainBundle] pathForResource:@"PandoraExceptions" ofType:@"plist"];
 	errorCodes = [[NSDictionary dictionaryWithContentsOfFile:errorCodesPath] retain];
 	
+	// Initialize Other Members
+	stationList = [[NSMutableArray alloc] init];
+	stations = [[NSMutableDictionary alloc] init];
+	
+	return self;
+}
+
+- (id)initWithPartner:(NSString*)partnerName
+{
+	if (!(self = [self init])) return self;
+	[self setPartner:partnerName];
+	return self;
+}
+
+- (void)setPartner:(NSString *)partnerName {
 	// Get Partner Info
 	NSString *partnerPath = [[NSBundle mainBundle] pathForResource:@"PartnerInfo" ofType:@"plist"];
 	partner = [[[NSDictionary dictionaryWithContentsOfFile:partnerPath] objectForKey:partnerName] copy];
@@ -54,17 +68,6 @@
 	NSString *decryptKey = [partner objectForKey:kDecrypt];
 	Blowfish_Init(&blowfishCTXEncrypt, (unsigned char*)[encryptKey UTF8String], (int)[encryptKey length]);
 	Blowfish_Init(&blowfishCTXDecrypt, (unsigned char*)[decryptKey UTF8String], (int)[decryptKey length]);
-	
-	if(![self partnerLogin])
-	{
-		return nil;
-	}
-	
-	// Initialize Other Members
-	stationList = [[NSMutableArray alloc] init];
-	stations = [[NSMutableDictionary alloc] init];
-	
-	return self;
 }
 
 -(void)dealloc {
@@ -80,7 +83,7 @@
 	[super dealloc];
 }
 
-- (BOOL)partnerLogin {
+- (BOOL)partnerLogin:(NSError**)error {
 	NSLog(@"Partner Login");
 	
 	// Prepare JSON Request
@@ -91,11 +94,11 @@
 								[partner objectForKey:kDeviceModel], kDeviceModel,
 								[NSString stringWithFormat:@"%d", pandoraVersion], kVersion,
 								nil];
-	NSError *error = nil;
-	NSDictionary *response = [self jsonRequest:@"auth.partnerLogin" withParameters:parameters useTLS:TRUE isEncrypted:FALSE error:&error];
+	//NSError *error = nil;
+	NSDictionary *response = [self jsonRequest:@"auth.partnerLogin" withParameters:parameters useTLS:TRUE isEncrypted:FALSE error:error];
 	if(response == nil)
 	{
-		NSLog(@"%@", [error localizedDescription]);
+		//NSLog(@"Partner Login Error:\n%@", [*error localizedDescription]);
 		return FALSE;
 	}
 	//NSLog(@"JSON Response:\n%@", response);
@@ -158,8 +161,8 @@
 		partnerAuthToken = nil;
 		
 		// Initiate relogin
-		if ([self partnerLogin]) {
-			NSError *error = nil;
+		NSError *error = nil;
+		if ([self partnerLogin:&error]) {
 			[self loginWithUsername:username andPassword:password error:&error];
 			if(!error) {
 				return TRUE;

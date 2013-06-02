@@ -147,4 +147,7 @@
 - (NSInteger)selectedSongIndex;
 - (PandoraSong*)selectedSong;
 
+// Error Handling
+- (void)loginErrorHander:(NSError*)error;
+
 @end

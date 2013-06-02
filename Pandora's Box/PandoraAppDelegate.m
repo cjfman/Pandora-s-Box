@@ -159,6 +159,17 @@
 }
 
 - (IBAction)login:(id)sender {
+	// Start Pandora
+	if (!pandora) {
+		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
+		NSError *error = nil;
+		[pandora partnerLogin:&error];
+		if (error) {
+			[self loginErrorHander:error];
+			return;
+		}
+	}
+	
 	// If sender, than get login credentials from sheet
 	// otherwise use credentials preset by caller
 	if (sender) {
@@ -167,26 +178,10 @@
 		password = [self.passwordView stringValue];
 		bool remember = [self.rememberMeView state];
 		
-		// Start Pandora
-		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
 		if (error) {
-			// Bad username/password
-			if ([error code] == 1002)
-			{
-				NSLog(@"Invalid User Credentials");
-				[self.loginErrorView setHidden:NO];
-				[self.loginErrorImage setHidden:NO];
-			}
-			// Unknown Error
-			else
-			{
-				NSLog(@"Login error:\n%@", error);
-				[self.loginErrorView setStringValue:@"Unknown Error"];
-				[self.loginErrorView setHidden:NO];
-				[self.loginErrorImage setHidden:NO];
-			}
+			[self loginErrorHander:error];
 			return;
 		}
 		
@@ -212,22 +207,11 @@
 		 }
 	}
 	else {
-		// Start Pandora with preset credentials
-		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
+		// Login with preset credentials
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
 		if (error) {
-			if ([error code] == 1002)
-			{
-				NSLog(@"Invalid User Credentials");
-				[self startLoginSheet];
-			}
-			else
-			{
-				NSLog(@"Login error:\n%@", error);
-				[self.loginErrorView setStringValue:@"Unknown Error"];
-				[self startLoginSheet];
-			}
+			[self loginErrorHander:error];
 			return;
 		}
 	}
@@ -305,7 +289,9 @@
  */
 -(void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
 {
-	NSAssert([event type] == NSSystemDefined && [event subtype] == SPSystemDefinedEventMediaKeys, @"Unexpected NSEvent in mediaKeyTap:receivedMediaKeyEvent:");
+	NSAssert([event type] == NSSystemDefined
+			 && [event subtype] == SPSystemDefinedEventMediaKeys,
+			 @"Unexpected NSEvent in mediaKeyTap:receivedMediaKeyEvent:");
 	// magic code
 	int keyCode = (([event data1] & 0xFFFF0000) >> 16);
 	int keyFlags = ([event data1] & 0x0000FFFF);
@@ -784,6 +770,48 @@
 
 - (PandoraSong*)selectedSong {
 	return [currentStation getSongAtIndex:[self selectedSongIndex]];
+}
+
+- (void)loginErrorHander:(NSError *)error {
+	if ([[error domain] isEqualTo:NSURLErrorDomain]) {
+		if ([error code] == -1009) {
+			[self.loginErrorView setStringValue:@"Please connect to the internet"];
+			NSLog(@"%@", [error localizedDescription]);
+		}
+		else {
+			NSLog(@"Login error:\n%@", error);
+			[self.loginErrorView setStringValue:@"Unknown Network Error"];
+		}
+		[pandora release];
+		pandora = nil;
+	}
+	else if([[error domain] isEqualTo:@"Pandora"]) {
+		// Bad username/password
+		if ([error code] == 1002)
+		{
+			NSLog(@"Invalid User Credentials");
+		}
+		// Unknown Error
+		else
+		{
+			NSLog(@"Login error:\n%@", error);
+			[self.loginErrorView setStringValue:@"Unknown Pandora Error"];
+			[pandora release];
+			pandora = nil;
+		}
+		[self.loginErrorView setHidden:NO];
+		[self.loginErrorImage setHidden:NO];
+	}
+	// Unknown Error
+	else {
+		NSLog(@"Login error:\n%@", error);
+		[self.loginErrorView setStringValue:@"Unknown Error"];
+		[pandora release];
+		pandora = nil;
+	}
+	[self.loginErrorView setHidden:NO];
+	[self.loginErrorImage setHidden:NO];
+	return;
 }
 
 @end

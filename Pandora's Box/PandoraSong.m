@@ -137,7 +137,7 @@
 			   [[self.songName toAlphaNumeric] lowercaseString]];
 		url = [url URLByAppendingPathExtension:@"html"];
 		
-		NSLog(@"Loading Lyrics from site: %@", url);
+		//NSLog(@"Loading Lyrics from site: %@", url);
 		
 		// Build HTTP Request
 		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -164,7 +164,7 @@
 		NSRange startRange = [htmlString rangeOfString:@"<!-- start of lyrics -->"];
 		NSRange endRange = [htmlString rangeOfString:@"<!-- end of lyrics -->"];
 		if (startRange.location == NSNotFound) {
-			NSLog(@"Failed to find lyrics at %@", host);
+			//NSLog(@"Failed to find lyrics at %@", host);
 			NSString *backupHost = @"http://www.plyrics.com/lyrics";
 			if (![host isEqualToString:backupHost]) {
 				[self loadLyrics:backupHost];

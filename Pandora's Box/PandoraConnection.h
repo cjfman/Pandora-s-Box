@@ -34,8 +34,10 @@
 	NSString *password;
 }
 
+- (id)init;
 - (id)initWithPartner:(NSString*)partnerName;
-- (BOOL)partnerLogin;
+- (void)setPartner:(NSString*)partnerName;
+- (BOOL)partnerLogin:(NSError**)error;
 - (NSArray*)loginWithUsername:(NSString*) username
 				  andPassword:(NSString*) password
 						error:(NSError**)error;
