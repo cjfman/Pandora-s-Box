@@ -583,6 +583,9 @@
 }
 
 - (void)changeSong:(PandoraSong *)newSong {
+	if (!newSong) {
+		return;
+	}
 	@synchronized(self) {
 		NSLog(@"New Song: %@", newSong.songName);
 		
