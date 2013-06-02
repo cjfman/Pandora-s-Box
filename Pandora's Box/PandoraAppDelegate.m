@@ -422,6 +422,11 @@
 }
 
 - (IBAction)toggleStationList:(id)sender {
+	static Boolean running = false;
+	if (running) {
+		return;
+	}
+	running = true;
 	[sender setEnabled:NO];
 	NSRect frame = [self.stationsScrollView frame];
 	NSRect wframe = [self.window frame];
@@ -441,8 +446,11 @@
 	}
 	
 	// Clear old contraints
-	[self.windowView removeConstraints:stationsScrollViewConstraints];
-	[stationsScrollViewConstraints release];
+	if (stationsScrollViewConstraints) {
+		[self.windowView removeConstraints:stationsScrollViewConstraints];
+		[stationsScrollViewConstraints release];
+		stationsScrollViewConstraints = nil;
+	}
 	
 	// Start Animation
 	[NSAnimationContext beginGrouping];
@@ -456,6 +464,7 @@
 		 retain];
 		[self.windowView addConstraints:stationsScrollViewConstraints];
 		[sender setEnabled:YES];
+		running = false;
 	}];
 	[[self.stationsScrollView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
