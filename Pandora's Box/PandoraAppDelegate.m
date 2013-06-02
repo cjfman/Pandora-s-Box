@@ -81,6 +81,7 @@
 		NSLog(@"Media key monitoring disabled");
 	
 	// Setup UI Elements
+	// Constraints
 	//*
 	 [self.windowView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainTabView
 	 attribute:NSLayoutAttributeHeight
@@ -89,16 +90,15 @@
 	 attribute:NSLayoutAttributeWidth
 	 multiplier:1.0
 	 constant:1]];
-	 //*/
-	 /*
-	[self.windowView addConstraint:
-	 [NSLayoutConstraint constraintWithItem:self.stationsScrollView
-								  attribute:NSLayoutAttributeTrailing
-								  relatedBy:NSLayoutRelationEqual
-									 toItem:self.mainTabView
-								  attribute:NSLayoutAttributeLeading
-								 multiplier:1
-								   constant:0]];
+	//*/
+	//*
+	stationsScrollViewConstraints =
+	[[NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(250)]"
+											options:NSLayoutFormatDirectionLeadingToTrailing
+											metrics:nil
+											  views:@{@"view":self.stationsScrollView}]
+	 retain];
+	[self.windowView addConstraints:stationsScrollViewConstraints];
 	 //*/
 	[self.albumTabAlbumView setImageScaling:NSScaleToFit];
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
@@ -403,15 +403,31 @@
 		frame.size.width = diff;
 		wframe.size.width += diff;
 	}
+	
+	// Clear old contraints
+	[self.windowView removeConstraints:stationsScrollViewConstraints];
+	[stationsScrollViewConstraints release];
+	
+	// Start Animation
+	[NSAnimationContext beginGrouping];
+	[[NSAnimationContext currentContext] setCompletionHandler:^{
+		stationsScrollViewConstraints = [
+										 [NSLayoutConstraint constraintsWithVisualFormat:
+										  [NSString stringWithFormat:@"H:[view(%d)]", (int)frame.size.width]
+																				 options:NSLayoutFormatDirectionLeadingToTrailing
+																				 metrics:nil
+																				   views:@{@"view":self.stationsScrollView}]
+										 retain];
+		[self.windowView addConstraints:stationsScrollViewConstraints];
+	}];
 	[[self.stationsScrollView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
-	/*[self.windowView addConstraint:
-	 [NSLayoutConstraint constraintWithItem:self.stationsScrollView
-								  attribute:NSLayoutAttributeWidth
-								  relatedBy:NSLayoutRelationEqual
-									 toItem:nil attribute:nil
-								 multiplier:1
-								   constant:diff]];*/
+	[NSAnimationContext endGrouping];
+	
+}
+
+- (void)toggleStationListEnd {
+	
 }
 
 /*****************************************

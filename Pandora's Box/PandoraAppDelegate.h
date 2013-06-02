@@ -48,6 +48,9 @@
 	
 	// Media Key Support
 	SPMediaKeyTap *keyTap;
+	
+	// Constraints
+	NSArray *stationsScrollViewConstraints;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -88,6 +91,7 @@
 - (IBAction)relogin:(id)sender;
 - (IBAction)getLyricsMenuItem:(id)sender;
 - (IBAction)toggleStationList:(id)sender;
+- (void)toggleStationListEnd;
 
 // Toolbar Buttons
 @property (assign) IBOutlet NSSegmentedControl *tabSelectionView;
