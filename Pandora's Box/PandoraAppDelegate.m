@@ -17,6 +17,7 @@
 #define kRememberLogin @"rememberLogin"
 #define kOpenStation @"openStation"
 #define kVolume @"volume"
+#define kStationsVisible @"stationsVisible"
 
 @implementation PandoraAppDelegate
 
@@ -71,6 +72,7 @@
 	  [NSNumber numberWithInt:1], kOpenStation,
 	  [NSNumber numberWithFloat:.5], kVolume,
 	  [SPMediaKeyTap defaultMediaKeyUserBundleIdentifiers],kMediaKeyUsingBundleIdentifiersDefaultsKey,
+	  [NSNumber numberWithInt:250], kStationsVisible,
 	  nil]];
 	  
 	// Media Key Support
@@ -80,27 +82,34 @@
 	else
 		NSLog(@"Media key monitoring disabled");
 	
-	// Setup UI Elements
+	// Setup GUI Elements
 	// Constraints
-	//*
-	 [self.windowView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainTabView
+	// Square Constraint for Album Art
+	[self.windowView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainTabView
 	 attribute:NSLayoutAttributeHeight
 	 relatedBy:NSLayoutRelationEqual
 	 toItem:self.mainTabView
 	 attribute:NSLayoutAttributeWidth
 	 multiplier:1.0
 	 constant:1]];
-	//*/
-	//*
+	[self.albumTabAlbumView setImageScaling:NSScaleToFit];
+	// Station List Width Constraint
+	NSInteger stationsWidth = [[userDefaults objectForKey:kStationsVisible] integerValue];
 	stationsScrollViewConstraints =
-	[[NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(250)]"
+	[[NSLayoutConstraint constraintsWithVisualFormat:
+	  [NSString stringWithFormat:@"H:[view(%ld)]", stationsWidth]
 											options:NSLayoutFormatDirectionLeadingToTrailing
 											metrics:nil
 											  views:@{@"view":self.stationsScrollView}]
 	 retain];
 	[self.windowView addConstraints:stationsScrollViewConstraints];
-	 //*/
-	[self.albumTabAlbumView setImageScaling:NSScaleToFit];
+	if (stationsWidth) {
+		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
+	}
+	else {
+		[self.toggleStationsMenuItem setTitle:@"Show Stations"];
+	}
+	// Other GUI Setup
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:0]; //[userDefaults integerForKey:kOpenTab]];
 	[self.tabSelectionView selectSegmentWithTag:0]; //[userDefaults integerForKey:kOpenTab]];
@@ -244,6 +253,7 @@
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
 	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]] forKey:kOpenStation];
 	[userDefaults setFloat:[self.volumeSlider floatValue] forKey:kVolume];
+	[userDefaults setInteger:self.stationsScrollView.frame.size.width  forKey:kStationsVisible];
 	
 	// Clear Cache
 	NSError *error = nil;
@@ -397,11 +407,13 @@
 	if (diff) {
 		frame.size.width = 0;
 		wframe.size.width -= diff;
+		[self.toggleStationsMenuItem setTitle:@"Show Stations"];
 	}
 	else {
 		diff = 250;
 		frame.size.width = diff;
 		wframe.size.width += diff;
+		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
 	}
 	
 	// Clear old contraints
@@ -411,13 +423,13 @@
 	// Start Animation
 	[NSAnimationContext beginGrouping];
 	[[NSAnimationContext currentContext] setCompletionHandler:^{
-		stationsScrollViewConstraints = [
-										 [NSLayoutConstraint constraintsWithVisualFormat:
-										  [NSString stringWithFormat:@"H:[view(%d)]", (int)frame.size.width]
-																				 options:NSLayoutFormatDirectionLeadingToTrailing
-																				 metrics:nil
-																				   views:@{@"view":self.stationsScrollView}]
-										 retain];
+		stationsScrollViewConstraints =
+		[[NSLayoutConstraint constraintsWithVisualFormat:
+		  [NSString stringWithFormat:@"H:[view(%d)]", (int)frame.size.width]
+												 options:NSLayoutFormatDirectionLeadingToTrailing
+												 metrics:nil
+												   views:@{@"view":self.stationsScrollView}]
+		 retain];
 		[self.windowView addConstraints:stationsScrollViewConstraints];
 	}];
 	[[self.stationsScrollView animator] setFrame:frame];

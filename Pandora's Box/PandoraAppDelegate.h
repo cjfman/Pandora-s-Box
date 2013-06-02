@@ -83,6 +83,7 @@
 @property (assign) IBOutlet NSMenuItem *backMenuItem;
 @property (assign) IBOutlet NSMenuItem *tiredMenuItem;
 @property (assign) IBOutlet NSMenuItem *debugMenuItem;
+@property (assign) IBOutlet NSMenuItem *toggleStationsMenuItem;
 - (IBAction)playPause:(id)sender;
 - (IBAction)skipSong:(id)sender;
 - (IBAction)playPreviousSong:(id)sender;
@@ -91,12 +92,12 @@
 - (IBAction)relogin:(id)sender;
 - (IBAction)getLyricsMenuItem:(id)sender;
 - (IBAction)toggleStationList:(id)sender;
-- (void)toggleStationListEnd;
 
 // Toolbar Buttons
 @property (assign) IBOutlet NSSegmentedControl *tabSelectionView;
 @property (assign) IBOutlet NSSegmentedControl *playbackControls;
 @property (assign) IBOutlet NSSlider *volumeSlider;
+@property (assign) IBOutlet NSButton *toggleStationsButton;
 - (IBAction)newTabSelected:(id)sender;
 - (IBAction)audioControlPushed:(id)sender;
 - (IBAction)ratingPushed:(id)sender;
