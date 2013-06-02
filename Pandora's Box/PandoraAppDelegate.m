@@ -53,6 +53,8 @@
 	speakerMute = [[NSImage imageNamed:@"SpeakerMuteTemplate.pdf"] retain];
 	playSymbol = [[NSImage imageNamed:@"audioControlPlayTemplate.pdf"] retain];
 	pauseSymbol = [[NSImage imageNamed:@"audioControlPauseTemplate.pdf"] retain];
+	openDrawer = [[NSImage imageNamed:@"OpenDrawerTemplate.pdf"] retain];
+	closeDrawer = [[NSImage imageNamed:@"CloseDrawerTemplate.pdf"] retain];
 	
 #ifdef DEBUG
 	[self.debugMenuItem setEnabled:YES];
@@ -105,9 +107,11 @@
 	[self.windowView addConstraints:stationsScrollViewConstraints];
 	if (stationsWidth) {
 		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
+		[self.toggleStationsButton setImage:closeDrawer];
 	}
 	else {
 		[self.toggleStationsMenuItem setTitle:@"Show Stations"];
+		[self.toggleStationsButton setImage:openDrawer];
 	}
 	// Other GUI Setup
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
@@ -414,12 +418,14 @@
 		frame.size.width = 0;
 		wframe.size.width -= diff;
 		[self.toggleStationsMenuItem setTitle:@"Show Stations"];
+		[self.toggleStationsButton setImage:openDrawer];
 	}
 	else {
 		diff = 250;
 		frame.size.width = diff;
 		wframe.size.width += diff;
 		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
+		[self.toggleStationsButton setImage:closeDrawer];
 	}
 	
 	// Clear old contraints

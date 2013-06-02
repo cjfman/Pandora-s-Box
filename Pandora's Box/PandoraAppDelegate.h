@@ -41,6 +41,8 @@
 	NSImage *speakerMute;
 	NSImage *playSymbol;
 	NSImage *pauseSymbol;
+	NSImage *openDrawer;
+	NSImage *closeDrawer;
 	
 	//Paths
 	NSString *supportPath;
