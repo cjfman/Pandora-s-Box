@@ -121,7 +121,9 @@
 
 - (PandoraSong *) getNextSong {
 	if ([playList count] <= ++currentIndex) {
-		[self getPlaylist];
+		if(![self getPlaylist]) {
+			return nil;
+		};
 	}
 	return [playList objectAtIndex:currentIndex];
 }

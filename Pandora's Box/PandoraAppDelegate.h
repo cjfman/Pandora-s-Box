@@ -93,6 +93,7 @@
 - (IBAction)relogin:(id)sender;
 - (IBAction)getLyricsMenuItem:(id)sender;
 - (IBAction)toggleStationList:(id)sender;
+- (IBAction)debugAction:(id)sender;
 
 // Toolbar Buttons
 @property (assign) IBOutlet NSSegmentedControl *tabSelectionView;
@@ -145,8 +146,9 @@
 - (NSInteger)playingSongIndex;
 - (NSInteger)selectedSongIndex;
 - (PandoraSong*)selectedSong;
+- (void)alertUser:(NSString*)message;
 
 // Error Handling
-- (void)loginErrorHander:(NSError*)error;
+- (void)errorHandler:(NSError*)error;
 
 @end

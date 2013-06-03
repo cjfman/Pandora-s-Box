@@ -32,7 +32,7 @@
 		<key>encrypt</key>
 		<string>721^26xE22776</string>
 	</dict>
-	<key>Andriod</key>
+	<key>Android</key>
 	<dict>
 		<key>entryPoint</key>
 		<string>tuner.pandora.com</string>

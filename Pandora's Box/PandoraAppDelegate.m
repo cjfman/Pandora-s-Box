@@ -165,7 +165,7 @@
 		NSError *error = nil;
 		[pandora partnerLogin:&error];
 		if (error) {
-			[self loginErrorHander:error];
+			[self errorHandler:error];
 			return;
 		}
 	}
@@ -181,7 +181,7 @@
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
 		if (error) {
-			[self loginErrorHander:error];
+			[self errorHandler:error];
 			return;
 		}
 		
@@ -211,7 +211,7 @@
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
 		if (error) {
-			[self loginErrorHander:error];
+			[self errorHandler:error];
 			return;
 		}
 	}
@@ -354,7 +354,8 @@
 		return;
 	}
 	[self clearPlayer];
-	[self changeSong:[currentStation setCurrentIndex:[currentStation getCurrentIndex] - 1]];
+	[self changeSong:[currentStation setCurrentIndex:
+					  [currentStation getCurrentIndex] - 1]];
 }
 
 - (IBAction)logout:(id)sender {
@@ -455,6 +456,10 @@
 	[[self.stationsScrollView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
 	[NSAnimationContext endGrouping];
+}
+
+- (IBAction)debugAction:(id)sender {
+	[self alertUser:@"Hello World"];
 }
 
 /*****************************************
@@ -579,6 +584,8 @@
 
 - (void)changeSong:(PandoraSong *)newSong {
 	if (!newSong) {
+		[currentStation cleanPlayList];
+		[self errorHandler:[pandora lastError]];
 		return;
 	}
 	@synchronized(self) {
@@ -632,10 +639,11 @@
 	}
 	
 	[self clearPlayer];
-	if (!song.enabled) {
+	/*if (!song.enabled) {
 		NSLog(@"Selected song %@ is disabled", [song songName]);
+		[currentStation cleanPlayList];
 		return;
-	}
+	}*/
 	[self changeSong:song];
 }
 
@@ -772,15 +780,24 @@
 	return [currentStation getSongAtIndex:[self selectedSongIndex]];
 }
 
-- (void)loginErrorHander:(NSError *)error {
+- (void)alertUser:(NSString *)message {
+	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+	[alert setMessageText:message];
+	[alert runModal];
+}
+
+- (void)errorHandler:(NSError *)error {
 	if ([[error domain] isEqualTo:NSURLErrorDomain]) {
+		// Network is disconnected
 		if ([error code] == -1009) {
-			[self.loginErrorView setStringValue:@"Please connect to the internet"];
+			//[self.loginErrorView setStringValue:@"Please connect to the internet"];
+			[self alertUser:@"Could not connect to Pandora.\nPlease check your network connection."];
 			NSLog(@"%@", [error localizedDescription]);
 		}
 		else {
 			NSLog(@"Login error:\n%@", error);
-			[self.loginErrorView setStringValue:@"Unknown Network Error"];
+			//[self.loginErrorView setStringValue:@"Unknown Network Error"];
+			[self alertUser:@"Unknown Network Error"];
 		}
 		[pandora release];
 		pandora = nil;
@@ -790,27 +807,30 @@
 		if ([error code] == 1002)
 		{
 			NSLog(@"Invalid User Credentials");
+			[self alertUser:@"Invalid User Credentials"];
 		}
 		// Unknown Error
 		else
 		{
 			NSLog(@"Login error:\n%@", error);
-			[self.loginErrorView setStringValue:@"Unknown Pandora Error"];
+			//[self.loginErrorView setStringValue:@"Unknown Pandora Error"];
+			[self alertUser:@"Unknown Pandora Error"];
 			[pandora release];
 			pandora = nil;
 		}
-		[self.loginErrorView setHidden:NO];
-		[self.loginErrorImage setHidden:NO];
+		//[self.loginErrorView setHidden:NO];
+		//[self.loginErrorImage setHidden:NO];
 	}
 	// Unknown Error
 	else {
 		NSLog(@"Login error:\n%@", error);
-		[self.loginErrorView setStringValue:@"Unknown Error"];
+		//[self.loginErrorView setStringValue:@"Unknown Error"];
+		[self alertUser:@"An unknown error has occurred"];
 		[pandora release];
 		pandora = nil;
 	}
-	[self.loginErrorView setHidden:NO];
-	[self.loginErrorImage setHidden:NO];
+	//[self.loginErrorView setHidden:NO];
+	//[self.loginErrorImage setHidden:NO];
 	return;
 }
 

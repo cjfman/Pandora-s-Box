@@ -34,6 +34,8 @@
 	NSString *password;
 }
 
+@property (assign) NSError *lastError;
+
 - (id)init;
 - (id)initWithPartner:(NSString*)partnerName;
 - (void)setPartner:(NSString*)partnerName;
@@ -56,6 +58,13 @@
 
 @end
 
+
+/********************************
+ Exceptions
+ *******************************/
+
+@interface PandoraException : NSException
+@end
 
 @interface NSString (HexIntValue)
 - (unsigned int)hexIntValue;

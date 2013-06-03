@@ -297,7 +297,10 @@
 										returningResponse:&urlResponse
 													error:error];
 	}
-	if (jsonData == nil) return nil;
+	if (jsonData == nil) {
+		self.lastError = *error;
+		return nil;
+	}
 	NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     /*
     if ([method isEqualTo:@"user.sleepSong"])
@@ -313,7 +316,8 @@
 		// Expired Credentials
 		if (code == 1001) {
 			if(![self relogin]) {
-				[NSException raise:@"AuthTimeout" format:@"Authentication has timed out"];
+				[PandoraException raise:@"AuthTimeout"
+								   format:@"Authentication has timed out"];
 			}
 			NSLog(@"Successfully relogged in. Reattempting: %@", method);
 			return [self jsonRequest:method
@@ -325,27 +329,31 @@
 		// Invalid Login Credentials
 		else if (code == 1002) {
 			*error = [NSError errorWithDomain:@"Pandora" code:1002 userInfo:response];
+			self.lastError = *error;
 			return nil;
 		}
 		NSLog(@"%@", jsonResult);
 		// Pass error to calling method
 		//NSString *errorName = [errorCodes objectForKey:codeString];
 		*error = [NSError errorWithDomain:@"Pandora" code:code userInfo:response];
+		self.lastError = *error;
 		return nil;
 	}
 	
+	self.lastError = nil;
 	return [[jsonData objectFromJSONData] objectForKey:@"result"];
 #endif
 }
 
 + (NSString*)encodeURL: (NSString*) string
 {
-	CFStringRef urlString = CFURLCreateStringByAddingPercentEscapes(
-																	NULL,
-																	(CFStringRef)string,
-																	NULL,
-																	(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
-																	kCFStringEncodingUTF8 );
+	CFStringRef urlString =
+	CFURLCreateStringByAddingPercentEscapes(
+											NULL,
+											(CFStringRef)string,
+											NULL,
+											(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+											kCFStringEncodingUTF8 );
     return [(NSString *)urlString autorelease];
 }
 
@@ -405,4 +413,7 @@
 	}
 }
 
+@end
+
+@implementation PandoraException
 @end
