@@ -229,13 +229,16 @@
 }
 
 - (AVAudioPlayer*)audioPlayer {
+	if (!self.enabled) return nil;
 	if (!audioPlayer) {
 		[self loadSong];
 		NSError *error = nil;
 		audioPlayer = [[AVAudioPlayer alloc] initWithData:self.songData
 													error:&error];
 		if (error) {
-			NSLog(@"%@", error);
+			NSLog(@"Error playing song %@:\n>%@",
+				  self.songName, [error localizedDescription]);
+			self.enabled = FALSE;
 			return nil;
 		}
 	}

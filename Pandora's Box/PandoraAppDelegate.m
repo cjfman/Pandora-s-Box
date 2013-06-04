@@ -459,7 +459,7 @@
 }
 
 - (IBAction)debugAction:(id)sender {
-	[self alertUser:@"Hello World"];
+	[self startStationSheet];
 }
 
 /*****************************************
@@ -551,9 +551,11 @@
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
 	if (tableView == self.playlistView) {
 		return YES;
-		//return [[selectedStation getSongAtIndex:row] enabled];
 	}
-	return YES;
+	else if (tableView == self.stationsTableView) {
+		return YES;
+	}
+	return NO;
 }
 
 /*****************************************
@@ -599,8 +601,10 @@
 		currentSong = newSong;
 		
 		// Play Song
-		if (!(audioPlayer = currentSong.audioPlayer))
+		if (!(audioPlayer = currentSong.audioPlayer)) {
+			[currentStation cleanPlayList];
 			return;
+		}
 		[audioPlayer retain];
 		[audioPlayer setDelegate:self];
 		[audioPlayer setVolume:[self.volumeSlider floatValue]];
