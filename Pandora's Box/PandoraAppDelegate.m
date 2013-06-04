@@ -505,7 +505,6 @@
 											  [song albumName]];
 			
 			// Now Playing
-			///*
 			if ([audioPlayer isPlaying]) {
 				[thisCell.imageView setImage:speakerLoud];
 			}
@@ -568,8 +567,6 @@
 
 - (void)changeStation:(PandoraStation *)newStation {
 	currentStation = newStation;
-	//[self.stationsTabStationNameView setStringValue:
-	// [newStation stationName]];
 	if (audioPlayer) {
 		[audioPlayer pause];
 	}
@@ -639,11 +636,6 @@
 	}
 	
 	[self clearPlayer];
-	/*if (!song.enabled) {
-		NSLog(@"Selected song %@ is disabled", [song songName]);
-		[currentStation cleanPlayList];
-		return;
-	}*/
 	[self changeSong:song];
 }
 
@@ -669,9 +661,7 @@
 {
     int seconds = totalSeconds % 60;
     int minutes = (totalSeconds / 60) % 60;
-    //int hours = totalSeconds / 3600;
 	
-    //return [NSString stringWithFormat:@"%02d:%02d:%02d",hours, minutes, seconds];
 	return [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
 }
 
@@ -790,13 +780,11 @@
 	if ([[error domain] isEqualTo:NSURLErrorDomain]) {
 		// Network is disconnected
 		if ([error code] == -1009) {
-			//[self.loginErrorView setStringValue:@"Please connect to the internet"];
 			[self alertUser:@"Could not connect to Pandora.\nPlease check your network connection."];
 			NSLog(@"%@", [error localizedDescription]);
 		}
 		else {
 			NSLog(@"Login error:\n%@", error);
-			//[self.loginErrorView setStringValue:@"Unknown Network Error"];
 			[self alertUser:@"Unknown Network Error"];
 		}
 		[pandora release];
@@ -813,24 +801,18 @@
 		else
 		{
 			NSLog(@"Login error:\n%@", error);
-			//[self.loginErrorView setStringValue:@"Unknown Pandora Error"];
 			[self alertUser:@"Unknown Pandora Error"];
 			[pandora release];
 			pandora = nil;
 		}
-		//[self.loginErrorView setHidden:NO];
-		//[self.loginErrorImage setHidden:NO];
 	}
 	// Unknown Error
 	else {
 		NSLog(@"Login error:\n%@", error);
-		//[self.loginErrorView setStringValue:@"Unknown Error"];
 		[self alertUser:@"An unknown error has occurred"];
 		[pandora release];
 		pandora = nil;
 	}
-	//[self.loginErrorView setHidden:NO];
-	//[self.loginErrorImage setHidden:NO];
 	return;
 }
 
