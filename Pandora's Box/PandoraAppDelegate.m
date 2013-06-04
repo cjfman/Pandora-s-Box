@@ -192,7 +192,9 @@
 		// Save Settings
 		[userDefaults setBool:remember forKey:kRememberLogin];
 		 if (remember) {
-			 //[pandora saveToDefaults:userDefaults];
+			 // Delete any previous entry
+			 [SSKeychain deletePasswordForService:applicationName
+										  account:username];
 			 // Save password to keychain
 			 BOOL keySet = [SSKeychain setPassword:password
 										forService:applicationName
@@ -202,6 +204,7 @@
 				 [userDefaults setObject:username forKey:kUsername];
 			 }
 			 else {
+				 NSLog(@"Failed to save to keychain");
 				 [userDefaults setBool:FALSE forKey:kRememberLogin];
 			 }
 		 }
