@@ -38,6 +38,7 @@
 		5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */; };
 		5628279E16B608AA00C7DECB /* SpeakerQuietTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */; };
 		562827A216B60E1900C7DECB /* PlaylistTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562827A116B60E1900C7DECB /* PlaylistTableCellView.m */; };
+		5646B9EC175D8B55000B7655 /* CreateStation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5646B9EB175D8B55000B7655 /* CreateStation.xib */; };
 		5648C83516CABE1F0070DF07 /* PandoraSeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5648C83416CABE1F0070DF07 /* PandoraSeed.m */; };
 		565DD96A1756A5C000E0903A /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C80041756780D00C55025 /* SSKeychain.m */; };
 		565DD96C1756A61900E0903A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565DD96B1756A61800E0903A /* Security.framework */; };
@@ -111,6 +112,7 @@
 		5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerQuietTemplate.pdf; sourceTree = "<group>"; };
 		562827A016B60E1900C7DECB /* PlaylistTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistTableCellView.h; sourceTree = "<group>"; };
 		562827A116B60E1900C7DECB /* PlaylistTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistTableCellView.m; sourceTree = "<group>"; };
+		5646B9EB175D8B55000B7655 /* CreateStation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateStation.xib; sourceTree = "<group>"; };
 		5648C83316CABE1F0070DF07 /* PandoraSeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSeed.h; sourceTree = "<group>"; };
 		5648C83416CABE1F0070DF07 /* PandoraSeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSeed.m; sourceTree = "<group>"; };
 		565DD96B1756A61800E0903A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -202,6 +204,7 @@
 				5623D00716B5C220002B2E0C /* PandoraAppDelegate.h */,
 				5623D00816B5C220002B2E0C /* PandoraAppDelegate.m */,
 				5623D00A16B5C220002B2E0C /* MainMenu.xib */,
+				5646B9EB175D8B55000B7655 /* CreateStation.xib */,
 				5623D05A16B5C37E002B2E0C /* My Tools */,
 				5628279F16B60DD300C7DECB /* My UI Elements */,
 				5623D04216B5C34C002B2E0C /* images */,
@@ -448,6 +451,7 @@
 				56A422BA175B03B000EE9460 /* OpenDrawerTemplate.pdf in Resources */,
 				56A422BC175B096100EE9460 /* RowViewTemplate.pdf in Resources */,
 				56AB4C8E175BDBB30030A610 /* errorImage.png in Resources */,
+				5646B9EC175D8B55000B7655 /* CreateStation.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

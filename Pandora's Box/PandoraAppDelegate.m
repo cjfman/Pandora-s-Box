@@ -282,6 +282,33 @@
 	}
 }
 
+/*****************************************
+ Station Creation Sheet
+ *****************************************/
+
+- (void)startStationSheet {
+	if (!self.stationSheet) {
+		if(![NSBundle loadNibNamed:@"CreateStation" owner:self]) {
+			NSLog(@"Marco");
+			return;
+		}
+	}
+	else {
+		[self.stationSheetTextField setValue:@""];
+	}
+	[NSApp beginSheet: self.stationSheet
+	   modalForWindow: self.window
+		modalDelegate: nil //self
+	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
+		  contextInfo: nil];
+	[self.stationSheet setPreventsApplicationTerminationWhenModal:NO];
+}
+
+- (IBAction)stationSheetAction:(id)sender {
+	// Close Modal Sheet
+	[NSApp endSheet:self.stationSheet];
+	[self.stationSheet orderOut:self];
+}
 
 /*****************************************
  Media Key Support
@@ -820,6 +847,7 @@
 		[pandora release];
 		pandora = nil;
 	}
+	[pandora setLastError:nil];
 	return;
 }
 
