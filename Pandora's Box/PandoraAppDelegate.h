@@ -82,7 +82,6 @@
 @property (assign) IBOutlet NSButton *stationSheetCancelButton;
 @property (assign) IBOutlet NSProgressIndicator *stationsSheetIndicator;
 @property (assign) IBOutlet NSPanel *stationSheet;
-@property (assign) IBOutlet NSView *testWindow;
 - (void)startStationSheet;
 - (IBAction)stationSheetAction:(id)sender;
 
