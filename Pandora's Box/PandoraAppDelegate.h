@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PandoraConnection.h"
 #import "SPMediaKeyTap.h"
+#import "StationWindowController.h"
 
 #define audioCacheFolder @"Audio File Cache"
 
@@ -18,6 +19,7 @@
 	NSString *applicationName;
 	NSUserDefaults *userDefaults;
 	NSFileManager *fileManager;
+	StationWindowController *stationController;
 	
 	// Pandora
 	PandoraConnection *pandora;
@@ -73,17 +75,6 @@
 @property (assign) IBOutlet NSImageView *loginErrorImage;
 - (void)startLoginSheet;
 - (IBAction)login:(id)sender;
-
-// Station Creation Sheet
-@property (assign) IBOutlet NSTextField *stationSheetTextField;
-@property (assign) IBOutlet NSScrollView *stationSheetScrollView;
-@property (assign) IBOutlet NSTableView *stationSheetTableView;
-@property (assign) IBOutlet NSButton *stationSheetCreateButton;
-@property (assign) IBOutlet NSButton *stationSheetCancelButton;
-@property (assign) IBOutlet NSProgressIndicator *stationsSheetIndicator;
-@property (assign) IBOutlet NSPanel *stationSheet;
-- (void)startStationSheet;
-- (IBAction)stationSheetAction:(id)sender;
 
 // Media Keys
 - (void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;

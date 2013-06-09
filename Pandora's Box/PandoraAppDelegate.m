@@ -296,41 +296,12 @@
 	else {
 		[self.stationSheetTextField setValue:@""];
 	}*/
-	// Hide Scroll View and get frame
-	NSRect frame = [self.stationSheetScrollView frame];
-	CGFloat hdiff = frame.size.height;
-	[self.stationSheetScrollView setAlphaValue:0];
-	// Reize and position sheet accordingly
-	frame = [self.stationSheet frame];
-	frame.size.height -= hdiff;
-	frame.origin.y += hdiff;
-	[self.stationSheet setFrame:frame display:NO];
-	// Start Sheet
-	[NSApp beginSheet: self.stationSheet
-	   modalForWindow: self.window
-		modalDelegate: nil //self
-	   didEndSelector: nil //@selector(didEndSheet:returnCode:contextInfo:)
-		  contextInfo: nil];
-	[self.stationSheet setPreventsApplicationTerminationWhenModal:NO];
-}
-
-- (IBAction)stationSheetAction:(id)sender {
-	if (sender == self.stationSheetCreateButton) {
-		CGFloat diff = 100;
-		// Create new frame for sheet
-		NSRect sheetFrame = [self.stationSheet frame];
-		sheetFrame.size.height += diff;
-		sheetFrame.origin.y -= diff;
-		// Start Animation
-		[NSAnimationContext beginGrouping];
-		[[self.stationSheetScrollView animator] setAlphaValue:1];
-		[self.stationSheet setFrame:sheetFrame display:YES animate:YES];
-		[NSAnimationContext endGrouping];
-		return;
+	if (!stationController) {
+		stationController = [[StationWindowController alloc] init];
+	[stationController setMainWindow:self.window];
+	[stationController setPandoraConnection:pandora];
 	}
-	// Close Modal Sheet
-	[NSApp endSheet:self.stationSheet];
-	[self.stationSheet orderOut:self];
+	[stationController startSheet];
 }
 
 /*****************************************
