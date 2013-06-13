@@ -83,6 +83,18 @@
 	[super dealloc];
 }
 
+- (void)asynchronousMethod:(SEL)selector
+				withObject:(id)parameters
+		   completionBlock:(void(^)(id))callback {
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		id result = [self performSelector:selector withObject:parameters];
+
+		dispatch_async(dispatch_get_main_queue(), ^{
+			callback(result);
+		});
+	});
+}
+
 - (BOOL)partnerLogin:(NSError**)error {
 	NSLog(@"Partner Login");
 	
@@ -220,6 +232,20 @@
 	PandoraStation *station = [stations objectForKey:name];
 	if (!station) return nil;
 	return station;
+}
+
+- (NSDictionary*)musicSearch:(NSString *)searchText {
+	NSMutableDictionary *parameters =
+	[NSMutableDictionary dictionaryWithObjectsAndKeys:
+	 searchText, @"searchText",
+	 nil];
+	NSError *error = nil;
+	NSDictionary *response = [self jsonRequest:@"music.search"
+								withParameters:parameters
+										useTLS:NO
+								   isEncrypted:YES
+										 error:&error];
+	return response;
 }
 
 /*******************************************

@@ -10,8 +10,8 @@
 #import "blowfish_koc.h"
 #import "PandoraStation.h"
 
-#define PANDORA_PARSE_DEBUG
-#define SONG_DOWNLOAD_DEBUG
+//#define PANDORA_PARSE_DEBUG
+//#define SONG_DOWNLOAD_DEBUG
 
 @interface PandoraConnection : NSObject
 {
@@ -38,6 +38,11 @@
 
 - (id)init;
 - (id)initWithPartner:(NSString*)partnerName;
+- (void)asynchronousMethod:(SEL)selector
+				withObject:(id)parameters
+		   completionBlock:(void(^)(id))callback;
+
+// Pandora Methods
 - (void)setPartner:(NSString*)partnerName;
 - (BOOL)partnerLogin:(NSError**)error;
 - (NSArray*)loginWithUsername:(NSString*) username
@@ -46,9 +51,13 @@
 - (BOOL)relogin;
 - (NSArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
+- (NSDictionary*)musicSearch:(NSString*)searchText;
 
 // JSON
-- (NSDictionary*)jsonRequest:(NSString*)method withParameters:(NSDictionary*)parameters useTLS:(BOOL)useTLS isEncrypted:(BOOL)isEncrypted error:(NSError**)error;
+- (NSDictionary*)jsonRequest:(NSString*)method
+			  withParameters:(NSDictionary*)parameters
+					  useTLS:(BOOL)useTLS
+				 isEncrypted:(BOOL)isEncrypted error:(NSError**)error;
 + (NSString*)encodeURL:(NSString*)string;
 
 // Blowfish

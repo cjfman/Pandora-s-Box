@@ -89,7 +89,13 @@
 
 - (void)controlTextDidChange:(NSNotification *)aNotification {
 	[self.indicator startAnimation:self];
-	while(true);
+	//NSDictionary *results = [pandora musicSearch:[self.textField stringValue]];
+	[pandora asynchronousMethod:@selector(musicSearch:)
+					 withObject:[self.textField stringValue]
+				completionBlock:^(NSDictionary* results) {
+					NSLog(@"%@", results);
+				}];
+	[self.indicator stopAnimation:self];
 }
 
 @end
