@@ -21,3 +21,14 @@
 }
 
 @end
+
+
+@implementation PandoraSearchResult
+
+- (id)initWithDictionary:(NSDictionary*)info {
+	if (!(self = [super init])) return self;
+	[self setValuesForKeysWithDictionary:info];
+	return self;
+}
+
+@end
