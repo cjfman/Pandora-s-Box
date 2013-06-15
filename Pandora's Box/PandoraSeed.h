@@ -28,10 +28,15 @@
 @class PandoraSearchResult;
 
 @interface PandoraSearchResult : NSObject {
-	
+	NSString* stringValue;
+	bool isSong;
 }
 
 - (id)initWithDictionary:(NSDictionary*)info;
+- (bool)isArtist;
+- (bool)isSong;
+- (NSString*)stringValue;
+- (NSComparisonResult)compare:(PandoraSearchResult*)b;
 
 @property (retain) NSString* musicToken;
 @property (retain) NSString* artistName;

@@ -380,7 +380,7 @@
 								<object class="NSMenuItem" id="3697289">
 									<reference key="NSMenu" ref="996618747"/>
 									<string key="NSTitle">Next</string>
-									<string key="NSKeyEquiv"></string>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
@@ -388,7 +388,8 @@
 								<object class="NSMenuItem" id="4575918">
 									<reference key="NSMenu" ref="996618747"/>
 									<string key="NSTitle">Back</string>
-									<string key="NSKeyEquiv"></string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
@@ -1497,7 +1498,6 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{418, 1}, {15, 275}}</string>
 														<reference key="NSSuperview" ref="113171856"/>
-														<reference key="NSNextKeyView"/>
 														<string key="NSReuseIdentifierKey">_NS:83</string>
 														<reference key="NSTarget" ref="113171856"/>
 														<string key="NSAction">_doScroller:</string>

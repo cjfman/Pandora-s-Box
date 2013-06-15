@@ -8,12 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PandoraConnection.h"
+#import "PandoraSeed.h"
 
-@interface StationWindowController : NSWindowController <NSWindowDelegate, NSTextFieldDelegate> {
+@interface StationWindowController : NSWindowController <NSWindowDelegate, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate> {
 	PandoraConnection *pandora;
+	NSArray *artists;
+	NSArray *songs;
+	PandoraSearchResult *tophit;
 }
 - (void)setPandoraConnection:(PandoraConnection*)aConnection;
 - (void)startSheet;
+- (void)setTableLength:(CGFloat)length;
+- (void)autosetTableLength;
+- (void)closeTable;
 - (IBAction)action:(id)sender;
 
 @property (retain) NSWindow *mainWindow;
