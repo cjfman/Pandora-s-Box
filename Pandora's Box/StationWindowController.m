@@ -110,6 +110,12 @@
 	[self setTableLength:height];
 }
 
+- (void)alertUser:(NSString *)message {
+	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+	[alert setMessageText:message];
+	[alert runModal];
+}
+
 - (IBAction)action:(id)sender {
 	NSLog(@"%@", self.createButton);
 	NSLog(@"%@", sender);
@@ -144,6 +150,10 @@
 	// Define Callback function
 	void (^callback)(NSDictionary*) = ^(NSDictionary* results) {
 		if (refnum != count) return;	// Not the most recent request
+		if (!results) {
+			[self alertUser:@"Couldn't connenct to Pandora"];
+			return;
+		}
 		NSLog(@"%@", results);
 		// Clear old lists
 		if (artists) [artists release];

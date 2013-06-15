@@ -21,6 +21,7 @@
 - (void)setTableLength:(CGFloat)length;
 - (void)autosetTableLength;
 - (void)closeTable;
+- (void)alertUser:(NSString *)message;
 - (IBAction)action:(id)sender;
 
 @property (retain) NSWindow *mainWindow;

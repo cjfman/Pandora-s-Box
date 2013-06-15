@@ -14,3 +14,7 @@ Features
 
 Upcomming Features
 - Station creation and deletion
+
+
+Notes
+- When creating a station, the search results shown are not all of the results shown when using the pandora website
