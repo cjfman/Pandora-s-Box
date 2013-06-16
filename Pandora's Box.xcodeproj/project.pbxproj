@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		561C9D0E176E50A7006EFC05 /* PandoraSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 561C9D0D176E50A7006EFC05 /* PandoraSearchResult.m */; };
 		5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623CFF516B5C220002B2E0C /* Cocoa.framework */; };
 		5623D00016B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623CFFE16B5C220002B2E0C /* InfoPlist.strings */; };
 		5623D00216B5C220002B2E0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D00116B5C220002B2E0C /* main.m */; };
@@ -66,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		561C9D0C176E50A7006EFC05 /* PandoraSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSearchResult.h; sourceTree = "<group>"; };
+		561C9D0D176E50A7006EFC05 /* PandoraSearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSearchResult.m; sourceTree = "<group>"; };
 		5623CFF116B5C220002B2E0C /* Pandora's Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pandora's Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5623CFF516B5C220002B2E0C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5623CFF816B5C220002B2E0C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -267,6 +270,8 @@
 				5623D03516B5C2C2002B2E0C /* PandoraSong.m */,
 				5648C83316CABE1F0070DF07 /* PandoraSeed.h */,
 				5648C83416CABE1F0070DF07 /* PandoraSeed.m */,
+				561C9D0C176E50A7006EFC05 /* PandoraSearchResult.h */,
+				561C9D0D176E50A7006EFC05 /* PandoraSearchResult.m */,
 				5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */,
 				5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */,
 				56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */,
@@ -505,6 +510,7 @@
 				56E73E7A175518F500815678 /* NSObject+SPInvocationGrabbing.m in Sources */,
 				56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */,
 				56FE74EA1763FE040048052E /* StationWindowController.m in Sources */,
+				561C9D0E176E50A7006EFC05 /* PandoraSearchResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,8 +53,11 @@
 
 - (void)startSheet {
 	[self window]; // Load the sheet from xib
+	// Set up GUI
 	[self.indicator setUsesThreadedAnimation:YES];
 	[self.textField setStringValue:@""];
+	[self.createButton setEnabled:NO];
+	[self.messageLabel setHidden:YES];
 	// Hide Scroll View and get frame
 	NSRect frame = [self.scrollView frame];
 	CGFloat hdiff = frame.size.height;
@@ -110,6 +113,21 @@
 	[self setTableLength:height];
 }
 
+- (void)clearResults {
+	// Search field is empty
+	[self.messageLabel setHidden:YES];
+	[self.createButton setEnabled:NO];
+	// Clear any previous results
+	if (artists) [artists release];
+	if (songs) [songs release];
+	if (tophit) [tophit release];
+	artists = nil;
+	songs = nil;
+	tophit = nil;
+	[self.tableView reloadData];
+	[self closeTable];
+}
+
 - (void)alertUser:(NSString *)message {
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert setMessageText:message];
@@ -132,14 +150,7 @@
 
 - (void)controlTextDidChange:(NSNotification *)aNotification {
 	if ([[self.textField stringValue] length] == 0) {
-		if (artists) [artists release];
-		if (songs) [songs release];
-		if (tophit) [tophit release];
-		artists = nil;
-		songs = nil;
-		tophit = nil;
-		[self.tableView reloadData];
-		[self closeTable];
+		[self clearResults];
 		return;
 	}
 	
@@ -151,10 +162,10 @@
 	void (^callback)(NSDictionary*) = ^(NSDictionary* results) {
 		if (refnum != count) return;	// Not the most recent request
 		if (!results) {
-			[self alertUser:@"Couldn't connenct to Pandora"];
+			[self alertUser:@"Error talking to Pandora"];
 			return;
 		}
-		NSLog(@"%@", results);
+		//NSLog(@"%@", results);
 		// Clear old lists
 		if (artists) [artists release];
 		if (songs) [songs release];
@@ -189,10 +200,21 @@
 		}
 		[swap sortUsingSelector:@selector(compare:)];
 		songs = [[NSArray arrayWithArray:swap] retain];
+		
+		// Setup GUI
 		[self.tableView reloadData];
-		[self autosetTableLength];
 		[self.indicator stopAnimation:self];
-		count = 0;
+		if ([self numberOfRowsInTableView:self.tableView]) {
+			[self autosetTableLength];
+			[self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
+						byExtendingSelection:NO];
+			[self.messageLabel setHidden:YES];
+		}
+		else {
+			[self clearResults];
+			[self.messageLabel setHidden:NO];
+		}
+		count = 0;	// The last request has come in
 	};
 	[pandora asynchronousMethod:@selector(musicSearch:)
 					 withObject:[self.textField stringValue]
@@ -253,7 +275,13 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 	NSTableView *tableView = [aNotification object];
-	[tableView scrollRowToVisible:[tableView selectedRow]];
+	NSInteger row = [tableView selectedRow];
+	if (row == -1)
+		[self.createButton setEnabled:NO];
+	else {
+		[tableView scrollRowToVisible:row];
+		[self.createButton setEnabled:YES];
+	}
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {

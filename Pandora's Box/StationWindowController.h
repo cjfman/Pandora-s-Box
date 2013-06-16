@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PandoraConnection.h"
-#import "PandoraSeed.h"
+#import "PandoraSearchResult.h"
 
 @interface StationWindowController : NSWindowController <NSWindowDelegate, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate> {
 	PandoraConnection *pandora;
@@ -21,8 +21,18 @@
 - (void)setTableLength:(CGFloat)length;
 - (void)autosetTableLength;
 - (void)closeTable;
+- (void)clearResults;
 - (void)alertUser:(NSString *)message;
 - (IBAction)action:(id)sender;
+
+// Delegate Methods
+- (void)controlTextDidChange:(NSNotification *)aNotification;
+- (NSInteger)numberOfRowsInTableView:(NSTableView *) view;
+- (NSView *)tableView:(NSTableView *)tableView
+   viewForTableColumn:(NSTableColumn *)tableColumn
+				  row:(NSInteger)row;
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification;
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row;
 
 @property (retain) NSWindow *mainWindow;
 
@@ -35,5 +45,6 @@
 @property (assign) IBOutlet NSButton *createButton;
 @property (assign) IBOutlet NSButton *cancelButton;
 @property (assign) IBOutlet NSProgressIndicator *indicator;
+@property (assign) IBOutlet NSTextField *messageLabel;
 
 @end

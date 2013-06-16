@@ -51,6 +51,7 @@
 - (BOOL)relogin;
 - (NSArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
+//- (PandoraStation*)createStation:
 - (NSDictionary*)musicSearch:(NSString*)searchText;
 
 // JSON
