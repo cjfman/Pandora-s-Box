@@ -113,6 +113,28 @@
 	[self setTableLength:height];
 }
 
+- (PandoraSearchResult*)resultForRow:(NSInteger)row {
+	NSInteger offset = row;
+	if (tophit) {
+		if (offset == 0) {
+			return tophit;
+		}
+		offset--;
+	}
+	if (artists && [artists count]) {
+		if (offset < [artists count]) {
+			return [artists objectAtIndex:offset];
+		}
+		offset -= [artists count];
+	}
+	if (songs && [songs count]) {
+		if (offset < [songs count]) {
+			return [songs objectAtIndex:offset];
+		}
+	}
+	return nil;
+}
+
 - (void)clearResults {
 	// Search field is empty
 	[self.messageLabel setHidden:YES];
@@ -128,6 +150,10 @@
 	[self closeTable];
 }
 
+- (void)createStation {
+	
+}
+
 - (void)alertUser:(NSString *)message {
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert setMessageText:message];
@@ -135,11 +161,11 @@
 }
 
 - (IBAction)action:(id)sender {
-	NSLog(@"%@", self.createButton);
-	NSLog(@"%@", sender);
 	if (sender == self.createButton) {
+		[self createStation];
 	}
 	// Close Modal Sheet
+	[self clearResults];
 	[NSApp endSheet:self.sheet];
 	[self.sheet orderOut:self];
 }
@@ -240,34 +266,13 @@
 	NSTableCellView *thisCell = [tableView makeViewWithIdentifier:thisColName
 															owner:self];
 	NSString *string;
-	NSInteger offset = row;
-	while (1) {
-		if (tophit) {
-			if (offset == 0) {
-				string = tophit.stringValue;
-				if ([tophit isArtist])
-					string = [string stringByAppendingString:@" (artist)"];
-				else
-					string = [string stringByAppendingString:@" (song)"];
-				break;
-			}
-			offset--;
-		}
-		if (artists && [artists count]) {
-			if (offset < [artists count]) {
-				string = [[artists objectAtIndex:offset] stringValue];
-				break;
-			}
-			offset -= [artists count];
-		}
-		if (songs && [songs count]) {
-			if (offset < [songs count]) {
-				string = [[songs objectAtIndex:offset] stringValue];
-				break;
-			}
-		}
-		string = @"";
-		break;
+	PandoraSearchResult *result = [self resultForRow:row];
+	string = [result stringValue];
+	if (result == tophit) {
+		if ([tophit isArtist])
+			string = [string stringByAppendingString:@" (artist)"];
+		else
+			string = [string stringByAppendingString:@" (song)"];
 	}
 	thisCell.textField.stringValue = string;
 	return thisCell;

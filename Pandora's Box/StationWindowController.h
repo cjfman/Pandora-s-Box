@@ -21,7 +21,9 @@
 - (void)setTableLength:(CGFloat)length;
 - (void)autosetTableLength;
 - (void)closeTable;
+- (PandoraSearchResult*)resultForRow:(NSInteger)row;
 - (void)clearResults;
+- (void)createStation;
 - (void)alertUser:(NSString *)message;
 - (IBAction)action:(id)sender;
 
