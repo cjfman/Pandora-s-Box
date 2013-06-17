@@ -177,7 +177,9 @@
 
 - (IBAction)action:(id)sender {
 	if (sender == self.createButton) {
+		[self.indicator startAnimation:self];
 		[self createStation];
+		[self.indicator stopAnimation:self];
 	}
 	// Close Modal Sheet
 	[self clearResults];

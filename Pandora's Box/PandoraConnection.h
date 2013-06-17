@@ -11,8 +11,8 @@
 #import "PandoraStation.h"
 #import "PandoraSearchResult.h"
 
-//#define PANDORA_PARSE_DEBUG
-//#define SONG_DOWNLOAD_DEBUG
+#define PANDORA_PARSE_DEBUG
+#define SONG_DOWNLOAD_DEBUG
 
 @interface PandoraConnection : NSObject
 {
@@ -50,7 +50,7 @@
 				  andPassword:(NSString*) password
 						error:(NSError**)error;
 - (BOOL)relogin;
-- (NSArray*)getStationList;
+- (NSMutableArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
 - (PandoraStation*)createStation:(PandoraSearchResult*)music;
 - (NSDictionary*)musicSearch:(NSString*)searchText;

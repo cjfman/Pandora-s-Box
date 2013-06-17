@@ -300,6 +300,7 @@
 	[self.stationsTableView reloadData];
 	[self changeStation:station];
 	[stationController release];
+	stationController = nil;
 }
 
 /*****************************************
