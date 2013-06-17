@@ -299,8 +299,6 @@
 - (void)stationCreated:(PandoraStation *)station {
 	[self.stationsTableView reloadData];
 	[self changeStation:station];
-	[stationController release];
-	stationController = nil;
 }
 
 /*****************************************

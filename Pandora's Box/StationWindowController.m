@@ -22,7 +22,7 @@
 	artists = nil;
 	songs = nil;
 	tophit = nil;
-	return [self retain];
+	return self;
 }
 
 - (id)initWithWindow:(NSWindow *)window
@@ -185,7 +185,6 @@
 	[self clearResults];
 	[NSApp endSheet:self.sheet];
 	[self.sheet orderOut:self];
-	[self release];
 }
 
 /*****************************************
