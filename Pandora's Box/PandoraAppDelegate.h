@@ -77,8 +77,10 @@
 - (IBAction)login:(id)sender;
 
 // Station Creation
+@property (assign) IBOutlet NSSegmentedControl *addDelStationButton;
 - (void)startStationSheet;
 - (void)stationCreated:(PandoraStation*)station;
+- (IBAction)addDelStation:(id)sender;
 
 // Media Keys
 - (void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
@@ -103,7 +105,7 @@
 - (IBAction)toggleStationList:(id)sender;
 - (IBAction)newStation:(id)sender;
 - (IBAction)deleteStation:(id)sender;
-- (void)deleteProptDidEnd:(NSAlert*)a
+- (void)deletePromptDidEnd:(NSAlert*)a
 			   returnCode:(NSInteger)code
 			  contextInfo:(void *)ci;
 - (IBAction)debugAction:(id)sender;

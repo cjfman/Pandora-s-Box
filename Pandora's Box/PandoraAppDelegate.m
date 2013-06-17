@@ -305,7 +305,20 @@
 
 - (void)stationCreated:(PandoraStation *)station {
 	[self.stationsTableView reloadData];
+	NSLog(@"Created Station: %@:", [station stationName]);
 	[self changeStation:station];
+}
+
+- (IBAction)addDelStation:(id)sender {
+	NSInteger selection = [sender selectedSegment];
+	switch (selection) {
+		case 0:
+			[self startStationSheet];
+			break;
+		case 1:
+			[self deleteStation:sender];
+			break;
+	}
 }
 
 /*****************************************
@@ -487,10 +500,17 @@
 }
 
 - (IBAction)newStation:(id)sender {
+	if (!pandora) {
+		return;
+	}
 	[self startStationSheet];
 }
 
 - (IBAction)deleteStation:(id)sender {
+	if ([self selectedStationIndex] == -1 || !pandora) {
+		// No station is selected
+		return;
+	}
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert setMessageText:[NSString stringWithFormat:
 						   @"Are you sure you want to delete \n\"%@\" ?",
@@ -499,11 +519,11 @@
 	[alert addButtonWithTitle:@"Delete"];
 	[alert beginSheetModalForWindow:self.window
 					  modalDelegate:self
-					 didEndSelector:@selector(deleteProptDidEnd:returnCode:contextInfo:)
+					 didEndSelector:@selector(deletePromptDidEnd:returnCode:contextInfo:)
 						contextInfo:nil];
 }
 
-- (void)deleteProptDidEnd:(NSAlert *)a returnCode:(NSInteger)code contextInfo:(void *)ci {
+- (void)deletePromptDidEnd:(NSAlert *)a returnCode:(NSInteger)code contextInfo:(void *)ci {
 	if (code == NSAlertFirstButtonReturn) {
 		// Cancel was hit
 		return;
