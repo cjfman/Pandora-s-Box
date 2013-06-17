@@ -53,7 +53,7 @@
 	SPMediaKeyTap *keyTap;
 	
 	// Constraints
-	NSArray *stationsScrollViewConstraints;
+	NSArray *stationsViewConstraints;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -131,6 +131,7 @@
 // Stations Table
 @property (assign) IBOutlet NSTableView *stationsTableView;
 @property (assign) IBOutlet NSScrollView *stationsScrollView;
+@property (assign) IBOutlet NSView *stationsView;
 
 // Tab View
 @property (assign) IBOutlet NSTabView *mainTabView;

@@ -97,14 +97,14 @@
 	[self.albumTabAlbumView setImageScaling:NSScaleToFit];
 	// Station List Width Constraint
 	NSInteger stationsWidth = [[userDefaults objectForKey:kStationsVisible] integerValue];
-	stationsScrollViewConstraints =
+	stationsViewConstraints =
 	[[NSLayoutConstraint constraintsWithVisualFormat:
 	  [NSString stringWithFormat:@"H:[view(%ld)]", stationsWidth]
 											options:NSLayoutFormatDirectionLeadingToTrailing
 											metrics:nil
-											  views:@{@"view":self.stationsScrollView}]
+											  views:@{@"view":self.stationsView}]
 	 retain];
-	[self.windowView addConstraints:stationsScrollViewConstraints];
+	[self.windowView addConstraints:stationsViewConstraints];
 	// Set Toggle Stations Controls
 	if (stationsWidth) {
 		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
@@ -268,7 +268,7 @@
 	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]]
 					  forKey:kOpenStation];
 	[userDefaults setFloat:[self.volumeSlider floatValue] forKey:kVolume];
-	[userDefaults setInteger:self.stationsScrollView.frame.size.width  forKey:kStationsVisible];
+	[userDefaults setInteger:self.stationsView.frame.size.width  forKey:kStationsVisible];
 	
 	// Clear Cache
 	NSError *error = nil;
@@ -443,7 +443,7 @@
 	}
 	running = true;
 	[sender setEnabled:NO];
-	NSRect frame = [self.stationsScrollView frame];
+	NSRect frame = [self.stationsView frame];
 	NSRect wframe = [self.window frame];
 	NSInteger diff = frame.size.width;
 	if (diff) {
@@ -461,27 +461,27 @@
 	}
 	
 	// Clear old contraints
-	if (stationsScrollViewConstraints) {
-		[self.windowView removeConstraints:stationsScrollViewConstraints];
-		[stationsScrollViewConstraints release];
-		stationsScrollViewConstraints = nil;
+	if (stationsViewConstraints) {
+		[self.windowView removeConstraints:stationsViewConstraints];
+		[stationsViewConstraints release];
+		stationsViewConstraints = nil;
 	}
 	
 	// Start Animation
 	[NSAnimationContext beginGrouping];
 	[[NSAnimationContext currentContext] setCompletionHandler:^{
-		stationsScrollViewConstraints =
+		stationsViewConstraints =
 		[[NSLayoutConstraint constraintsWithVisualFormat:
 		  [NSString stringWithFormat:@"H:[view(%d)]", (int)frame.size.width]
 												 options:NSLayoutFormatDirectionLeadingToTrailing
 												 metrics:nil
-												   views:@{@"view":self.stationsScrollView}]
+												   views:@{@"view":self.stationsView}]
 		 retain];
-		[self.windowView addConstraints:stationsScrollViewConstraints];
+		[self.windowView addConstraints:stationsViewConstraints];
 		[sender setEnabled:YES];
 		running = false;
 	}];
-	[[self.stationsScrollView animator] setFrame:frame];
+	[[self.stationsView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
 	[NSAnimationContext endGrouping];
 }
