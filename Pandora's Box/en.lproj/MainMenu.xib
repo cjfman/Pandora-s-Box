@@ -347,6 +347,32 @@
 						<object class="NSMenu" key="NSSubmenu" id="941447902">
 							<string key="NSTitle">Account</string>
 							<array class="NSMutableArray" key="NSMenuItems">
+								<object class="NSMenuItem" id="1041596751">
+									<reference key="NSMenu" ref="941447902"/>
+									<string key="NSTitle">New Station</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="526350519">
+									<reference key="NSMenu" ref="941447902"/>
+									<string key="NSTitle">Delete Station</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="764301277">
+									<reference key="NSMenu" ref="941447902"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="449495672">
 									<reference key="NSMenu" ref="941447902"/>
 									<string key="NSTitle">Logout</string>
@@ -1056,7 +1082,7 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{255, 429}</string>
 											<reference key="NSSuperview" ref="168619188"/>
-											<reference key="NSNextKeyView" ref="644823453"/>
+											<reference key="NSNextKeyView" ref="583264514"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="355672305">
@@ -1206,7 +1232,7 @@
 							</array>
 							<string key="NSFrameSize">{257, 447}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSNextKeyView" ref="168619188"/>
+							<reference key="NSNextKeyView" ref="644823453"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="482620413"/>
@@ -1299,6 +1325,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{257, 0}, {471, 447}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSNextKeyView" ref="727773362"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="1041310444">
@@ -1419,7 +1446,7 @@
 																<int key="NSvFlags">2322</int>
 																<string key="NSFrameSize">{417, 14}</string>
 																<reference key="NSSuperview" ref="257464051"/>
-																<reference key="NSNextKeyView" ref="582235718"/>
+																<reference key="NSNextKeyView" ref="765179022"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<object class="NSTextContainer" key="NSTextContainer" id="35604011">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1497,6 +1524,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{418, 1}, {15, 275}}</string>
 														<reference key="NSSuperview" ref="113171856"/>
+														<reference key="NSNextKeyView"/>
 														<string key="NSReuseIdentifierKey">_NS:83</string>
 														<reference key="NSTarget" ref="113171856"/>
 														<string key="NSAction">_doScroller:</string>
@@ -1519,7 +1547,7 @@
 												</array>
 												<string key="NSFrame">{{20, 20}, {434, 277}}</string>
 												<reference key="NSSuperview" ref="727773362"/>
-												<reference key="NSNextKeyView" ref="257464051"/>
+												<reference key="NSNextKeyView" ref="582235718"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133138</int>
 												<reference key="NSVScroller" ref="765179022"/>
@@ -2618,6 +2646,38 @@
 					<int key="connectionID">3565</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">newStation:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1041596751"/>
+					</object>
+					<int key="connectionID">3624</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">deleteStation:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="526350519"/>
+					</object>
+					<int key="connectionID">3625</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">createStationMenuItem</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1041596751"/>
+					</object>
+					<int key="connectionID">3626</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">deleteStationMenuItem</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="526350519"/>
+					</object>
+					<int key="connectionID">3627</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="1068307256"/>
@@ -3337,6 +3397,9 @@
 						<reference key="object" ref="941447902"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="449495672"/>
+							<reference ref="1041596751"/>
+							<reference ref="526350519"/>
+							<reference ref="764301277"/>
 						</array>
 						<reference key="parent" ref="302598603"/>
 					</object>
@@ -5904,6 +5967,21 @@
 						<reference key="object" ref="692890331"/>
 						<reference key="parent" ref="781443406"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">3620</int>
+						<reference key="object" ref="1041596751"/>
+						<reference key="parent" ref="941447902"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">3621</int>
+						<reference key="object" ref="526350519"/>
+						<reference key="parent" ref="941447902"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">3622</int>
+						<reference key="object" ref="764301277"/>
+						<reference key="parent" ref="941447902"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6273,6 +6351,9 @@
 				<string key="3562.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3563.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="3620.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="3621.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="3622.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="371.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="371.IBWindowTemplateEditedContentRect">{{2722, 517}, {480, 360}}</string>
 				<integer value="1" key="371.NSWindowTemplate.visibleAtLaunch"/>
@@ -6357,7 +6438,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">3619</int>
+			<int key="maxID">3627</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

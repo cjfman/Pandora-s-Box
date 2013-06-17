@@ -54,6 +54,7 @@
 - (NSMutableArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
 - (PandoraStation*)createStation:(PandoraSearchResult*)music;
+- (BOOL)deleteStation:(PandoraStation*)station;
 - (NSDictionary*)musicSearch:(NSString*)searchText;
 
 // JSON

@@ -253,13 +253,20 @@
 	else if (item == self.toggleStationsMenuItem) {
 		ans = (pandora) ? YES : NO;
 	}
+	else if (item == self.createStationMenuItem) {
+		ans = (pandora) ? YES : NO;
+	}
+	else if (item == self.deleteStationMenuItem) {
+		ans = (self.selectedStationIndex != -1) && self.selectedStation.allowDelete;
+	}
 	return ans;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	// Save layout at other settings
 	[userDefaults setInteger:[self.tabSelectionView selectedSegment] forKey:kOpenTab];
-	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]] forKey:kOpenStation];
+	[userDefaults setInteger:[stationList indexOfObject:[currentStation stationName]]
+					  forKey:kOpenStation];
 	[userDefaults setFloat:[self.volumeSlider floatValue] forKey:kVolume];
 	[userDefaults setInteger:self.stationsScrollView.frame.size.width  forKey:kStationsVisible];
 	
@@ -479,6 +486,45 @@
 	[NSAnimationContext endGrouping];
 }
 
+- (IBAction)newStation:(id)sender {
+	[self startStationSheet];
+}
+
+- (IBAction)deleteStation:(id)sender {
+	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+	[alert setMessageText:[NSString stringWithFormat:
+						   @"Are you sure you want to delete \n\"%@\" ?",
+						   [[self selectedStation] stationName]]];
+	[alert addButtonWithTitle:@"Cancel"];
+	[alert addButtonWithTitle:@"Delete"];
+	[alert beginSheetModalForWindow:self.window
+					  modalDelegate:self
+					 didEndSelector:@selector(deleteProptDidEnd:returnCode:contextInfo:)
+						contextInfo:nil];
+}
+
+- (void)deleteProptDidEnd:(NSAlert *)a returnCode:(NSInteger)code contextInfo:(void *)ci {
+	if (code == NSAlertFirstButtonReturn) {
+		// Cancel was hit
+		return;
+	}
+	else if (code == NSAlertSecondButtonReturn) {
+		// Delete the station
+		PandoraStation *station = [self selectedStation];
+		if ([pandora deleteStation:station]) {
+			NSLog(@"Deleted station: %@", station.stationName);
+			[self.stationsTableView reloadData];
+			if (station == currentStation) {
+				// Play first station
+				[self changeStation:[pandora getStation:[stationList objectAtIndex:0]]];
+			}
+		}
+		else {
+			NSLog(@"Faild to deleted station: %@\n%@", station.stationName, [pandora lastError]);
+		}
+	}
+}
+
 - (IBAction)debugAction:(id)sender {
 	[self startStationSheet];
 }
@@ -589,6 +635,7 @@
 }
 
 - (void)changeStation:(PandoraStation *)newStation {
+	NSLog(@"Station changed: %@", newStation.stationName);
 	currentStation = newStation;
 	if (audioPlayer) {
 		[audioPlayer pause];
@@ -668,7 +715,6 @@
 	PandoraStation *station = [pandora getStation:
 							   [stationList objectAtIndex:
 								[self.stationsTableView selectedRow]]];
-	NSLog(@"New Station Selected: %@", station.stationName);
 	[self changeStation:station];
 }
 
@@ -791,8 +837,16 @@
 	return [currentStation getCurrentIndex];
 }
 
-- (PandoraSong*)selectedSong {
+- (PandoraSong *)selectedSong {
 	return [currentStation getSongAtIndex:[self selectedSongIndex]];
+}
+
+- (NSInteger)selectedStationIndex {
+	return [self.stationsTableView selectedRow];
+}
+
+- (PandoraStation *)selectedStation {
+	return [pandora getStation:[stationList objectAtIndex:[self selectedStationIndex]]];
 }
 
 - (void)alertUser:(NSString *)message {

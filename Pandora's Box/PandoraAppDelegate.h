@@ -91,6 +91,8 @@
 @property (assign) IBOutlet NSMenuItem *tiredMenuItem;
 @property (assign) IBOutlet NSMenuItem *debugMenuItem;
 @property (assign) IBOutlet NSMenuItem *toggleStationsMenuItem;
+@property (assign) IBOutlet NSMenuItem *createStationMenuItem;
+@property (assign) IBOutlet NSMenuItem *deleteStationMenuItem;
 - (IBAction)playPause:(id)sender;
 - (IBAction)skipSong:(id)sender;
 - (IBAction)playPreviousSong:(id)sender;
@@ -99,6 +101,11 @@
 - (IBAction)relogin:(id)sender;
 - (IBAction)getLyricsMenuItem:(id)sender;
 - (IBAction)toggleStationList:(id)sender;
+- (IBAction)newStation:(id)sender;
+- (IBAction)deleteStation:(id)sender;
+- (void)deleteProptDidEnd:(NSAlert*)a
+			   returnCode:(NSInteger)code
+			  contextInfo:(void *)ci;
 - (IBAction)debugAction:(id)sender;
 
 // Toolbar Buttons
@@ -152,6 +159,8 @@
 - (NSInteger)playingSongIndex;
 - (NSInteger)selectedSongIndex;
 - (PandoraSong*)selectedSong;
+- (NSInteger)selectedStationIndex;
+- (PandoraStation*)selectedStation;
 - (void)alertUser:(NSString*)message;
 
 // Error Handling

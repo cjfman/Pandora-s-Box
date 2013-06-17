@@ -267,6 +267,31 @@
 	return station;
 }
 
+- (BOOL)deleteStation:(PandoraStation *)station {
+	if (!station.allowDelete) {
+		self.lastError = [NSError errorWithDomain:@"Pandora"
+											 code:0
+										 userInfo:nil];
+		return FALSE;
+	}
+	NSMutableDictionary *parameters =
+	[NSMutableDictionary dictionaryWithObject:[station stationToken]
+									   forKey:@"stationToken"];
+	NSError *error = nil;
+	[self jsonRequest:@"station.deleteStation"
+	   withParameters:parameters
+			   useTLS:NO
+		  isEncrypted:YES
+				error:&error];
+	if (error)
+		return FALSE;
+	
+	NSString *name = [station stationName];
+	[stations removeObjectForKey:name];
+	[stationList removeObjectIdenticalTo:name];
+	return TRUE;
+}
+
 - (NSDictionary*)musicSearch:(NSString *)searchText {
 	NSMutableDictionary *parameters =
 	[NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -362,7 +387,7 @@
 	}
 	NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     /*
-    if ([method isEqualTo:@"station.createStation"])
+    if ([method isEqualTo:@"station.deleteStation"])
         NSLog(@"%@", jsonResult);//*/
 	
 	NSDictionary *response = [jsonData objectFromJSONData];
