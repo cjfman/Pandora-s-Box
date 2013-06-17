@@ -17,7 +17,12 @@
 - (id)init {
 	self = [super initWithWindowNibName:@"StationWindowController"
 								  owner:self];
-	return self;
+	target = nil;
+	pandora = nil;
+	artists = nil;
+	songs = nil;
+	tophit = nil;
+	return [self retain];
 }
 
 - (id)initWithWindow:(NSWindow *)window
@@ -35,6 +40,7 @@
 	if (artists) [artists release];
 	if (songs) [songs release];
 	if (tophit) [tophit release];
+	if (target) [target release];
 	if (self.mainWindow) [self.mainWindow release];
 	[super dealloc];
 }
@@ -42,6 +48,12 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+}
+
+- (void)setTarget:(id)aTarget callbackSelector:(SEL)selector {
+	if (!aTarget) return;
+	target = [aTarget retain];
+	finalCallback = selector;
 }
 
 - (void)setPandoraConnection:(PandoraConnection*)aConnection {
@@ -151,7 +163,10 @@
 }
 
 - (void)createStation {
-	
+	PandoraSearchResult *seed = [self resultForRow:[self.tableView selectedRow]];
+	PandoraStation *station = [pandora createStation:seed];
+	if (target)
+		[target performSelector:finalCallback withObject:station];
 }
 
 - (void)alertUser:(NSString *)message {
@@ -168,6 +183,7 @@
 	[self clearResults];
 	[NSApp endSheet:self.sheet];
 	[self.sheet orderOut:self];
+	[self release];
 }
 
 /*****************************************

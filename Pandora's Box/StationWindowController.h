@@ -11,11 +11,14 @@
 #import "PandoraSearchResult.h"
 
 @interface StationWindowController : NSWindowController <NSWindowDelegate, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate> {
+	id target;
+	SEL finalCallback;
 	PandoraConnection *pandora;
 	NSArray *artists;
 	NSArray *songs;
 	PandoraSearchResult *tophit;
 }
+- (void)setTarget:(id)aTarget callbackSelector:(SEL)selector;
 - (void)setPandoraConnection:(PandoraConnection*)aConnection;
 - (void)startSheet;
 - (void)setTableLength:(CGFloat)length;

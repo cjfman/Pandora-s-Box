@@ -76,6 +76,10 @@
 - (void)startLoginSheet;
 - (IBAction)login:(id)sender;
 
+// Station Creation
+- (void)startStationSheet;
+- (void)stationCreated:(PandoraStation*)station;
+
 // Media Keys
 - (void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
 

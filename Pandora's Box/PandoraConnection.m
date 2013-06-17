@@ -234,6 +234,28 @@
 	return station;
 }
 
+- (PandoraStation*)createStation:(PandoraSearchResult *)music {
+	NSMutableDictionary *parameters =
+	[NSMutableDictionary dictionaryWithObject:[music musicToken]
+									   forKey:@"musicToken"];
+	NSError *error = nil;
+	NSDictionary *result = [self jsonRequest:@"station.createStation"
+	   withParameters:parameters
+			   useTLS:NO isEncrypted:YES
+				error:&error];
+	
+	if (!result) {
+		NSLog(@"%@", error);
+		return nil;
+	}
+	PandoraStation *station = [[[PandoraStation alloc] initWithDictionary:result
+											connection:self]
+			autorelease];
+	if (station)
+		[stationList addObject:station];
+	return station;
+}
+
 - (NSDictionary*)musicSearch:(NSString *)searchText {
 	NSMutableDictionary *parameters =
 	[NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -329,7 +351,7 @@
 	}
 	NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     /*
-    if ([method isEqualTo:@"user.sleepSong"])
+    if ([method isEqualTo:@"station.createStation"])
         NSLog(@"%@", jsonResult);//*/
 	
 	NSDictionary *response = [jsonData objectFromJSONData];

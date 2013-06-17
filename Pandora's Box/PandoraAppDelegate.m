@@ -287,21 +287,19 @@
  *****************************************/
 
 - (void)startStationSheet {
-	/*if (!self.stationSheet) {
-		if(![NSBundle loadNibNamed:@"CreateStation" owner:self]) {
-			NSLog(@"Marco");
-			return;
-		}
-	}
-	else {
-		[self.stationSheetTextField setValue:@""];
-	}*/
 	if (!stationController) {
 		stationController = [[StationWindowController alloc] init];
-	[stationController setMainWindow:self.window];
-	[stationController setPandoraConnection:pandora];
+		[stationController setTarget:self callbackSelector:@selector(stationCreated:)];
+		[stationController setMainWindow:self.window];
+		[stationController setPandoraConnection:pandora];
 	}
 	[stationController startSheet];
+}
+
+- (void)stationCreated:(PandoraStation *)station {
+	[self.stationsTableView reloadData];
+	[self changeStation:station];
+	[stationController release];
 }
 
 /*****************************************

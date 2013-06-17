@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "blowfish_koc.h"
 #import "PandoraStation.h"
+#import "PandoraSearchResult.h"
 
 //#define PANDORA_PARSE_DEBUG
 //#define SONG_DOWNLOAD_DEBUG
@@ -51,7 +52,7 @@
 - (BOOL)relogin;
 - (NSArray*)getStationList;
 - (PandoraStation*)getStation:(NSString*)name;
-//- (PandoraStation*)createStation:
+- (PandoraStation*)createStation:(PandoraSearchResult*)music;
 - (NSDictionary*)musicSearch:(NSString*)searchText;
 
 // JSON
