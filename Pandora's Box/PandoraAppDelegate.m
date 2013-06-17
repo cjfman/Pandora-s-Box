@@ -220,7 +220,7 @@
 	}
 	
 	// Start Station
-	stationList = [[NSMutableArray arrayWithArray:[pandora getStationList]] retain];
+	stationList = [[pandora getStationList] retain];
 	[self.stationsTableView reloadData];
 	NSInteger stationIndex = [userDefaults integerForKey:kOpenStation];
 	// Check bounds
