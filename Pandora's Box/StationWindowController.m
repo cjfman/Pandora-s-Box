@@ -183,6 +183,7 @@
 	}
 	// Close Modal Sheet
 	[self clearResults];
+	[self.indicator stopAnimation:self];
 	[NSApp endSheet:self.sheet];
 	[self.sheet orderOut:self];
 }

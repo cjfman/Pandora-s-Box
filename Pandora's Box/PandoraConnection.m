@@ -251,8 +251,10 @@
 	PandoraStation *station = [[[PandoraStation alloc] initWithDictionary:result
 											connection:self]
 			autorelease];
-	if (station)
-		[stationList addObject:station];
+	if (station) {
+		[stationList addObject:[station stationName]];
+		[stations setObject:station forKey:[station stationName]];
+	}
 	return station;
 }
 
