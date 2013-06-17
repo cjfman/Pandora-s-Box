@@ -17,6 +17,7 @@
 }
 
 - (id)initWithDictionary:(NSDictionary*)info;
+- (NSString*)description;
 - (bool)isArtist;
 - (bool)isSong;
 - (NSString*)stringValue;

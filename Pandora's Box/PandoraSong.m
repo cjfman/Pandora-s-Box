@@ -57,6 +57,11 @@
 	[super dealloc];
 }
 
+- (NSString*)description {
+	return [NSString stringWithFormat:@"Pandora Song: %@ by %@",
+			self.songName, self.artistName];
+}
+
 - (void)loadData {
 	[self loadAlbumArt];
 	[self loadSong];

@@ -63,14 +63,13 @@
 @property (copy) NSString *amazonSongDigitalAsin;
 @property (copy) NSString *adToken;
 
-//@property (retain) NSImage *albumArt;
 @property (retain) NSData *songData;
-//@property (retain) AVAudioPlayer *audioPlayer;
 @property (assign) BOOL enabled;
 
 - (id)initWithDictionary:(NSDictionary*)info
 			  connection:(PandoraConnection*)newConnection
 				 station:(PandoraStation*)newStation;
+- (NSString*)description;
 - (void)loadData;
 - (void)loadAlbumArt;
 - (void)loadSong;

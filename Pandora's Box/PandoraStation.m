@@ -41,6 +41,10 @@
 	[super dealloc];
 }
 
+- (NSString*)description {
+	return [NSString stringWithFormat:@"Pandora Station: %@", self.stationName];
+}
+
 - (void)requestExtendedInfo {
     //NSLog(@"Getting extended info for station: %@", self.stationName);
     

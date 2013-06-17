@@ -46,6 +46,7 @@
 @property BOOL requiresCleanAds;
 
 - (id)initWithDictionary: info connection:(PandoraConnection*)newConnection;
+- (NSString*)description;
 - (void)requestExtendedInfo;
 - (NSArray*)getPlaylist;
 

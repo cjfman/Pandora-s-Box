@@ -11,8 +11,8 @@
 #import "PandoraStation.h"
 #import "PandoraSearchResult.h"
 
-#define PANDORA_PARSE_DEBUG
-#define SONG_DOWNLOAD_DEBUG
+//#define PANDORA_PARSE_DEBUG
+//#define SONG_DOWNLOAD_DEBUG
 
 @interface PandoraConnection : NSObject
 {
@@ -39,6 +39,7 @@
 
 - (id)init;
 - (id)initWithPartner:(NSString*)partnerName;
+- (NSString*)description;
 - (void)asynchronousMethod:(SEL)selector
 				withObject:(id)parameters
 		   completionBlock:(void(^)(id))callback;

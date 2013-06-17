@@ -60,17 +60,16 @@
 	return self;
 }
 
-- (void)setPartner:(NSString *)partnerName {
-	// Get Partner Info
-	NSString *partnerPath = [[NSBundle mainBundle] pathForResource:@"PartnerInfo" ofType:@"plist"];
-	partner = [[[NSDictionary dictionaryWithContentsOfFile:partnerPath] objectForKey:partnerName] copy];
-	NSString *encryptKey = [partner objectForKey:kEncrypt];
-	NSString *decryptKey = [partner objectForKey:kDecrypt];
-	Blowfish_Init(&blowfishCTXEncrypt, (unsigned char*)[encryptKey UTF8String], (int)[encryptKey length]);
-	Blowfish_Init(&blowfishCTXDecrypt, (unsigned char*)[decryptKey UTF8String], (int)[decryptKey length]);
+- (NSString*)description {
+	if (userAuthToken) {
+		return [NSString stringWithFormat:
+				@"Pandora connection with user: %@", username];
+	}
+	else
+		return @"Pandora connection";
 }
 
--(void)dealloc {
+- (void)dealloc {
 	[partner release];
 	[stationList release];
 	[stations release];
@@ -93,6 +92,16 @@
 			callback(result);
 		});
 	});
+}
+
+- (void)setPartner:(NSString *)partnerName {
+	// Get Partner Info
+	NSString *partnerPath = [[NSBundle mainBundle] pathForResource:@"PartnerInfo" ofType:@"plist"];
+	partner = [[[NSDictionary dictionaryWithContentsOfFile:partnerPath] objectForKey:partnerName] copy];
+	NSString *encryptKey = [partner objectForKey:kEncrypt];
+	NSString *decryptKey = [partner objectForKey:kDecrypt];
+	Blowfish_Init(&blowfishCTXEncrypt, (unsigned char*)[encryptKey UTF8String], (int)[encryptKey length]);
+	Blowfish_Init(&blowfishCTXDecrypt, (unsigned char*)[decryptKey UTF8String], (int)[decryptKey length]);
 }
 
 - (BOOL)partnerLogin:(NSError**)error {

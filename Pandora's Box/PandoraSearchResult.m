@@ -18,6 +18,24 @@
 	return self;
 }
 
+- (void)dealloc {
+	if (self.musicToken) [self.musicToken release];
+	if (self.artistName) [self.artistName release];
+	if (self.songName)   [self.songName   release];
+	[super dealloc];
+}
+
+- (NSString*)description {
+	if ([self isArtist]) {
+		return [NSString stringWithFormat:
+				@"Pandora Search Result (artist): %@", self.artistName];
+	}
+	else {
+		return [NSString stringWithFormat:@"Pandora Search Result (song): %@ by %@",
+				self.songName, self.artistName];
+	}
+}
+
 - (bool)isArtist {
 	return !(self.songName);
 }
