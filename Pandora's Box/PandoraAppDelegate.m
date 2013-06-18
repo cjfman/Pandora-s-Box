@@ -188,19 +188,22 @@
 		// Close Modal Sheet
 		[NSApp endSheet:self.loginWindow];
 		[self.loginWindow orderOut:self];
-	
-		// Save Settings
-		[userDefaults setBool:remember forKey:kRememberLogin];
+		
+#ifndef PANDORA_PARSE_DEBUG
+		// Save the username and password in the keychain
 		 if (remember) {
 			 // Delete any previous entry
-			 [SSKeychain deletePasswordForService:applicationName
-										  account:username];
+			 for (NSString *oldUsername in [SSKeychain allAccounts]) {
+				 [SSKeychain deletePasswordForService:applicationName
+											  account:oldUsername];
+			 }
 			 // Save password to keychain
 			 BOOL keySet = [SSKeychain setPassword:password
 										forService:applicationName
 										   account:username];
 			 if (keySet) {
 				 // Save user to settings
+				 [userDefaults setBool:remember forKey:kRememberLogin];
 				 [userDefaults setObject:username forKey:kUsername];
 			 }
 			 else {
@@ -208,6 +211,7 @@
 				 [userDefaults setBool:FALSE forKey:kRememberLogin];
 			 }
 		 }
+#endif
 	}
 	else {
 		// Login with preset credentials
