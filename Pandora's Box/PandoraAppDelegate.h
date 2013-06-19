@@ -72,7 +72,7 @@
 @property (assign) IBOutlet NSSecureTextField *passwordView;
 @property (assign) IBOutlet NSButton *rememberMeView;
 @property (assign) IBOutlet NSTextField *loginErrorView;
-@property (assign) IBOutlet NSImageView *loginErrorImage;
+@property (assign) IBOutlet NSProgressIndicator *loginIndicator;
 - (void)startLoginSheet;
 - (IBAction)login:(id)sender;
 

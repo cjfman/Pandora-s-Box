@@ -156,9 +156,12 @@
 	[self.usernameView setStringValue:@""];
 	[self.passwordView setStringValue:@""];
 	[self.rememberMeView setState:false];
+	[self.loginIndicator setCanDrawConcurrently:YES];
 }
 
 - (IBAction)login:(id)sender {
+	[self.loginIndicator startAnimation:self];
+	
 	// Start Pandora
 	if (!pandora) {
 		pandora = [[PandoraConnection alloc] initWithPartner:@"iOS"];
@@ -181,6 +184,7 @@
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
 		if (error) {
+			[self.loginIndicator stopAnimation:self];
 			[self errorHandler:error];
 			return;
 		}
