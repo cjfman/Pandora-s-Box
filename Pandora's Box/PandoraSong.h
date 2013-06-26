@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AVFoundation/AVFoundation.h>
+#import "CFAudioPlayer.h"
 #import "cjfmanExtentionToNSString.h"
 
 @class PandoraConnection;
@@ -19,7 +19,7 @@
 	PandoraStation *station;
 	NSString *audioContainer;
 	NSString *songPath;
-	AVAudioPlayer *audioPlayer;
+	CFAudioPlayer *audioPlayer;
 	NSImage *albumArt;
 	BOOL cached;
 }
@@ -79,8 +79,8 @@
 - (void)clean;
 
 // Getters and Setters
-- (void)setAudioPlayer:(AVAudioPlayer*)newPlayer;
-- (AVAudioPlayer*)audioPlayer;
+- (void)setAudioPlayer:(CFAudioPlayer*)newPlayer;
+- (CFAudioPlayer*)audioPlayer;
 - (void)setAlbumArt:(NSImage*)newArt;
 - (NSImage*)albumArt;
 

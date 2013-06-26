@@ -9,7 +9,10 @@
 #import "PandoraAppDelegate.h"
 #import "PandoraConnection.h"
 #import "PlaylistTableCellView.h"
+
+#ifndef GNUstep
 #import "SSKeychain.h"
+#endif
 
 #define kOpenTab @"openTab"
 #define kUsername @"username"
@@ -73,16 +76,20 @@
 	  [NSNumber numberWithBool:false], kRememberLogin,
 	  [NSNumber numberWithInt:1], kOpenStation,
 	  [NSNumber numberWithFloat:.5], kVolume,
+#ifndef GNUstep
 	  [SPMediaKeyTap defaultMediaKeyUserBundleIdentifiers],kMediaKeyUsingBundleIdentifiersDefaultsKey,
 	  [NSNumber numberWithInt:250], kStationsVisible,
+#endif
 	  nil]];
-	  
+
+#ifndef GNUstep
 	// Media Key Support
 	keyTap = [[SPMediaKeyTap alloc] initWithDelegate:self];
 	if([SPMediaKeyTap usesGlobalMediaKeyTap])
 		[keyTap startWatchingMediaKeys];
 	else
 		NSLog(@"Media key monitoring disabled");
+#endif
 	
 	// Setup GUI Elements
 	// Constraints
@@ -95,17 +102,9 @@
 	 multiplier:1.0
 	 constant:1]];
 	[self.albumTabAlbumView setImageScaling:NSScaleToFit];
-	// Station List Width Constraint
-	NSInteger stationsWidth = [[userDefaults objectForKey:kStationsVisible] integerValue];
-	stationsViewConstraints =
-	[[NSLayoutConstraint constraintsWithVisualFormat:
-	  [NSString stringWithFormat:@"H:[view(%ld)]", stationsWidth]
-											options:NSLayoutFormatDirectionLeadingToTrailing
-											metrics:nil
-											  views:@{@"view":self.stationsView}]
-	 retain];
-	[self.windowView addConstraints:stationsViewConstraints];
 	// Set Toggle Stations Controls
+#ifndef GNUstep
+	NSInteger stationsWidth = [[userDefaults objectForKey:kStationsVisible] integerValue];
 	if (stationsWidth) {
 		[self.toggleStationsMenuItem setTitle:@"Hide Stations"];
 		[self.toggleStationsButton setImage:closeDrawer];
@@ -114,6 +113,21 @@
 		[self.toggleStationsMenuItem setTitle:@"Show Stations"];
 		[self.toggleStationsButton setImage:openDrawer];
 	}
+#else
+	NSInteger stationsWidth = 250;
+	[self.toggleStationsButton setHidden:YES];
+	[self.rememberMeView setHidden:YES];
+	[self.toggleStationsMenuItem setHidden:YES];
+#endif
+	// Station List Width Constraint
+	stationsViewConstraints =
+	[[NSLayoutConstraint constraintsWithVisualFormat:
+	  [NSString stringWithFormat:@"H:[view(%ld)]", stationsWidth]
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:@{@"view":self.stationsView}]
+	 retain];
+	[self.windowView addConstraints:stationsViewConstraints];
 	// Other GUI Setup
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:[userDefaults integerForKey:kOpenTab]];
@@ -132,6 +146,7 @@
 	
 	
 	// Login
+#ifndef GNUstep
 	if ([userDefaults boolForKey:kRememberLogin]) {
 		// Login using saved credentials from keychain
 		username = [userDefaults objectForKey:kUsername];
@@ -141,6 +156,7 @@
 			return;
 		}
 	}
+#endif
 	
 	// Start Modal Login Sheet
 	[self startLoginSheet];
@@ -179,7 +195,9 @@
 		// Get Values from sheet
 		username = [[self.usernameView stringValue] copy];
 		password = [self.passwordView stringValue];
+#ifndef GNUstep
 		bool remember = [self.rememberMeView state];
+#endif
 		
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
@@ -194,6 +212,7 @@
 		[self.loginWindow orderOut:self];
 		
 #ifndef PANDORA_PARSE_DEBUG
+	#ifndef GNUstep
 		// Save the username and password in the keychain
 		 if (remember) {
 			 // Delete any previous entry
@@ -215,6 +234,7 @@
 				 [userDefaults setBool:FALSE forKey:kRememberLogin];
 			 }
 		 }
+	#endif
 #endif
 	}
 	else {
@@ -333,6 +353,7 @@
  Media Key Support
  *****************************************/
 
+#ifndef GNUstep
 /*
  * Code Provided by https://github.com/nevyn/SPMediaKeyTap
  */
@@ -366,6 +387,8 @@
 		}
 	}
 }
+
+#endif
 
 /*****************************************
  Menu Bar Methods
@@ -424,6 +447,7 @@
 	pandora = nil;
 	
 	// Remove password from keychain
+#ifndef GNUstep
 	if ([userDefaults boolForKey:kRememberLogin]) {
 		[userDefaults setBool:FALSE forKey:kRememberLogin];
 		NSError *error = nil;
@@ -432,6 +456,7 @@
 			NSLog(@"Failed to remove %@ from keychain\n%@", username, error);
 		}
 	}
+#endif
 	[username release];
 	username = nil;
 	[password release];
@@ -458,6 +483,7 @@
 }
 
 - (IBAction)toggleStationList:(id)sender {
+#ifndef GNUstep
 	static Boolean running = false;
 	if (running) {
 		return;
@@ -505,6 +531,7 @@
 	[[self.stationsView animator] setFrame:frame];
 	[[self.window animator] setFrame:wframe display:YES animate:YES];
 	[NSAnimationContext endGrouping];
+#endif
 }
 
 - (IBAction)newStation:(id)sender {
@@ -768,6 +795,7 @@
  AVAudioPlayer Deligate Methods
  *****************************************/
 
+#ifndef GNUstep
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player
 					   successfully:(BOOL)flag {
 	if (player == audioPlayer) {
@@ -775,6 +803,7 @@
 		[self playNextSong];
 	}
 }
+#endif
 
 /*****************************************
  Toolbar Methods

@@ -229,7 +229,7 @@
  Getters and Setters
  *******************************************/
 
-- (void)setAudioPlayer:(AVAudioPlayer *)newPlayer {
+- (void)setAudioPlayer:(CFAudioPlayer *)newPlayer {
 	audioPlayer = newPlayer;
 }
 
@@ -238,7 +238,7 @@
 	if (!audioPlayer) {
 		[self loadSong];
 		NSError *error = nil;
-		audioPlayer = [[AVAudioPlayer alloc] initWithData:self.songData
+		audioPlayer = [[CFAudioPlayer alloc] initWithData:self.songData
 													error:&error];
 		if (error) {
 			NSLog(@"Error playing song %@:\n>%@",

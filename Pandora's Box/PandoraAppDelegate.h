@@ -6,15 +6,25 @@
 //  Copyright (c) 2013 Charles Franklin. All rights reserved.
 //
 
+#define GNUstep
+
 #import <Cocoa/Cocoa.h>
-#import <AVFoundation/AVFoundation.h>
-#import "PandoraConnection.h"
+
+#ifndef GNUstep
 #import "SPMediaKeyTap.h"
+#endif
+
+#import "PandoraConnection.h"
 #import "StationWindowController.h"
+#import "CFAudioPlayer.h"
 
 #define audioCacheFolder @"Audio File Cache"
 
-@interface PandoraAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, AVAudioPlayerDelegate, NSUserInterfaceValidations>
+@interface PandoraAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, NSUserInterfaceValidations
+#ifndef GNUstep
+, AVAudioPlayerDelegate
+#endif
+>
 {
 	NSString *applicationName;
 	NSUserDefaults *userDefaults;
@@ -30,7 +40,7 @@
 	NSString *password;
 	
 	// Audio
-	AVAudioPlayer *audioPlayer;
+	CFAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
 	
 	// Images
@@ -49,8 +59,10 @@
 	NSString *supportPath;
 	NSString *audioCachePath;
 	
+#ifndef GNUstep
 	// Media Key Support
 	SPMediaKeyTap *keyTap;
+#endif
 	
 	// Constraints
 	NSArray *stationsViewConstraints;
@@ -83,7 +95,9 @@
 - (IBAction)addDelStation:(id)sender;
 
 // Media Keys
+#ifndef GNUstep
 - (void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event;
+#endif
 
 // Menu Bar
 @property (assign) IBOutlet NSMenuItem *logoutMenuItem;
