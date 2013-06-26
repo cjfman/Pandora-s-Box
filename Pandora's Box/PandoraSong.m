@@ -22,6 +22,7 @@
 	self.audioPlayer = nil;
 	self.enabled = YES;
 	cached = NO;
+	loading = false;
 	return self;
 }
 
@@ -63,9 +64,20 @@
 }
 
 - (void)loadData {
+	//loading = true;
 	[self loadAlbumArt];
 	[self loadSong];
 	[self loadLyrics];
+	loading = false;
+}
+
+- (void)asynchronousLoadWithCallback:(void(^)(void))callback {
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		[self loadData];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			callback();
+		});
+	});
 }
 
 - (void)loadAlbumArt {
@@ -259,6 +271,14 @@
 		[self loadAlbumArt];
 	}
 	return albumArt;
+}
+
+- (BOOL)cached {
+	return cached;
+}
+
+- (BOOL)loading {
+	return loading;
 }
 
 /*******************************************

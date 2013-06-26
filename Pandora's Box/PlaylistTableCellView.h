@@ -11,5 +11,6 @@
 @interface PlaylistTableCellView : NSTableCellView
 
 @property (assign) IBOutlet NSImageView *ratingImage;
+@property (assign) IBOutlet NSProgressIndicator *indicator;
 
 @end

@@ -22,6 +22,7 @@
 	AVAudioPlayer *audioPlayer;
 	NSImage *albumArt;
 	BOOL cached;
+	BOOL loading;
 }
 
 // Song Info
@@ -71,6 +72,7 @@
 				 station:(PandoraStation*)newStation;
 - (NSString*)description;
 - (void)loadData;
+- (void)asynchronousLoadWithCallback:(void(^)(void))callback;
 - (void)loadAlbumArt;
 - (void)loadSong;
 - (void)loadLyrics;
@@ -83,6 +85,8 @@
 - (AVAudioPlayer*)audioPlayer;
 - (void)setAlbumArt:(NSImage*)newArt;
 - (NSImage*)albumArt;
+- (BOOL)cached;
+- (BOOL)loading;
 
 // Pandora Calls
 - (void)rate:(BOOL)rating;

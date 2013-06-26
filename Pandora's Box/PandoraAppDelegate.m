@@ -179,7 +179,9 @@
 		// Get Values from sheet
 		username = [[self.usernameView stringValue] copy];
 		password = [self.passwordView stringValue];
+#ifndef PANDORA_PARSE_DEBUG
 		bool remember = [self.rememberMeView state];
+#endif
 		
 		NSError *error = nil;
 		[pandora loginWithUsername:username andPassword:password error:&error];
@@ -586,8 +588,8 @@
 			
 		}
 		if ([thisColName isEqualToString:@"Album Art"]) {
-			NSImageView *thisCell = [tableView makeViewWithIdentifier:thisColName owner:self];
-			[thisCell setImage:[song albumArt]];
+			NSTableCellView *thisCell = [tableView makeViewWithIdentifier:thisColName owner:self];
+			[thisCell.imageView setImage:[song albumArt]];
 			return thisCell;
 		}
 		else if ([thisColName isEqualToString:@"Info"]) {
@@ -653,6 +655,26 @@
 	return NO;
 }
 
+- (void)playlistIndicators {
+	return;
+	for (int row = 0; row < [currentStation count]; row++) {
+		PandoraSong *song = [currentStation getSongAtIndex:row];
+		PlaylistTableCellView *cell = [self.playlistView viewAtColumn:0 row:row makeIfNecessary:YES];
+		// Loading Indicator
+		[cell.indicator setCanDrawConcurrently:YES];
+		// ----THIS IS A TEST----
+		//*
+		if (!song.loading) {
+			[cell.indicator stopAnimation:self];
+		}
+		else {
+			[cell.indicator startAnimation:self];
+		}
+		// ----END TEST----
+		//*/
+	}
+}
+
 /*****************************************
  Song Playing Methods
  *****************************************/
@@ -686,40 +708,48 @@
 	@synchronized(self) {
 		NSLog(@"New Song: %@", newSong.songName);
 		
-		// Get Song Data
-		[newSong loadData];
-		if (!newSong.enabled) {
-			NSLog(@"Song %@ is disabled", [newSong songName]);
-			[self playNextSong];
-			return;
-		}
+		static int count = 0;
+		int call_id = ++count;
 		
-		currentSong = newSong;
-		
-		// Play Song
-		if (!(audioPlayer = currentSong.audioPlayer)) {
+		// Get Song Data Asynchronously
+		[newSong asynchronousLoadWithCallback:^{
+			if (call_id != count) return;
+			count = 0;
+			
+			if (!newSong.enabled) {
+				//NSLog(@"Song %@ is disabled", [newSong songName]);
+				[self playNextSong];
+				return;
+			}
+			
+			currentSong = newSong;
+			
+			// Play Song
+			if (!(audioPlayer = currentSong.audioPlayer)) {
+				[currentStation cleanPlayList];
+				return;
+			}
+			[audioPlayer retain];
+			[audioPlayer setDelegate:self];
+			[audioPlayer setVolume:[self.volumeSlider floatValue]];
+			[self playPause:nil];
+			[currentSong saveSong:audioCachePath];
+			
+			// Setup gui elemets
 			[currentStation cleanPlayList];
-			return;
-		}
-		[audioPlayer retain];
-		[audioPlayer setDelegate:self];
-		[audioPlayer setVolume:[self.volumeSlider floatValue]];
-		[self playPause:nil];
-		[currentSong saveSong:audioCachePath];
-		
-		// Setup gui elemets
-		[currentStation cleanPlayList];
-		[self.playlistView reloadData];
-		[self.playHeadView setMaxValue:[audioPlayer duration]];
-		[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
-		[self.songTabAlbumView setImage:currentSong.albumArt];
-		[self.albumTabAlbumView setImage:currentSong.albumArt];
-		[self.songTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
+			[self.playlistView reloadData];
+			[self.playHeadView setMaxValue:[audioPlayer duration]];
+			[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
+			[self.songTabAlbumView setImage:currentSong.albumArt];
+			[self.albumTabAlbumView setImage:currentSong.albumArt];
+			[self.songTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
 													  [currentSong songName],
 													  [currentSong artistName],
 													  [currentSong albumName]]];
-		[self.lyricsView setString:[currentSong lyrics]];
-		[self.lyricsView scrollToBeginningOfDocument:nil];
+			[self.lyricsView setString:[currentSong lyrics]];
+			[self.lyricsView scrollToBeginningOfDocument:nil];
+		}];
+		[self playlistIndicators];
 	}
 }
 
