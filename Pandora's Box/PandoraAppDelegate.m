@@ -446,8 +446,11 @@
 }
 
 - (IBAction)tired:(id)sender {
-	if (currentSong) {
-		[currentSong sleep];
+	PandoraSong *song = [self selectedSong];
+	if (song) {
+		[song sleep];
+	}
+	if (song == currentSong) {
 		[self playNextSong];
 	}
 }
