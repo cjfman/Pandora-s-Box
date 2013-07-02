@@ -154,7 +154,17 @@
 	return song;
 }
 
-- (void) cleanPlayList {
+- (BOOL)isDirty {
+	for (int i = 0; i < [playList count]; i++) {
+		PandoraSong *song = [playList objectAtIndex:i];
+		if (!song.enabled) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
+- (void)cleanPlayList {
 	int i = 0;
 	for (i = 0; i < [playList count]; i++) {
 		PandoraSong *song = [playList objectAtIndex:i];

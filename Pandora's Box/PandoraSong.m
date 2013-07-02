@@ -22,6 +22,7 @@
 	self.audioPlayer = nil;
 	self.enabled = YES;
 	cached = NO;
+	self.lyrics = @"Lyrics not loaded";
 	loading = false;
 	return self;
 }
@@ -64,7 +65,7 @@
 }
 
 - (void)loadData {
-	//loading = true;
+	loading = true;
 	[self loadAlbumArt];
 	[self loadSong];
 	[self loadLyrics];
@@ -72,11 +73,14 @@
 }
 
 - (void)asynchronousLoadWithCallback:(void(^)(void))callback {
+	loading = true;
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		[self loadData];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			callback();
-		});
+		@synchronized (self) {
+			[self loadData];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				callback();
+			});
+		}
 	});
 }
 

@@ -229,6 +229,8 @@
 		}
 	}
 	
+	songIndex = -1; // Set an intial value for the current song index
+	
 	// Start Station
 	stationList = [[pandora getStationList] retain];
 	[self.stationsTableView reloadData];
@@ -410,6 +412,7 @@
 }
 
 - (IBAction)logout:(id)sender {
+	NSLog(@"Logging out");
 	// Deallocate memory
 	if (audioPlayer) {
 		[audioPlayer stop];
@@ -608,7 +611,7 @@
 			else {
 				[thisCell.imageView setImage:speakerMute];
 			 }//*/
-			if (row == [currentStation getCurrentIndex]) {
+			if (row == [currentStation getCurrentIndex] && !song.loading) {
 				[thisCell.imageView setHidden:NO];
 			}
 			else {
@@ -627,6 +630,16 @@
 			}
 			else {
 				[thisCell.ratingImage setHidden:YES];
+			}
+			
+			// ----THIS IS A TEST----
+			//*
+			[thisCell.indicator setCanDrawConcurrently:YES];
+			if (!song.loading) {
+				[thisCell.indicator stopAnimation:self];
+			}
+			else {
+				[thisCell.indicator startAnimation:self];
 			}
 			
 			return thisCell;
@@ -655,24 +668,27 @@
 	return NO;
 }
 
-- (void)playlistIndicators {
-	return;
-	for (int row = 0; row < [currentStation count]; row++) {
-		PandoraSong *song = [currentStation getSongAtIndex:row];
-		PlaylistTableCellView *cell = [self.playlistView viewAtColumn:0 row:row makeIfNecessary:YES];
-		// Loading Indicator
-		[cell.indicator setCanDrawConcurrently:YES];
-		// ----THIS IS A TEST----
-		//*
-		if (!song.loading) {
-			[cell.indicator stopAnimation:self];
-		}
-		else {
-			[cell.indicator startAnimation:self];
-		}
-		// ----END TEST----
-		//*/
-	}
+- (void)reloadTable:(NSTableView*)table row:(NSInteger)row {
+	// Specified Row
+	NSIndexSet *rowSet = [NSIndexSet indexSetWithIndex:row];
+	// All Columns
+	NSIndexSet *colSet = [NSIndexSet indexSetWithIndexesInRange:
+						  NSMakeRange(0, [table numberOfColumns])];
+	[table reloadDataForRowIndexes:rowSet
+					 columnIndexes:colSet];
+}
+
+- (void)reloadTable:(NSTableView*)table
+			  start:(NSInteger)start
+			 length:(NSInteger)length {
+	// Specified Rows
+	NSIndexSet *rowSet = [NSIndexSet indexSetWithIndexesInRange:
+						  NSMakeRange(start, length)];
+	// All Columns
+	NSIndexSet *colSet = [NSIndexSet indexSetWithIndexesInRange:
+						  NSMakeRange(0, [table numberOfColumns])];
+	[table reloadDataForRowIndexes:rowSet
+					 columnIndexes:colSet];
 }
 
 /*****************************************
@@ -681,7 +697,7 @@
 
 - (void)playNextSong {
 	[self clearPlayer];
-	[self changeSong: [currentStation getNextSong]];
+	[self changeSong:[currentStation getNextSong]];
 }
 
 - (void)changeStation:(PandoraStation *)newStation {
@@ -690,67 +706,85 @@
 	if (audioPlayer) {
 		[audioPlayer pause];
 	}
-	PandoraSong *song = [newStation getCurrentSong];
-	[self.playlistView reloadData];
-	[self changeSong: song];
 	
 	// Change Window Title
 	[self.window setTitle:[NSString stringWithFormat:@"%@",
-							   [currentStation stationName]]];
+						   [currentStation stationName]]];
+	
+	
+	PandoraSong *song = [newStation getCurrentSong];
+	[self.playlistView reloadData];
+	[self changeSong: song];
 }
 
 - (void)changeSong:(PandoraSong *)newSong {
 	if (!newSong) {
 		[currentStation cleanPlayList];
+		[self.playlistView reloadData];
 		[self errorHandler:[pandora lastError]];
 		return;
 	}
-	@synchronized(self) {
-		NSLog(@"New Song: %@", newSong.songName);
+	NSLog(@"New Song: %@", newSong.songName);
+	currentSong = newSong;
+	lastSongIndex = songIndex;
+	songIndex = [currentStation getCurrentIndex];
+	
+	static int count = 0;
+	int call_id = ++count;
+	
+	// Get Song Data Asynchronously
+	[newSong asynchronousLoadWithCallback:^{
+		if (call_id != count) {
+			return;
+		}
+		count = 0;
 		
-		static int count = 0;
-		int call_id = ++count;
+		if (!newSong.enabled) {
+			//NSLog(@"Song %@ is disabled", [newSong songName]);
+			[self playNextSong];
+			return;
+		}
 		
-		// Get Song Data Asynchronously
-		[newSong asynchronousLoadWithCallback:^{
-			if (call_id != count) return;
-			count = 0;
-			
-			if (!newSong.enabled) {
-				//NSLog(@"Song %@ is disabled", [newSong songName]);
-				[self playNextSong];
-				return;
-			}
-			
-			currentSong = newSong;
-			
-			// Play Song
-			if (!(audioPlayer = currentSong.audioPlayer)) {
-				[currentStation cleanPlayList];
-				return;
-			}
-			[audioPlayer retain];
-			[audioPlayer setDelegate:self];
-			[audioPlayer setVolume:[self.volumeSlider floatValue]];
-			[self playPause:nil];
-			[currentSong saveSong:audioCachePath];
-			
-			// Setup gui elemets
+		// Play Song
+		if (!(audioPlayer = currentSong.audioPlayer)) {
 			[currentStation cleanPlayList];
-			[self.playlistView reloadData];
-			[self.playHeadView setMaxValue:[audioPlayer duration]];
-			[self.playlistView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentStation getCurrentIndex]] byExtendingSelection:NO];
-			[self.songTabAlbumView setImage:currentSong.albumArt];
-			[self.albumTabAlbumView setImage:currentSong.albumArt];
-			[self.songTabSongTextView setStringValue:[NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
-													  [currentSong songName],
-													  [currentSong artistName],
-													  [currentSong albumName]]];
-			[self.lyricsView setString:[currentSong lyrics]];
-			[self.lyricsView scrollToBeginningOfDocument:nil];
-		}];
-		[self playlistIndicators];
+			return;
+		}
+		[audioPlayer retain];
+		[audioPlayer setDelegate:self];
+		[audioPlayer setVolume:[self.volumeSlider floatValue]];
+		[self playPause:nil];
+		[currentSong saveSong:audioCachePath];
+		
+		// Setup GUI
+		[self reloadTable:self.playlistView row:songIndex];
+		[self.lyricsView setString:[currentSong lyrics]];
+		[self.lyricsView scrollToBeginningOfDocument:nil];
+	}];
+
+	// Setup gui elemets
+	if ([currentStation isDirty]) {
+		[currentStation cleanPlayList];
+		[self.playlistView reloadData];
 	}
+	else {
+		// Only reload nessessary rows
+		[self reloadTable:self.playlistView row:songIndex];
+		[self reloadTable:self.playlistView row:lastSongIndex];
+	}
+	[self.playHeadView setMaxValue:[audioPlayer duration]];
+	[self.playlistView selectRowIndexes:
+	 [NSIndexSet indexSetWithIndex:songIndex]
+				   byExtendingSelection:NO];
+	[self.songTabAlbumView setImage:currentSong.albumArt];
+	[self.albumTabAlbumView setImage:currentSong.albumArt];
+	[self.songTabSongTextView setStringValue:
+	 [NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
+	  [currentSong songName],
+	  [currentSong artistName],
+	  [currentSong albumName]]];
+	[self.lyricsView setString:[currentSong lyrics]];
+	[self.lyricsView scrollToBeginningOfDocument:nil];
 }
 
 - (void)songSelected {
