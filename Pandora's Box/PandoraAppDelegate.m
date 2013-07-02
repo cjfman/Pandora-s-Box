@@ -728,16 +728,18 @@
 	currentSong = newSong;
 	lastSongIndex = songIndex;
 	songIndex = [currentStation getCurrentIndex];
+	NSInteger index_id = songIndex;
 	
-	static int count = 0;
-	int call_id = ++count;
+	//static int count = 0;
+	//int call_id = ++count;
 	
 	// Get Song Data Asynchronously
 	[newSong asynchronousLoadWithCallback:^{
-		if (call_id != count) {
+		if (songIndex != index_id) { //call_id != count) {
+			[self reloadTable:self.playlistView row:index_id];
 			return;
 		}
-		count = 0;
+		//count = 0;
 		
 		if (!newSong.enabled) {
 			//NSLog(@"Song %@ is disabled", [newSong songName]);
@@ -757,7 +759,7 @@
 		[currentSong saveSong:audioCachePath];
 		
 		// Setup GUI
-		[self reloadTable:self.playlistView row:songIndex];
+		[self reloadTable:self.playlistView row:index_id];
 		[self.lyricsView setString:[currentSong lyrics]];
 		[self.lyricsView scrollToBeginningOfDocument:nil];
 	}];
@@ -766,6 +768,7 @@
 	if ([currentStation isDirty]) {
 		[currentStation cleanPlayList];
 		[self.playlistView reloadData];
+		songIndex = [currentStation getCurrentIndex];
 	}
 	else {
 		// Only reload nessessary rows
