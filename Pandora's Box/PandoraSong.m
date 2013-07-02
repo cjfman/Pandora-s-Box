@@ -21,9 +21,9 @@
 	station = [newStation retain];
 	self.audioPlayer = nil;
 	self.enabled = YES;
-	cached = NO;
 	self.lyrics = @"Lyrics not loaded";
 	loading = false;
+	cached = NO;
 	return self;
 }
 
@@ -98,23 +98,21 @@
 	if (self.songData) return;
 	NSString *usedURL;
 	@synchronized(self.songData) {
-#ifndef SONG_DOWNLOAD_DEBUG
 		if (cached) {
 			self.songData = [[[NSFileManager defaultManager]
 							  contentsAtPath:songPath] retain];
-			return;
 		}
 		else {
+#ifndef SONG_DOWNLOAD_DEBUG
 			NSLog(@"Downloading song data for song: %@", self.songName);
 			self.songData = [[NSData alloc] initWithContentsOfURL:
 							 [NSURL URLWithString: self.audioUrl]];
 			usedURL = self.audioUrl;
-		}
 #else
-		self.songData = [[[NSFileManager defaultManager] contentsAtPath:@"/Users/Charles/Music/iTunes/iTunes Music/Afrojack/Take Over Control (feat. Eva Simons) - Single/01 Take Over Control (Radio Edit) [feat. Eva Simons].m4a"] retain];
-		usedURL = [NSString stringWithFormat:@"http://test.com/DEBUG_%@.m4a?parameters", self.songName];
-		
+			self.songData = [[[NSFileManager defaultManager] contentsAtPath:@"/Users/Charles/Music/iTunes/iTunes Music/Afrojack/Take Over Control (feat. Eva Simons) - Single/01 Take Over Control (Radio Edit) [feat. Eva Simons].m4a"] retain];
+			usedURL = [NSString stringWithFormat:@"http://test.com/DEBUG_%@.m4a?parameters", self.songName];
 #endif
+		}
 		if (!self.songData) {
 			NSLog(@"Failed to load song data for song: %@", self.songName);
 			self.enabled = NO;
@@ -123,20 +121,22 @@
 		}
 	}
 	
-	// Find file extension by cleaning URL
-	NSMutableString *temp = [NSMutableString stringWithString:usedURL];
-	NSRange range = [temp rangeOfString:@"?"];
-	if (range.location != NSNotFound) {
-		range.length = [temp length] - range.location;
-		[temp deleteCharactersInRange:range];
+	if(!cached) {
+		// Find file extension by cleaning URL
+		NSMutableString *temp = [NSMutableString stringWithString:usedURL];
+		NSRange range = [temp rangeOfString:@"?"];
+		if (range.location != NSNotFound) {
+			range.length = [temp length] - range.location;
+			[temp deleteCharactersInRange:range];
+		}
+		range = [temp rangeOfString:@"." options:NSBackwardsSearch];
+		if (range.location != NSNotFound) {
+			range.length = range.location + 1;
+			range.location = 0;
+			[temp deleteCharactersInRange:range];
+		}
+		audioContainer = [NSString stringWithString:temp];
 	}
-	range = [temp rangeOfString:@"." options:NSBackwardsSearch];
-	if (range.location != NSNotFound) {
-		range.length = range.location + 1;
-		range.location = 0;
-		[temp deleteCharactersInRange:range];
-	}
-	audioContainer = [NSString stringWithString:temp];
 }
 
 - (void)loadLyrics {

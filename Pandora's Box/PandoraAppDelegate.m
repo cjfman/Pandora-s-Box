@@ -730,19 +730,21 @@
 	songIndex = [currentStation getCurrentIndex];
 	NSInteger index_id = songIndex;
 	
-	//static int count = 0;
-	//int call_id = ++count;
+	static int count = 0;
+	int call_id = ++count;
 	
 	// Get Song Data Asynchronously
 	[newSong asynchronousLoadWithCallback:^{
-		if (songIndex != index_id) { //call_id != count) {
+		if (call_id != count) { //songIndex != index_id) {
 			[self reloadTable:self.playlistView row:index_id];
 			return;
 		}
-		//count = 0;
+		count = 0;
 		
 		if (!newSong.enabled) {
-			//NSLog(@"Song %@ is disabled", [newSong songName]);
+			NSLog(@"Song %@ is disabled", [newSong songName]);
+			//[currentStation cleanPlayList];
+			//[self.playlistView reloadData];
 			[self playNextSong];
 			return;
 		}
@@ -759,12 +761,22 @@
 		[currentSong saveSong:audioCachePath];
 		
 		// Setup GUI
-		[self reloadTable:self.playlistView row:index_id];
 		[self.lyricsView setString:[currentSong lyrics]];
 		[self.lyricsView scrollToBeginningOfDocument:nil];
+		[self.playHeadView setMaxValue:[audioPlayer duration]];
+		if ([currentStation isDirty]) {
+			[currentStation cleanPlayList];
+			[self.playlistView reloadData];
+			songIndex = [currentStation getCurrentIndex];
+		}
+		else {
+			// Only reload nessessary rows
+			[self reloadTable:self.playlistView row:index_id];
+		}
 	}];
 
 	// Setup gui elemets
+	/*
 	if ([currentStation isDirty]) {
 		[currentStation cleanPlayList];
 		[self.playlistView reloadData];
@@ -774,8 +786,18 @@
 		// Only reload nessessary rows
 		[self reloadTable:self.playlistView row:songIndex];
 		[self reloadTable:self.playlistView row:lastSongIndex];
+	}//*/
+	// Only reload nessessary rows
+	[self reloadTable:self.playlistView row:songIndex];
+	[self reloadTable:self.playlistView row:lastSongIndex];
+	if ([self.playlistView numberOfRows] != [currentStation count]) {
+		// Load New Rows
+		NSInteger rcount = [self.playlistView numberOfRows];
+		NSInteger add = [currentStation count] - rcount;
+		[self.playlistView insertRowsAtIndexes:
+		 [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(rcount, add)]
+								 withAnimation:0];
 	}
-	[self.playHeadView setMaxValue:[audioPlayer duration]];
 	[self.playlistView selectRowIndexes:
 	 [NSIndexSet indexSetWithIndex:songIndex]
 				   byExtendingSelection:NO];
