@@ -32,8 +32,6 @@
 	// Audio
 	AVAudioPlayer *audioPlayer;
 	NSTimer *playHeadTimer;
-	NSInteger songIndex;
-	NSInteger lastSongIndex;
 	
 	// Images
 	NSImage *thumbsUpImage;

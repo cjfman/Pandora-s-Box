@@ -154,14 +154,20 @@
 	return song;
 }
 
-- (BOOL)isDirty {
+- (NSInteger)indexOfSong:(PandoraSong *)song {
+	return [playList indexOfObject:song];
+}
+
+- (NSIndexSet*)isDirty {
+	NSMutableIndexSet *set = nil;
 	for (int i = 0; i < [playList count]; i++) {
 		PandoraSong *song = [playList objectAtIndex:i];
 		if (!song.enabled) {
-			return YES;
+			if (!set) set = [NSMutableIndexSet indexSet];
+			[set addIndex:i];
 		}
 	}
-	return NO;
+	return set;
 }
 
 - (void)cleanPlayList {
@@ -175,6 +181,14 @@
 			[playList removeObjectAtIndex:i--];
 		}
 	}
+}
+
+- (void)removeSong:(PandoraSong*)song {
+	NSInteger index = [self indexOfSong:song];
+	if (index <= currentIndex) {
+		currentIndex--;
+	}
+	[playList removeObject:song];
 }
 
 @end

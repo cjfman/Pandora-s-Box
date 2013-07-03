@@ -228,9 +228,7 @@
 			return;
 		}
 	}
-	
-	songIndex = -1; // Set an intial value for the current song index
-	
+		
 	// Start Station
 	stationList = [[pandora getStationList] retain];
 	[self.stationsTableView reloadData];
@@ -672,6 +670,8 @@
 }
 
 - (void)reloadTable:(NSTableView*)table row:(NSInteger)row {
+	// Check bounds
+	if (row >= [table numberOfRows]) return;
 	// Specified Row
 	NSIndexSet *rowSet = [NSIndexSet indexSetWithIndex:row];
 	// All Columns
@@ -684,6 +684,9 @@
 - (void)reloadTable:(NSTableView*)table
 			  start:(NSInteger)start
 			 length:(NSInteger)length {
+	// Check bounds
+	if (start >= [table numberOfRows]) return;
+	if (start + length > [table numberOfRows]) return;
 	// Specified Rows
 	NSIndexSet *rowSet = [NSIndexSet indexSetWithIndexesInRange:
 						  NSMakeRange(start, length)];
@@ -728,26 +731,25 @@
 		return;
 	}
 	NSLog(@"New Song: %@", newSong.songName);
+	
+	NSInteger lastSongIndex = [currentStation indexOfSong:currentSong];
+	NSInteger songIndex = [currentStation indexOfSong:newSong];
 	currentSong = newSong;
-	lastSongIndex = songIndex;
-	songIndex = [currentStation getCurrentIndex];
-	NSInteger index_id = songIndex;
 	
 	static int count = 0;
 	int call_id = ++count;
 	
 	// Get Song Data Asynchronously
 	[newSong asynchronousLoadWithCallback:^{
-		if (call_id != count) { //songIndex != index_id) {
-			[self reloadTable:self.playlistView row:index_id];
+		NSInteger index = [currentStation indexOfSong:newSong];
+		if (call_id != count) {
+			[self reloadTable:self.playlistView row:index];
 			return;
 		}
 		count = 0;
 		
 		if (!newSong.enabled) {
 			NSLog(@"Song %@ is disabled", [newSong songName]);
-			//[currentStation cleanPlayList];
-			//[self.playlistView reloadData];
 			[self playNextSong];
 			return;
 		}
@@ -767,43 +769,35 @@
 		[self.lyricsView setString:[currentSong lyrics]];
 		[self.lyricsView scrollToBeginningOfDocument:nil];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];
-		if ([currentStation isDirty]) {
+	
+		// Reload row
+		[self reloadTable:self.playlistView row:index];
+		[self.playlistView selectRowIndexes:
+		 [NSIndexSet indexSetWithIndex:index]
+					   byExtendingSelection:NO];
+		
+		// Clean play list
+		NSIndexSet *dirtySet = [currentStation isDirty];
+		if (dirtySet) {
 			[currentStation cleanPlayList];
-			[self.playlistView reloadData];
-			songIndex = [currentStation getCurrentIndex];
-		}
-		else {
-			// Only reload nessessary rows
-			[self reloadTable:self.playlistView row:index_id];
+			[self.playlistView removeRowsAtIndexes:dirtySet
+									 withAnimation:NSTableViewAnimationEffectFade];
 		}
 	}];
 
 	// Setup gui elemets
-	/*
-	if ([currentStation isDirty]) {
-		[currentStation cleanPlayList];
-		[self.playlistView reloadData];
-		songIndex = [currentStation getCurrentIndex];
-	}
-	else {
-		// Only reload nessessary rows
-		[self reloadTable:self.playlistView row:songIndex];
-		[self reloadTable:self.playlistView row:lastSongIndex];
-	}//*/
 	// Only reload nessessary rows
 	[self reloadTable:self.playlistView row:songIndex];
 	[self reloadTable:self.playlistView row:lastSongIndex];
-	if ([self.playlistView numberOfRows] != [currentStation count]) {
+	if ([self.playlistView numberOfRows] < [currentStation count]) {
 		// Load New Rows
 		NSInteger rcount = [self.playlistView numberOfRows];
 		NSInteger add = [currentStation count] - rcount;
 		[self.playlistView insertRowsAtIndexes:
 		 [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(rcount, add)]
-								 withAnimation:0];
+								 withAnimation:NSTableViewAnimationSlideDown];
 	}
-	[self.playlistView selectRowIndexes:
-	 [NSIndexSet indexSetWithIndex:songIndex]
-				   byExtendingSelection:NO];
+	[self.playlistView deselectAll:self];
 	[self.songTabAlbumView setImage:currentSong.albumArt];
 	[self.albumTabAlbumView setImage:currentSong.albumArt];
 	[self.songTabSongTextView setStringValue:
@@ -894,7 +888,9 @@
 - (IBAction)ratingPushed:(id)sender {
 	NSInteger selection = [sender selectedSegment];
 	PandoraSong *song = [self selectedSong];
+	if (!song) return;
 	NSInteger index = [self selectedSongIndex];
+	if (index < 0) return;
 	switch (selection) {
 		case 0:
 			[song rate:YES];

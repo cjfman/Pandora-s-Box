@@ -57,7 +57,9 @@
 - (NSInteger)count;
 - (NSInteger)getCurrentIndex;
 - (PandoraSong *)setCurrentIndex:(NSInteger)index;
-- (BOOL)isDirty;
+- (NSInteger)indexOfSong:(PandoraSong*)song;
+- (NSIndexSet*)isDirty;
 - (void)cleanPlayList;
+- (void)removeSong:(PandoraSong*)song;
 
 @end
