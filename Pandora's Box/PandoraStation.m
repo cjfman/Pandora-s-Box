@@ -148,9 +148,10 @@
 	if (index < 0) index = 0;
 	else if (index >= [playList count]) index = [playList count] - 1;
 	PandoraSong *song = [playList objectAtIndex:index];
-	if (song.enabled) {
-		currentIndex = index;
+	if (!song.enabled) {
+		return nil;
 	}
+	currentIndex = index;
 	return song;
 }
 

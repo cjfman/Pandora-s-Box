@@ -812,6 +812,7 @@
 - (void)songSelected {
 	PandoraSong *song = [currentStation setCurrentIndex:
 						 [self.playlistView selectedRow]];
+	if (!song) return;
 	if (song == currentSong) {
 		if (audioPlayer) {
 			if (![audioPlayer isPlaying]) {
