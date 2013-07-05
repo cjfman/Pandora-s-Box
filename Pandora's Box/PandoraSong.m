@@ -21,7 +21,7 @@
 	station = [newStation retain];
 	self.audioPlayer = nil;
 	self.enabled = YES;
-	self.lyrics = @"Lyrics not loaded";
+	lyrics = nil;
 	loading = false;
 	cached = NO;
 	return self;
@@ -144,7 +144,7 @@
 }
 
 - (void)loadLyrics:(NSString*)host {
-	if (self.lyrics) return;
+	if (lyrics) return;
 	@try {
 		NSString *artist;
 		artist = [self.artistName stringByReplacingOccurrencesOfString:@"The "
@@ -168,15 +168,9 @@
 		NSData *lyricData;
 		NSError *error = nil;
 		NSURLResponse *urlResponse;
-		@synchronized(self) {
-			lyricData = [NSURLConnection sendSynchronousRequest:request
-											 returningResponse:&urlResponse
-														 error:&error];
-		}
-		/*if (lyricData == nil) {
-			self.lyrics = [@"Not Available" retain];
-			return;
-		}*/
+		lyricData = [NSURLConnection sendSynchronousRequest:request
+										 returningResponse:&urlResponse
+													 error:&error];
 		
 		NSString *htmlString = [[NSString alloc] initWithData:lyricData encoding:NSUTF8StringEncoding];
 		//NSLog(@"%@", htmlString);
@@ -191,7 +185,7 @@
 				[self loadLyrics:backupHost];
 			}
 			else {
-				self.lyrics = [@"Not Available" retain];
+				lyrics = [@"Not Available" retain];
 			}
 			return;
 		}
@@ -199,22 +193,22 @@
 		NSInteger startIndex = startRange.length + startRange.location + 2;
 		NSInteger endIndex = endRange.location;
 		NSRange lyricRange = NSMakeRange(startIndex, endIndex - startIndex);
-		self.lyrics = [htmlString substringWithRange:lyricRange];
-		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+		lyrics = [htmlString substringWithRange:lyricRange];
+		lyrics = [lyrics stringByReplacingOccurrencesOfString:
 					   @"<br>" withString:@""];
-		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+		lyrics = [lyrics stringByReplacingOccurrencesOfString:
 					   @"<br />" withString:@""];
-		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+		lyrics = [lyrics stringByReplacingOccurrencesOfString:
 					   @"<i>" withString:@""];
-		self.lyrics = [self.lyrics stringByReplacingOccurrencesOfString:
+		lyrics = [lyrics stringByReplacingOccurrencesOfString:
 					   @"</i>" withString:@""];
-		self.lyrics = [self.lyrics stringByAppendingString:
+		lyrics = [lyrics stringByAppendingString:
 					   @"\nLyrics provided by www.azlyrics.com"];
-		[self.lyrics retain];
-		//NSLog(@"Lyrics:\n%@", self.lyrics);
+		[lyrics retain];
+		//NSLog(@"Lyrics:\n%@", lyrics);
 	}
 	@catch (NSException *e) {
-		self.lyrics = [@"Not Available" retain];
+		lyrics = [@"Not Available" retain];
 	}
 }
 
@@ -275,6 +269,13 @@
 		[self loadAlbumArt];
 	}
 	return albumArt;
+}
+
+- (NSString*)lyrics {
+	if (!lyrics) {
+		return @"Lyrics not loaded";
+	}
+	return lyrics;
 }
 
 - (BOOL)cached {

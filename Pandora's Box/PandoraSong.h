@@ -21,6 +21,7 @@
 	NSString *songPath;
 	AVAudioPlayer *audioPlayer;
 	NSImage *albumArt;
+	NSString *lyrics;
 	BOOL cached;
 	BOOL loading;
 }
@@ -39,7 +40,6 @@
 @property (copy) NSString *albumArtUrl;
 @property (copy) NSDictionary *audioUrlMap;
 @property (copy) NSArray *additionalAudioUrl;
-@property (assign) NSString *lyrics;
 
 // Song Properties
 @property BOOL allowFeedback;
@@ -85,6 +85,7 @@
 - (AVAudioPlayer*)audioPlayer;
 - (void)setAlbumArt:(NSImage*)newArt;
 - (NSImage*)albumArt;
+- (NSString*)lyrics;
 - (BOOL)cached;
 - (BOOL)loading;
 

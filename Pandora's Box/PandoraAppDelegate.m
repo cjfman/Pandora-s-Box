@@ -118,6 +118,7 @@
 	[self.songTabSongTextView setStringValue:@"No Song Playing"];
 	[self.mainTabView selectTabViewItemAtIndex:[userDefaults integerForKey:kOpenTab]];
 	[self.tabSelectionView selectSegmentWithTag:[userDefaults integerForKey:kOpenTab]];
+	[self.songTabIndicator setCanDrawConcurrently:YES];
 	// Setup the playhead in the timebar
 	playHeadTimer = [[NSTimer timerWithTimeInterval:.1
 											 target:self
@@ -769,6 +770,10 @@
 		[self.lyricsView setString:[currentSong lyrics]];
 		[self.lyricsView scrollToBeginningOfDocument:nil];
 		[self.playHeadView setMaxValue:[audioPlayer duration]];
+		[self.songTabIndicator stopAnimation:self];
+		[self.songTabAlbumView setImage:currentSong.albumArt];
+		[self.lyricsView setString:[currentSong lyrics]];
+		[self.lyricsView scrollToBeginningOfDocument:nil];
 	
 		// Reload row
 		[self reloadTable:self.playlistView row:index];
@@ -786,11 +791,12 @@
 	}];
 
 	// Setup gui elemets
-	// Only reload nessessary rows
+	// Only reload nessessary table rows
 	[self reloadTable:self.playlistView row:songIndex];
 	[self reloadTable:self.playlistView row:lastSongIndex];
+	[self.songTabAlbumView setImage:currentSong.albumArt];
+	// Load New Rows
 	if ([self.playlistView numberOfRows] < [currentStation count]) {
-		// Load New Rows
 		NSInteger rcount = [self.playlistView numberOfRows];
 		NSInteger add = [currentStation count] - rcount;
 		[self.playlistView insertRowsAtIndexes:
@@ -798,8 +804,9 @@
 								 withAnimation:NSTableViewAnimationSlideDown];
 	}
 	[self.playlistView deselectAll:self];
-	[self.songTabAlbumView setImage:currentSong.albumArt];
 	[self.albumTabAlbumView setImage:currentSong.albumArt];
+	// Song Tab View
+	[self.songTabAlbumView setImage:nil];
 	[self.songTabSongTextView setStringValue:
 	 [NSString stringWithFormat:@"Title: %@\nArtist: %@\nAlbum: %@",
 	  [currentSong songName],
@@ -807,6 +814,7 @@
 	  [currentSong albumName]]];
 	[self.lyricsView setString:[currentSong lyrics]];
 	[self.lyricsView scrollToBeginningOfDocument:nil];
+	[self.songTabIndicator startAnimation:self];
 }
 
 - (void)songSelected {

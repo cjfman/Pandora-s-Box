@@ -142,6 +142,7 @@
 @property (assign) IBOutlet NSImageView *songTabAlbumView;
 @property (assign) IBOutlet NSTextField *songTabSongTextView;
 @property (assign) IBOutlet NSTextView *lyricsView;
+@property (assign) IBOutlet NSProgressIndicator *songTabIndicator;
 
 // Album Art Tab
 @property (assign) IBOutlet NSImageView *albumTabAlbumView;
