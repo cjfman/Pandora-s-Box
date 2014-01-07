@@ -232,7 +232,7 @@
 		[stations setObject:newStation
 					 forKey:name];
 	}	
-	return stationList;
+	return [[stationList retain] autorelease];
 }
 
 - (PandoraStation*)getStation:(NSString*)name
@@ -240,7 +240,7 @@
 	if (!stations) return nil;
 	PandoraStation *station = [stations objectForKey:name];
 	if (!station) return nil;
-	return station;
+	return [[station retain] autorelease];
 }
 
 - (PandoraStation*)createStation:(PandoraSearchResult *)music {
