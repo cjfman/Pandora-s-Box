@@ -10,9 +10,13 @@
 #import "blowfish_koc.h"
 #import "PandoraStation.h"
 #import "PandoraSearchResult.h"
+#import "DDLog.h"
 
 //#define PANDORA_PARSE_DEBUG
 //#define SONG_DOWNLOAD_DEBUG
+
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 
 @interface PandoraConnection : NSObject
 {

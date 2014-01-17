@@ -206,10 +206,10 @@
 	void (^callback)(NSDictionary*) = ^(NSDictionary* results) {
 		if (refnum != count) return;	// Not the most recent request
 		if (!results) {
-			[self alertUser:@"Error talking to Pandora"];
+			[self alertUser:@"Unknown Error Conducting Search"];
 			return;
 		}
-		//NSLog(@"%@", results);
+		//DDLogInfo(@"%@", results);
 		// Clear old lists
 		if (artists) [artists release];
 		if (songs) [songs release];

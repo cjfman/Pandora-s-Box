@@ -10,6 +10,11 @@
 #import "PandoraConnection.h"
 #import "PlaylistTableCellView.h"
 #import "SSKeychain.h"
+#import "DDLog.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+#import "DDFileLogger.h"
+#import "DDLog.h"
 
 #define kOpenTab @"openTab"
 #define kUsername @"username"
@@ -18,6 +23,7 @@
 #define kOpenStation @"openStation"
 #define kVolume @"volume"
 #define kStationsVisible @"stationsVisible"
+
 
 @implementation PandoraAppDelegate
 
@@ -64,6 +70,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // Setup logging
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_ERROR];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
+    
 	// Setup Default Settings
 	userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults registerDefaults:
@@ -82,7 +92,7 @@
 	if([SPMediaKeyTap usesGlobalMediaKeyTap])
 		[keyTap startWatchingMediaKeys];
 	else
-		NSLog(@"Media key monitoring disabled");
+		DDLogInfo(@"Media key monitoring disabled");
 	
 	// Setup GUI Elements
 	// Constraints
@@ -214,7 +224,7 @@
 				 [userDefaults setObject:username forKey:kUsername];
 			 }
 			 else {
-				 NSLog(@"Failed to save to keychain");
+				 DDLogError(@"Failed to save to keychain");
 				 [userDefaults setBool:FALSE forKey:kRememberLogin];
 			 }
 		 }
@@ -285,7 +295,7 @@
 	NSError *error = nil;
 	NSArray *files = [fileManager contentsOfDirectoryAtPath:audioCachePath error:&error];
 	if (error) {
-		NSLog(@"%@", error);
+		DDLogError(@"%@", error);
 	}
 	else {
 		for (NSString *file in files) {
@@ -295,7 +305,7 @@
 									error:&error];
 		}
 		if (error) {
-			NSLog(@"%@", error);
+			DDLogError(@"%@", error);
 		}
 	}
 }
@@ -316,7 +326,7 @@
 
 - (void)stationCreated:(PandoraStation *)station {
 	[self.stationsTableView reloadData];
-	NSLog(@"Created Station: %@:", [station stationName]);
+	DDLogInfo(@"Created Station: %@:", [station stationName]);
 	[self changeStation:station];
 }
 
@@ -411,7 +421,7 @@
 }
 
 - (IBAction)logout:(id)sender {
-	NSLog(@"Logging out");
+	DDLogInfo(@"Logging out");
 	// Deallocate memory
 	if (audioPlayer) {
 		[audioPlayer stop];
@@ -433,7 +443,7 @@
 		NSError *error = nil;
 		[SSKeychain deletePasswordForService:applicationName account:username error:&error];
 		if (error) {
-			NSLog(@"Failed to remove %@ from keychain\n%@", username, error);
+			DDLogError(@"Failed to remove %@ from keychain\n%@", username, error);
 		}
 	}
 	[username release];
@@ -547,7 +557,7 @@
 		// Delete the station
 		PandoraStation *station = [self selectedStation];
 		if ([pandora deleteStation:station]) {
-			NSLog(@"Deleted station: %@", station.stationName);
+			DDLogInfo(@"Deleted station: %@", station.stationName);
 			[self.stationsTableView reloadData];
 			if (station == currentStation) {
 				// Play first station
@@ -555,7 +565,7 @@
 			}
 		}
 		else {
-			NSLog(@"Faild to deleted station: %@\n%@", station.stationName, [pandora lastError]);
+			DDLogError(@"Faild to deleted station: %@\n%@", station.stationName, [pandora lastError]);
 		}
 	}
 }
@@ -708,7 +718,7 @@
 }
 
 - (void)changeStation:(PandoraStation *)newStation {
-	NSLog(@"Station changed: %@", newStation.stationName);
+	DDLogInfo(@"Station changed: %@", newStation.stationName);
 	currentStation = newStation;
 	if (audioPlayer) {
 		[audioPlayer pause];
@@ -731,7 +741,7 @@
 		[self errorHandler:[pandora lastError]];
 		return;
 	}
-	NSLog(@"New Song: %@", newSong.songName);
+	DDLogInfo(@"New Song: %@", newSong.songName);
 	
 	NSInteger lastSongIndex = [currentStation indexOfSong:currentSong];
 	NSInteger songIndex = [currentStation indexOfSong:newSong];
@@ -750,7 +760,7 @@
 		count = 0;
 		
 		if (!newSong.enabled) {
-			NSLog(@"Song %@ is disabled", [newSong songName]);
+			DDLogError(@"Song %@ is disabled", [newSong songName]);
 			[self playNextSong];
 			return;
 		}
@@ -985,10 +995,10 @@
 		// Network is disconnected
 		if ([error code] == -1009) {
 			[self alertUser:@"Could not connect to Pandora.\nPlease check your network connection."];
-			NSLog(@"%@", [error localizedDescription]);
+			DDLogError(@"%@", [error localizedDescription]);
 		}
 		else {
-			NSLog(@"Login error:\n%@", error);
+			DDLogError(@"Login error:\n%@", error);
 			[self alertUser:@"Unknown Network Error"];
 		}
 		[pandora release];
@@ -998,13 +1008,13 @@
 		// Bad username/password
 		if ([error code] == 1002)
 		{
-			NSLog(@"Invalid User Credentials");
+			DDLogError(@"Invalid User Credentials");
 			[self alertUser:@"Invalid User Credentials"];
 		}
 		// Unknown Error
 		else
 		{
-			NSLog(@"Login error:\n%@", error);
+			DDLogError(@"Login error:\n%@", error);
 			[self alertUser:@"Unknown Pandora Error"];
 			[pandora release];
 			pandora = nil;
@@ -1012,7 +1022,7 @@
 	}
 	// Unknown Error
 	else {
-		NSLog(@"Login error:\n%@", error);
+		DDLogError(@"Login error:\n%@", error);
 		[self alertUser:@"An unknown error has occurred"];
 		[pandora release];
 		pandora = nil;
