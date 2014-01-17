@@ -116,7 +116,6 @@
 		if (!self.songData) {
 			NSLog(@"Failed to load song data for song: %@", self.songName);
 			self.enabled = NO;
-			[self.songData release];
 			return;
 		}
 	}
