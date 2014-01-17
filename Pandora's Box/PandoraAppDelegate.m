@@ -37,9 +37,9 @@
 
 	// Setup Support Files
 	fileManager = [[NSFileManager defaultManager] retain];
-	supportPath = [[[NSString alloc] initWithFormat:
+	supportPath = [[[NSString stringWithFormat:
 					@"~/Library/Application Support/%@", applicationName]
-				   stringByExpandingTildeInPath];
+				   stringByExpandingTildeInPath] retain];
 	[fileManager createDirectoryAtPath:supportPath
 							  withIntermediateDirectories:NO
 											   attributes:nil
@@ -49,6 +49,11 @@
 		   withIntermediateDirectories:NO
 							attributes:nil
 								 error:nil];
+    logsPath = [[NSString alloc] initWithFormat:@"%@/%@", supportPath, logsFolder];
+    [fileManager createDirectoryAtPath:logsPath
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:nil];
 	
 	// Load Images
 	thumbsDownImage = [[NSImage imageNamed:@"ThumbsDownTemplate.pdf"] retain];
@@ -70,9 +75,28 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Setup logging
+    // Setup console and terminal logging
     [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_ERROR];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
+    
+    // Setup verbose file logging
+    DDLogFileManagerDefault *docsFileManager = [[DDLogFileManagerDefault alloc]
+                                            initWithLogsDirectory:
+                                                [logsPath stringByAppendingString:@"/Verbose"]];
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:docsFileManager];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:fileLogger withLogLevel:LOG_LEVEL_VERBOSE];
+    
+    // Setup info file logging
+    // Setup file logging
+    docsFileManager = [[DDLogFileManagerDefault alloc]
+                       initWithLogsDirectory:
+                       [logsPath stringByAppendingString:@"/Info"]];
+    fileLogger = [[DDFileLogger alloc] initWithLogFileManager:docsFileManager];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:fileLogger withLogLevel:LOG_LEVEL_INFO];
     
 	// Setup Default Settings
 	userDefaults = [NSUserDefaults standardUserDefaults];
@@ -168,6 +192,7 @@
 	[self.passwordView setStringValue:@""];
 	[self.rememberMeView setState:false];
 	[self.loginIndicator setCanDrawConcurrently:YES];
+    [self.loginIndicator stopAnimation:self];
 }
 
 - (IBAction)login:(id)sender {

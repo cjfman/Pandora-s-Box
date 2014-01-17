@@ -14,6 +14,7 @@
 #import "DDLog.h"
 
 #define audioCacheFolder @"Audio File Cache"
+#define logsFolder @"Logs"
 
 //static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -51,6 +52,7 @@
 	//Paths
 	NSString *supportPath;
 	NSString *audioCachePath;
+    NSString *logsPath;
 	
 	// Media Key Support
 	SPMediaKeyTap *keyTap;

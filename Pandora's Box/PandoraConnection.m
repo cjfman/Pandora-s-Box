@@ -321,6 +321,7 @@
 	return [[jsonString objectFromJSONString] objectForKey:@"result"];
 	
 #else
+    DDLogVerbose(@"Making JSON request: %@\n with parameters:\n%@", method, parameters);
 	// Build JSON string
 	// Add Common Parameters
 	if (syncTime)
@@ -390,6 +391,7 @@
         DDLogVerbose(@"%@", jsonResult);//*/
 	
 	NSDictionary *response = [jsonData objectFromJSONData];
+    DDLogVerbose(@"JSON response:\n%@", response);
 	if ([[response objectForKey:kStat] isEqualTo:@"fail"])
 	{
 		NSInteger code = [[response objectForKey:@"code"] integerValue];

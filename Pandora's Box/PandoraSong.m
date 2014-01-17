@@ -104,7 +104,7 @@
 		}
 		else {
 #ifndef SONG_DOWNLOAD_DEBUG
-			DDLogInfo(@"Downloading song data for song: %@", self.songName);
+			DDLogInfo(@"Loading song data for song: %@", self.songName);
 			self.songData = [[NSData alloc] initWithContentsOfURL:
 							 [NSURL URLWithString: self.audioUrl]];
 			usedURL = self.audioUrl;

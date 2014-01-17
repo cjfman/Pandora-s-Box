@@ -105,7 +105,7 @@
 										 isEncrypted:TRUE
 											   error:&error];
 	if (!response) return nil;
-	DDLogVerbose(@"JSON Response:\n%@", response);
+	//DDLogVerbose(@"JSON Response:\n%@", response);
 	NSArray *songs = [response objectForKey:@"items"];
 	for (NSDictionary* song in songs)
 	{
