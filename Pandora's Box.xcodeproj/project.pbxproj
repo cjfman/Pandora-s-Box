@@ -44,6 +44,7 @@
 		56255A061888A16F009A6C7A /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559FB1888A16F009A6C7A /* DDDispatchQueueLogFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		56255A071888A16F009A6C7A /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559FD1888A16F009A6C7A /* DDMultiFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		56255A081888A16F009A6C7A /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 562559FE1888A16F009A6C7A /* README.txt */; };
+		56255A0A1889B1CD009A6C7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 56255A091889B1CD009A6C7A /* README.md */; };
 		5628279B16B608AA00C7DECB /* SpeakerLoudTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279716B608AA00C7DECB /* SpeakerLoudTemplate.pdf */; };
 		5628279C16B608AA00C7DECB /* SpeakerMidTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279816B608AA00C7DECB /* SpeakerMidTemplate.pdf */; };
 		5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */; };
@@ -140,6 +141,7 @@
 		562559FC1888A16F009A6C7A /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		562559FD1888A16F009A6C7A /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
 		562559FE1888A16F009A6C7A /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		56255A091889B1CD009A6C7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		5628279716B608AA00C7DECB /* SpeakerLoudTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerLoudTemplate.pdf; sourceTree = "<group>"; };
 		5628279816B608AA00C7DECB /* SpeakerMidTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerMidTemplate.pdf; sourceTree = "<group>"; };
 		5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerMuteTemplate.pdf; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 		5623CFFC16B5C220002B2E0C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				56255A091889B1CD009A6C7A /* README.md */,
 				56F67D7B1755B034005C2037 /* Pandora.icns */,
 				56F67D7C1755B034005C2037 /* Pandora.iconset */,
 				5623CFFD16B5C220002B2E0C /* Pandora's Box-Info.plist */,
@@ -516,6 +519,7 @@
 				5623D00616B5C220002B2E0C /* Credits.rtf in Resources */,
 				5623D00C16B5C220002B2E0C /* MainMenu.xib in Resources */,
 				5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */,
+				56255A0A1889B1CD009A6C7A /* README.md in Resources */,
 				5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */,
 				5623D05016B5C34C002B2E0C /* readme.txt in Resources */,
 				5623D05116B5C34C002B2E0C /* audioControlBackTemplate.pdf in Resources */,

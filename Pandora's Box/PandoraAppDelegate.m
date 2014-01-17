@@ -85,11 +85,10 @@
                                                 [logsPath stringByAppendingString:@"/Verbose"]];
     DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:docsFileManager];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
     [DDLog addLogger:fileLogger withLogLevel:LOG_LEVEL_VERBOSE];
     
     // Setup info file logging
-    // Setup file logging
     docsFileManager = [[DDLogFileManagerDefault alloc]
                        initWithLogsDirectory:
                        [logsPath stringByAppendingString:@"/Info"]];
