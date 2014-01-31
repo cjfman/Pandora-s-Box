@@ -278,7 +278,7 @@
             <value key="minSize" type="size" width="483" height="452"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="728" height="475"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="2085" userLabel="Time Bar">
                         <rect key="frame" x="0.0" y="447" width="728" height="28"/>

@@ -97,6 +97,15 @@
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:fileLogger withLogLevel:LOG_LEVEL_INFO];
     
+    // Setup error file logging
+    docsFileManager = [[DDLogFileManagerDefault alloc]
+                       initWithLogsDirectory:
+                       [logsPath stringByAppendingString:@"/Error"]];
+    fileLogger = [[DDFileLogger alloc] initWithLogFileManager:docsFileManager];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:fileLogger withLogLevel:LOG_LEVEL_ERROR];
+    
 	// Setup Default Settings
 	userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults registerDefaults:

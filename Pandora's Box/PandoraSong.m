@@ -255,12 +255,12 @@
 			self.enabled = FALSE;
 			return nil;
 		}
-        if ([audioPlayer duration] <= 30)
+        if ([audioPlayer duration] <= 30) {
             DDLogError(@"Song '%@' was less than 30 seconds. Probable error.",
                          self.songName);
-            DDLogError(@"Song Data:\n%@", self);
-            //self.enabled = FALSE;
-            //return nil;
+            self.enabled = FALSE;
+            return nil;
+        }
 	}
 	return audioPlayer;
 }
