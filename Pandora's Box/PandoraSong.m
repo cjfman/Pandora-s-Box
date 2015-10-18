@@ -104,7 +104,7 @@
 		}
 		else {
 #ifndef SONG_DOWNLOAD_DEBUG
-			NSLog(@"Downloading song data for song: %@", self.songName);
+			DDLogInfo(@"Loading song data for song: %@", self.songName);
 			self.songData = [[NSData alloc] initWithContentsOfURL:
 							 [NSURL URLWithString: self.audioUrl]];
 			usedURL = self.audioUrl;
@@ -114,9 +114,8 @@
 #endif
 		}
 		if (!self.songData) {
-			NSLog(@"Failed to load song data for song: %@", self.songName);
+			DDLogError(@"Failed to load song data for song: %@", self.songName);
 			self.enabled = NO;
-			[self.songData release];
 			return;
 		}
 	}
@@ -158,7 +157,7 @@
 			   [[self.songName toAlphaNumeric] lowercaseString]];
 		url = [url URLByAppendingPathExtension:@"html"];
 		
-		//NSLog(@"Loading Lyrics from site: %@", url);
+		//DDLogInfo(@"Loading Lyrics from site: %@", url);
 		
 		// Build HTTP Request
 		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -173,13 +172,13 @@
 													 error:&error];
 		
 		NSString *htmlString = [[NSString alloc] initWithData:lyricData encoding:NSUTF8StringEncoding];
-		//NSLog(@"%@", htmlString);
+		//DDLogInfo(@"%@", htmlString);
 		
 		// Extract Lyrics from HTML
 		NSRange startRange = [htmlString rangeOfString:@"<!-- start of lyrics -->"];
 		NSRange endRange = [htmlString rangeOfString:@"<!-- end of lyrics -->"];
 		if (startRange.location == NSNotFound) {
-			//NSLog(@"Failed to find lyrics at %@", host);
+			//DDLogError(@"Failed to find lyrics at %@", host);
 			NSString *backupHost = @"http://www.plyrics.com/lyrics";
 			if (![host isEqualToString:backupHost]) {
 				[self loadLyrics:backupHost];
@@ -205,7 +204,7 @@
 		lyrics = [lyrics stringByAppendingString:
 					   @"\nLyrics provided by www.azlyrics.com"];
 		[lyrics retain];
-		//NSLog(@"Lyrics:\n%@", lyrics);
+		//DDLogDebug(@"Lyrics:\n%@", lyrics);
 	}
 	@catch (NSException *e) {
 		lyrics = [@"Not Available" retain];
@@ -224,7 +223,7 @@
 	NSError *error = nil;
 	cached = [self.songData writeToFile:songPath options:0 error:&error];
 	if (error) {
-		NSLog(@"Error saveing song: %@\n%@",self.songName, error);
+		DDLogError(@"Error saveing song: %@\n%@",self.songName, error);
 	}
 }
 
@@ -251,11 +250,17 @@
 		audioPlayer = [[AVAudioPlayer alloc] initWithData:self.songData
 													error:&error];
 		if (error) {
-			NSLog(@"Error playing song %@:\n>%@",
+			DDLogError(@"Error playing song %@:\n>%@",
 				  self.songName, [error localizedDescription]);
 			self.enabled = FALSE;
 			return nil;
 		}
+        if ([audioPlayer duration] <= 30) {
+            DDLogError(@"Song '%@' was less than 30 seconds. Probable error.",
+                         self.songName);
+            self.enabled = FALSE;
+            return nil;
+        }
 	}
 	return audioPlayer;
 }
@@ -304,10 +309,10 @@
 											   error:&error];
 	if (error)
 	{
-		NSLog(@"%@", error);
+		DDLogError(@"%@", error);
 		return;
 	}
-	NSLog(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
+	DDLogInfo(@"%@ now rated %ld", self.songName, [[response objectForKey:@"isPositive"] integerValue]);
 }
 
 - (void)sleep {
@@ -322,10 +327,10 @@
 											   error:&error];
 	if (error)
 	{
-		NSLog(@"%@\n%@", response, error);
+		DDLogError(@"%@\n%@", response, error);
 		return;
 	}
-	NSLog(@"Sleeping song: %@", self.songName);
+	DDLogInfo(@"Sleeping song: %@", self.songName);
 }
 
 @end
