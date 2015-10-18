@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		561C9D0E176E50A7006EFC05 /* PandoraSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 561C9D0D176E50A7006EFC05 /* PandoraSearchResult.m */; };
-		5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623CFF516B5C220002B2E0C /* Cocoa.framework */; };
 		5623D00016B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623CFFE16B5C220002B2E0C /* InfoPlist.strings */; };
 		5623D00216B5C220002B2E0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D00116B5C220002B2E0C /* main.m */; };
 		5623D00616B5C220002B2E0C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D00416B5C220002B2E0C /* Credits.rtf */; };
@@ -18,7 +17,6 @@
 		5623D01516B5C220002B2E0C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623CFF516B5C220002B2E0C /* Cocoa.framework */; };
 		5623D01D16B5C220002B2E0C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5623D01B16B5C220002B2E0C /* InfoPlist.strings */; };
 		5623D02016B5C220002B2E0C /* Pandora_s_BoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */; };
-		5623D02A16B5C23F002B2E0C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5623D02916B5C23F002B2E0C /* AVFoundation.framework */; };
 		5623D03816B5C2C2002B2E0C /* PandoraConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D03116B5C2C2002B2E0C /* PandoraConnection.m */; };
 		5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */; };
 		5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5623D03316B5C2C2002B2E0C /* PandoraExceptions.plist */; };
@@ -50,9 +48,12 @@
 		5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */; };
 		5628279E16B608AA00C7DECB /* SpeakerQuietTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */; };
 		562827A216B60E1900C7DECB /* PlaylistTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562827A116B60E1900C7DECB /* PlaylistTableCellView.m */; };
+		56331F341BD427EC002EF423 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56331F331BD427EC002EF423 /* Security.framework */; };
+		56331F361BD427F1002EF423 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56331F351BD427F1002EF423 /* Carbon.framework */; };
+		56331F381BD427F8002EF423 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56331F371BD427F8002EF423 /* AVFoundation.framework */; };
+		56331F3A1BD42800002EF423 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56331F391BD42800002EF423 /* Cocoa.framework */; };
 		5648C83516CABE1F0070DF07 /* PandoraSeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5648C83416CABE1F0070DF07 /* PandoraSeed.m */; };
 		565DD96A1756A5C000E0903A /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C80041756780D00C55025 /* SSKeychain.m */; };
-		565DD96C1756A61900E0903A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565DD96B1756A61800E0903A /* Security.framework */; };
 		56A422B9175B03B000EE9460 /* CloseDrawerTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 56A422B7175B03B000EE9460 /* CloseDrawerTemplate.pdf */; };
 		56A422BA175B03B000EE9460 /* OpenDrawerTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 56A422B8175B03B000EE9460 /* OpenDrawerTemplate.pdf */; };
 		56A422BC175B096100EE9460 /* RowViewTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 56A422BB175B096100EE9460 /* RowViewTemplate.pdf */; };
@@ -60,7 +61,6 @@
 		56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */; };
 		56E73E7A175518F500815678 /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */; };
 		56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6E175518F500815678 /* SPMediaKeyTap.m */; };
-		56E73E81175523DD00815678 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E73E80175523DD00815678 /* Carbon.framework */; };
 		56F67D7D1755B034005C2037 /* Pandora.icns in Resources */ = {isa = PBXBuildFile; fileRef = 56F67D7B1755B034005C2037 /* Pandora.icns */; };
 		56F67D7E1755B034005C2037 /* Pandora.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 56F67D7C1755B034005C2037 /* Pandora.iconset */; };
 		56FE74EA1763FE040048052E /* StationWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FE74E91763FE040048052E /* StationWindowController.m */; };
@@ -99,7 +99,6 @@
 		5623D01C16B5C220002B2E0C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5623D01E16B5C220002B2E0C /* Pandora_s_BoxTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pandora_s_BoxTests.h; sourceTree = "<group>"; };
 		5623D01F16B5C220002B2E0C /* Pandora_s_BoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pandora_s_BoxTests.m; sourceTree = "<group>"; };
-		5623D02916B5C23F002B2E0C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5623D03016B5C2C2002B2E0C /* PandoraConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraConnection.h; sourceTree = "<group>"; };
 		5623D03116B5C2C2002B2E0C /* PandoraConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraConnection.m; sourceTree = "<group>"; };
 		5623D03216B5C2C2002B2E0C /* PandoraDebugResponses.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PandoraDebugResponses.plist; sourceTree = "<group>"; };
@@ -148,9 +147,12 @@
 		5628279A16B608AA00C7DECB /* SpeakerQuietTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerQuietTemplate.pdf; sourceTree = "<group>"; };
 		562827A016B60E1900C7DECB /* PlaylistTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistTableCellView.h; sourceTree = "<group>"; };
 		562827A116B60E1900C7DECB /* PlaylistTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistTableCellView.m; sourceTree = "<group>"; };
+		56331F331BD427EC002EF423 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		56331F351BD427F1002EF423 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/Carbon.framework; sourceTree = DEVELOPER_DIR; };
+		56331F371BD427F8002EF423 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		56331F391BD42800002EF423 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		5648C83316CABE1F0070DF07 /* PandoraSeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PandoraSeed.h; sourceTree = "<group>"; };
 		5648C83416CABE1F0070DF07 /* PandoraSeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PandoraSeed.m; sourceTree = "<group>"; };
-		565DD96B1756A61800E0903A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		569C80031756780D00C55025 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		569C80041756780D00C55025 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		56A422B7175B03B000EE9460 /* CloseDrawerTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CloseDrawerTemplate.pdf; sourceTree = "<group>"; };
@@ -162,7 +164,6 @@
 		56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SPInvocationGrabbing.m"; sourceTree = "<group>"; };
 		56E73E6D175518F500815678 /* SPMediaKeyTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPMediaKeyTap.h; sourceTree = "<group>"; };
 		56E73E6E175518F500815678 /* SPMediaKeyTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPMediaKeyTap.m; sourceTree = "<group>"; };
-		56E73E80175523DD00815678 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		56F67D7B1755B034005C2037 /* Pandora.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Pandora.icns; path = ../Pandora.icns; sourceTree = "<group>"; };
 		56F67D7C1755B034005C2037 /* Pandora.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Pandora.iconset; path = ../Pandora.iconset; sourceTree = "<group>"; };
 		56FE74E81763FE040048052E /* StationWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationWindowController.h; sourceTree = "<group>"; };
@@ -175,10 +176,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				565DD96C1756A61900E0903A /* Security.framework in Frameworks */,
-				56E73E81175523DD00815678 /* Carbon.framework in Frameworks */,
-				5623D02A16B5C23F002B2E0C /* AVFoundation.framework in Frameworks */,
-				5623CFF616B5C220002B2E0C /* Cocoa.framework in Frameworks */,
+				56331F3A1BD42800002EF423 /* Cocoa.framework in Frameworks */,
+				56331F381BD427F8002EF423 /* AVFoundation.framework in Frameworks */,
+				56331F361BD427F1002EF423 /* Carbon.framework in Frameworks */,
+				56331F341BD427EC002EF423 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,9 +198,6 @@
 		5623CFE616B5C220002B2E0C = {
 			isa = PBXGroup;
 			children = (
-				565DD96B1756A61800E0903A /* Security.framework */,
-				56E73E80175523DD00815678 /* Carbon.framework */,
-				5623D02916B5C23F002B2E0C /* AVFoundation.framework */,
 				5623CFFB16B5C220002B2E0C /* Pandora's Box */,
 				5623D01816B5C220002B2E0C /* Pandora's BoxTests */,
 				5623CFF416B5C220002B2E0C /* Frameworks */,
@@ -219,6 +217,10 @@
 		5623CFF416B5C220002B2E0C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56331F391BD42800002EF423 /* Cocoa.framework */,
+				56331F371BD427F8002EF423 /* AVFoundation.framework */,
+				56331F351BD427F1002EF423 /* Carbon.framework */,
+				56331F331BD427EC002EF423 /* Security.framework */,
 				5623CFF516B5C220002B2E0C /* Cocoa.framework */,
 				5623D01316B5C220002B2E0C /* SenTestingKit.framework */,
 				5623CFF716B5C220002B2E0C /* Other Frameworks */,
@@ -479,7 +481,7 @@
 			name = "Pandora's BoxTests";
 			productName = "Pandora's BoxTests";
 			productReference = 5623D01216B5C220002B2E0C /* Pandora's BoxTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -723,6 +725,7 @@
 				GCC_PREFIX_HEADER = "Pandora's Box/Pandora's Box-Prefix.pch";
 				INFOPLIST_FILE = "Pandora's Box/Pandora's Box-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -735,6 +738,7 @@
 				GCC_PREFIX_HEADER = "Pandora's Box/Pandora's Box-Prefix.pch";
 				INFOPLIST_FILE = "Pandora's Box/Pandora's Box-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
