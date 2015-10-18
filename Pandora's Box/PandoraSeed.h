@@ -17,6 +17,8 @@
 @property (retain) NSString *artistName;
 @property (retain) NSString *songName;
 @property (retain) NSString *seedId;
+@property (retain) NSString *artUrl;
+@property (retain) NSString *musicToken;
 @property (retain) NSDictionary *dateCreated;
 
 - (id)initWithDictionary:(NSDictionary*)info

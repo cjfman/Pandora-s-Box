@@ -63,6 +63,14 @@
 @property (copy) NSString *trackGain;
 @property (copy) NSString *amazonSongDigitalAsin;
 @property (copy) NSString *adToken;
+@property (copy) NSString *shareLandingUrl;
+@property (copy) NSString *songIdentity;
+@property (copy) NSString *categoryDescriptor;
+@property (copy) NSString *trackType;
+@property (copy) NSString *albumIdentity;
+@property (copy) NSString *isFeatured;
+@property (copy) NSString *musicId;
+@property (copy) NSString *programDescriptor;
 
 @property (retain) NSData *songData;
 @property (assign) BOOL enabled;
