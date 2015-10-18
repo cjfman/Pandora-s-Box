@@ -17,7 +17,6 @@
 #define pandoraVersion 5
 
 
-
 // Common
 #define kentryPoint @"entryPoint"
 #define kPartnerId @"partnerId"
@@ -105,7 +104,7 @@
 }
 
 - (BOOL)partnerLogin:(NSError**)error {
-	NSLog(@"Partner Login");
+	DDLogInfo(@"Partner Login");
 	
 	// Prepare JSON Request
 	syncTime = 0;
@@ -119,10 +118,10 @@
 	NSDictionary *response = [self jsonRequest:@"auth.partnerLogin" withParameters:parameters useTLS:TRUE isEncrypted:FALSE error:error];
 	if(response == nil)
 	{
-		//NSLog(@"Partner Login Error:\n%@", [*error localizedDescription]);
+		//DDLogError(@"Partner Login Error:\n%@", [*error localizedDescription]);
 		return FALSE;
 	}
-	//NSLog(@"JSON Response:\n%@", response);
+	//DDLogVerbose(@"JSON Response:\n%@", response);
 	syncTime = [[self decryptBlowfishMessage:[response objectForKey:kSyncTime]] integerValue];
 	startTime = time(NULL);
 	partnerAuthToken = [[response objectForKey:kPartnerAuthToken] copy];
@@ -136,7 +135,7 @@
 {
 	username = [aUsername copy];
 	password = [aPassword copy];
-	NSLog(@"Logging in user: %@", username);
+	DDLogInfo(@"Logging in user: %@", username);
 	if (!partnerAuthToken) return nil;
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 								@"user", @"loginType",
@@ -157,7 +156,7 @@
 										useTLS:TRUE
 								   isEncrypted:TRUE
 										 error:error];
-	//NSLog(@"JSON Response:\n%@", response);
+	//DDLogVerbose(@"JSON Response:\n%@", response);
 	if (*error) return nil;
 	user_id = [[response objectForKey:kUserId] copy];
 	userAuthToken =[[response objectForKey:kUserAuthToken] copy];
@@ -166,7 +165,7 @@
 }
 
 - (BOOL)relogin {
-	NSLog(@"Relogging in");
+	DDLogError(@"Relogging in");
 	if (username && password && partner) {
 		// Clear credentials
 		syncTime = 0;				// Sync Time
@@ -197,7 +196,7 @@
 {
 	if (!partnerAuthToken) return nil;
 	if([stationList count]) return stationList;
-	NSLog(@"Retrieving Station List");
+	DDLogInfo(@"Retrieving Station List");
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 	NSError *error = nil;
 	
@@ -232,7 +231,7 @@
 		[stations setObject:newStation
 					 forKey:name];
 	}	
-	return stationList;
+	return [[stationList retain] autorelease];
 }
 
 - (PandoraStation*)getStation:(NSString*)name
@@ -240,7 +239,7 @@
 	if (!stations) return nil;
 	PandoraStation *station = [stations objectForKey:name];
 	if (!station) return nil;
-	return station;
+	return [[station retain] autorelease];
 }
 
 - (PandoraStation*)createStation:(PandoraSearchResult *)music {
@@ -254,7 +253,7 @@
 				error:&error];
 	
 	if (!result) {
-		NSLog(@"%@", error);
+		DDLogError(@"%@", error);
 		return nil;
 	}
 	PandoraStation *station = [[[PandoraStation alloc] initWithDictionary:result
@@ -322,6 +321,7 @@
 	return [[jsonString objectFromJSONString] objectForKey:@"result"];
 	
 #else
+    DDLogVerbose(@"Making JSON request: %@\n with parameters:\n%@", method, parameters);
 	// Build JSON string
 	// Add Common Parameters
 	if (syncTime)
@@ -385,12 +385,13 @@
 		self.lastError = *error;
 		return nil;
 	}
-	NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	//NSString *jsonResult = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     /*
     if ([method isEqualTo:@"station.deleteStation"])
-        NSLog(@"%@", jsonResult);//*/
+        DDLogVerbose(@"%@", jsonResult);//*/
 	
 	NSDictionary *response = [jsonData objectFromJSONData];
+    DDLogVerbose(@"JSON response:\n%@", response);
 	if ([[response objectForKey:kStat] isEqualTo:@"fail"])
 	{
 		NSInteger code = [[response objectForKey:@"code"] integerValue];
@@ -403,7 +404,7 @@
 				[PandoraException raise:@"AuthTimeout"
 								   format:@"Authentication has timed out"];
 			}
-			NSLog(@"Successfully relogged in. Reattempting: %@", method);
+			DDLogError(@"Successfully relogged in. Reattempting: %@", method);
 			return [self jsonRequest:method
 					  withParameters:parameters
 							  useTLS:useTLS
@@ -416,7 +417,7 @@
 			self.lastError = *error;
 			return nil;
 		}
-		NSLog(@"%@", jsonResult);
+		DDLogError(@"Unrecoverable JSON Error:\n%@", response);
 		// Pass error to calling method
 		//NSString *errorName = [errorCodes objectForKey:codeString];
 		*error = [NSError errorWithDomain:@"Pandora" code:code userInfo:response];

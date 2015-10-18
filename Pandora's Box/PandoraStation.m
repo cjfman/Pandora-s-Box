@@ -46,7 +46,7 @@
 }
 
 - (void)requestExtendedInfo {
-    //NSLog(@"Getting extended info for station: %@", self.stationName);
+    //DDLogInfo(@"Getting extended info for station: %@", self.stationName);
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   self.stationToken, @"stationToken",
@@ -59,10 +59,10 @@
 										 isEncrypted:TRUE
 											   error:&error];
     if (error) {
-        NSLog(@"%@", error);
+        DDLogError(@"%@", error);
         return;
     }
-    //NSLog(@"%@",response);
+    //DDLogVerbose(@"%@",response);
 	
     NSDictionary *music = [response objectForKey:@"music"];
 	self.seedArtists = [[NSMutableArray alloc] init];
@@ -84,7 +84,7 @@
 - (NSArray*)getPlaylist
 {
 	if(!self.stationToken) return nil;
-	NSLog(@"Getting New Playlist");
+	DDLogInfo(@"Getting New Playlist");
 	
 	/*
 	NSString *formats = [NSString stringWithFormat: @"%@,%@,%@,%@",
@@ -105,7 +105,7 @@
 										 isEncrypted:TRUE
 											   error:&error];
 	if (!response) return nil;
-	//NSLog(@"JSON Response:\n%@", response);
+	//DDLogVerbose(@"JSON Response:\n%@", response);
 	NSArray *songs = [response objectForKey:@"items"];
 	for (NSDictionary* song in songs)
 	{

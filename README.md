@@ -1,4 +1,4 @@
-Pandora-s-Box v0.5
+Pandora-s-Box v0.6.1
 =============
 Key Features
 - Play music from Pandora with your login

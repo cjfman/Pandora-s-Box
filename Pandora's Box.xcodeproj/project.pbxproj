@@ -34,6 +34,17 @@
 		5623D05816B5C34C002B2E0C /* ThumbsUpTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5623D04A16B5C34C002B2E0C /* ThumbsUpTemplate.pdf */; };
 		5623D05916B5C34C002B2E0C /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D04D16B5C34C002B2E0C /* JSONKit.m */; };
 		5623D05D16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */; };
+		562559FF1888A16F009A6C7A /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559EB1888A16F009A6C7A /* CLIColor.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A001888A16F009A6C7A /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559ED1888A16F009A6C7A /* DDAbstractDatabaseLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A011888A16F009A6C7A /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559EF1888A16F009A6C7A /* DDASLLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A021888A16F009A6C7A /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559F11888A16F009A6C7A /* DDFileLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A031888A16F009A6C7A /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559F41888A16F009A6C7A /* DDLog.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A041888A16F009A6C7A /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559F61888A16F009A6C7A /* DDTTYLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A051888A16F009A6C7A /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559F91888A16F009A6C7A /* DDContextFilterLogFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A061888A16F009A6C7A /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559FB1888A16F009A6C7A /* DDDispatchQueueLogFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A071888A16F009A6C7A /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 562559FD1888A16F009A6C7A /* DDMultiFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		56255A081888A16F009A6C7A /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 562559FE1888A16F009A6C7A /* README.txt */; };
+		56255A0A1889B1CD009A6C7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 56255A091889B1CD009A6C7A /* README.md */; };
 		5628279B16B608AA00C7DECB /* SpeakerLoudTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279716B608AA00C7DECB /* SpeakerLoudTemplate.pdf */; };
 		5628279C16B608AA00C7DECB /* SpeakerMidTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279816B608AA00C7DECB /* SpeakerMidTemplate.pdf */; };
 		5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */; };
@@ -110,6 +121,27 @@
 		5623D04D16B5C34C002B2E0C /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		5623D05B16B5C3A8002B2E0C /* cjfmanExtentionToNSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cjfmanExtentionToNSString.h; sourceTree = "<group>"; };
 		5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cjfmanExtentionToNSString.m; sourceTree = "<group>"; };
+		562559EA1888A16F009A6C7A /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIColor.h; sourceTree = "<group>"; };
+		562559EB1888A16F009A6C7A /* CLIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLIColor.m; sourceTree = "<group>"; };
+		562559EC1888A16F009A6C7A /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		562559ED1888A16F009A6C7A /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		562559EE1888A16F009A6C7A /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		562559EF1888A16F009A6C7A /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		562559F01888A16F009A6C7A /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		562559F11888A16F009A6C7A /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		562559F21888A16F009A6C7A /* DDLog+LOGV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDLog+LOGV.h"; sourceTree = "<group>"; };
+		562559F31888A16F009A6C7A /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		562559F41888A16F009A6C7A /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		562559F51888A16F009A6C7A /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		562559F61888A16F009A6C7A /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		562559F81888A16F009A6C7A /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		562559F91888A16F009A6C7A /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		562559FA1888A16F009A6C7A /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		562559FB1888A16F009A6C7A /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		562559FC1888A16F009A6C7A /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
+		562559FD1888A16F009A6C7A /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
+		562559FE1888A16F009A6C7A /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		56255A091889B1CD009A6C7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		5628279716B608AA00C7DECB /* SpeakerLoudTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerLoudTemplate.pdf; sourceTree = "<group>"; };
 		5628279816B608AA00C7DECB /* SpeakerMidTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerMidTemplate.pdf; sourceTree = "<group>"; };
 		5628279916B608AA00C7DECB /* SpeakerMuteTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SpeakerMuteTemplate.pdf; sourceTree = "<group>"; };
@@ -220,6 +252,7 @@
 				5623D04B16B5C34C002B2E0C /* JSONKit */,
 				5623D03D16B5C34C002B2E0C /* bfsh-koc */,
 				56E73E57175518F500815678 /* SPMediaKeyTap */,
+				562559E81888A16F009A6C7A /* Lumberjack */,
 				569C7FFD1756780D00C55025 /* sskeychain */,
 				5623CFFC16B5C220002B2E0C /* Supporting Files */,
 			);
@@ -229,6 +262,7 @@
 		5623CFFC16B5C220002B2E0C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				56255A091889B1CD009A6C7A /* README.md */,
 				56F67D7B1755B034005C2037 /* Pandora.icns */,
 				56F67D7C1755B034005C2037 /* Pandora.iconset */,
 				5623CFFD16B5C220002B2E0C /* Pandora's Box-Info.plist */,
@@ -326,6 +360,49 @@
 				5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */,
 			);
 			name = "My Tools";
+			sourceTree = "<group>";
+		};
+		562559E81888A16F009A6C7A /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				562559E91888A16F009A6C7A /* CLI */,
+				562559EC1888A16F009A6C7A /* DDAbstractDatabaseLogger.h */,
+				562559ED1888A16F009A6C7A /* DDAbstractDatabaseLogger.m */,
+				562559EE1888A16F009A6C7A /* DDASLLogger.h */,
+				562559EF1888A16F009A6C7A /* DDASLLogger.m */,
+				562559F01888A16F009A6C7A /* DDFileLogger.h */,
+				562559F11888A16F009A6C7A /* DDFileLogger.m */,
+				562559F21888A16F009A6C7A /* DDLog+LOGV.h */,
+				562559F31888A16F009A6C7A /* DDLog.h */,
+				562559F41888A16F009A6C7A /* DDLog.m */,
+				562559F51888A16F009A6C7A /* DDTTYLogger.h */,
+				562559F61888A16F009A6C7A /* DDTTYLogger.m */,
+				562559F71888A16F009A6C7A /* Extensions */,
+			);
+			path = Lumberjack;
+			sourceTree = "<group>";
+		};
+		562559E91888A16F009A6C7A /* CLI */ = {
+			isa = PBXGroup;
+			children = (
+				562559EA1888A16F009A6C7A /* CLIColor.h */,
+				562559EB1888A16F009A6C7A /* CLIColor.m */,
+			);
+			path = CLI;
+			sourceTree = "<group>";
+		};
+		562559F71888A16F009A6C7A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				562559F81888A16F009A6C7A /* DDContextFilterLogFormatter.h */,
+				562559F91888A16F009A6C7A /* DDContextFilterLogFormatter.m */,
+				562559FA1888A16F009A6C7A /* DDDispatchQueueLogFormatter.h */,
+				562559FB1888A16F009A6C7A /* DDDispatchQueueLogFormatter.m */,
+				562559FC1888A16F009A6C7A /* DDMultiFormatter.h */,
+				562559FD1888A16F009A6C7A /* DDMultiFormatter.m */,
+				562559FE1888A16F009A6C7A /* README.txt */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5628279F16B60DD300C7DECB /* My UI Elements */ = {
@@ -442,6 +519,7 @@
 				5623D00616B5C220002B2E0C /* Credits.rtf in Resources */,
 				5623D00C16B5C220002B2E0C /* MainMenu.xib in Resources */,
 				5623D03916B5C2C2002B2E0C /* PandoraDebugResponses.plist in Resources */,
+				56255A0A1889B1CD009A6C7A /* README.md in Resources */,
 				5623D03A16B5C2C2002B2E0C /* PandoraExceptions.plist in Resources */,
 				5623D05016B5C34C002B2E0C /* readme.txt in Resources */,
 				5623D05116B5C34C002B2E0C /* audioControlBackTemplate.pdf in Resources */,
@@ -452,6 +530,7 @@
 				5623D05816B5C34C002B2E0C /* ThumbsUpTemplate.pdf in Resources */,
 				56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */,
 				5628279B16B608AA00C7DECB /* SpeakerLoudTemplate.pdf in Resources */,
+				56255A081888A16F009A6C7A /* README.txt in Resources */,
 				5628279C16B608AA00C7DECB /* SpeakerMidTemplate.pdf in Resources */,
 				5628279D16B608AA00C7DECB /* SpeakerMuteTemplate.pdf in Resources */,
 				5628279E16B608AA00C7DECB /* SpeakerQuietTemplate.pdf in Resources */,
@@ -496,8 +575,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				565DD96A1756A5C000E0903A /* SSKeychain.m in Sources */,
 				5623D00216B5C220002B2E0C /* main.m in Sources */,
+				565DD96A1756A5C000E0903A /* SSKeychain.m in Sources */,
 				5623D00916B5C220002B2E0C /* PandoraAppDelegate.m in Sources */,
 				5623D03816B5C2C2002B2E0C /* PandoraConnection.m in Sources */,
 				5623D03B16B5C2C2002B2E0C /* PandoraSong.m in Sources */,
@@ -511,6 +590,15 @@
 				56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */,
 				56FE74EA1763FE040048052E /* StationWindowController.m in Sources */,
 				561C9D0E176E50A7006EFC05 /* PandoraSearchResult.m in Sources */,
+				56255A031888A16F009A6C7A /* DDLog.m in Sources */,
+				56255A021888A16F009A6C7A /* DDFileLogger.m in Sources */,
+				56255A061888A16F009A6C7A /* DDDispatchQueueLogFormatter.m in Sources */,
+				56255A051888A16F009A6C7A /* DDContextFilterLogFormatter.m in Sources */,
+				56255A071888A16F009A6C7A /* DDMultiFormatter.m in Sources */,
+				56255A041888A16F009A6C7A /* DDTTYLogger.m in Sources */,
+				56255A001888A16F009A6C7A /* DDAbstractDatabaseLogger.m in Sources */,
+				56255A011888A16F009A6C7A /* DDASLLogger.m in Sources */,
+				562559FF1888A16F009A6C7A /* CLIColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,7 +689,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -623,7 +711,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};
