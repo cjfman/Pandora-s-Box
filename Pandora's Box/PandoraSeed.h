@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONObject.h"
 
 @class PandoraConnection;
 
-@interface PandoraSeed : NSObject {
+@interface PandoraSeed : JSONObject {
 	PandoraConnection *connection;
 }
 

@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "cjfmanExtentionToNSString.h"
+#import "JSONObject.h"
 
 @class PandoraConnection;
 @class PandoraStation;
 
-@interface PandoraSong : NSObject
+@interface PandoraSong : JSONObject
 {
 	PandoraConnection *connection;
 	PandoraStation *station;

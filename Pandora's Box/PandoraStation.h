@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "PandoraSong.h"
+#import "JSONObject.h"
 
 @class PandoraConnection;
 
-@interface PandoraStation : NSObject
+@interface PandoraStation : JSONObject
 {
 	PandoraConnection *connection;
 	NSMutableArray *playList;

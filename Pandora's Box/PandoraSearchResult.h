@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONObject.h"
 
 
 @class PandoraSearchResult;
 
-@interface PandoraSearchResult : NSObject {
+@interface PandoraSearchResult : JSONObject {
 	NSString* stringValue;
 	bool isSong;
 }

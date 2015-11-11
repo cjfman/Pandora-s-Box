@@ -61,6 +61,7 @@
 		56DFD41B16B5C63E002AC29E /* PartnerInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56DFD41A16B5C63E002AC29E /* PartnerInfo.plist */; };
 		56E73E7A175518F500815678 /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */; };
 		56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E73E6E175518F500815678 /* SPMediaKeyTap.m */; };
+		56F1CEE51BF3D2F400F03CF8 /* JSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F1CEE41BF3D2F400F03CF8 /* JSONObject.m */; };
 		56F67D7D1755B034005C2037 /* Pandora.icns in Resources */ = {isa = PBXBuildFile; fileRef = 56F67D7B1755B034005C2037 /* Pandora.icns */; };
 		56F67D7E1755B034005C2037 /* Pandora.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 56F67D7C1755B034005C2037 /* Pandora.iconset */; };
 		56FE74EA1763FE040048052E /* StationWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FE74E91763FE040048052E /* StationWindowController.m */; };
@@ -164,6 +165,8 @@
 		56E73E6C175518F500815678 /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SPInvocationGrabbing.m"; sourceTree = "<group>"; };
 		56E73E6D175518F500815678 /* SPMediaKeyTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPMediaKeyTap.h; sourceTree = "<group>"; };
 		56E73E6E175518F500815678 /* SPMediaKeyTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPMediaKeyTap.m; sourceTree = "<group>"; };
+		56F1CEE31BF3D2F400F03CF8 /* JSONObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONObject.h; sourceTree = "<group>"; };
+		56F1CEE41BF3D2F400F03CF8 /* JSONObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONObject.m; sourceTree = "<group>"; };
 		56F67D7B1755B034005C2037 /* Pandora.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Pandora.icns; path = ../Pandora.icns; sourceTree = "<group>"; };
 		56F67D7C1755B034005C2037 /* Pandora.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Pandora.iconset; path = ../Pandora.iconset; sourceTree = "<group>"; };
 		56FE74E81763FE040048052E /* StationWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationWindowController.h; sourceTree = "<group>"; };
@@ -360,6 +363,8 @@
 			children = (
 				5623D05B16B5C3A8002B2E0C /* cjfmanExtentionToNSString.h */,
 				5623D05C16B5C3A8002B2E0C /* cjfmanExtentionToNSString.m */,
+				56F1CEE31BF3D2F400F03CF8 /* JSONObject.h */,
+				56F1CEE41BF3D2F400F03CF8 /* JSONObject.m */,
 			);
 			name = "My Tools";
 			sourceTree = "<group>";
@@ -589,6 +594,7 @@
 				562827A216B60E1900C7DECB /* PlaylistTableCellView.m in Sources */,
 				5648C83516CABE1F0070DF07 /* PandoraSeed.m in Sources */,
 				56E73E7A175518F500815678 /* NSObject+SPInvocationGrabbing.m in Sources */,
+				56F1CEE51BF3D2F400F03CF8 /* JSONObject.m in Sources */,
 				56E73E7B175518F500815678 /* SPMediaKeyTap.m in Sources */,
 				56FE74EA1763FE040048052E /* StationWindowController.m in Sources */,
 				561C9D0E176E50A7006EFC05 /* PandoraSearchResult.m in Sources */,
